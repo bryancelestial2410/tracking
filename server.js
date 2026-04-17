@@ -15,9 +15,9 @@ app.use(cors({
 app.use(express.json());
 
 // ── ROUTES ─────────────────────────────────────────────────
-app.use('/auth',         require('./my-backend/routes/auth'));
-app.use('/tools',        require('./my-backend/routes/tools'));
-app.use('/reservations', require('./my-backend/routes/reservations'));
+app.use('/auth',         require('./routes/auth'));
+app.use('/tools',        require('./routes/tools'));
+app.use('/reservations', require('./routes/reservations'));
 
 // ── HEALTH CHECK ───────────────────────────────────────────
 app.get('/', (req, res) => {
