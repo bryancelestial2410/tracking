@@ -6,7 +6,7 @@ const app = express();
 
 // ✅ Proper CORS
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://nursing-eta.vercel.app'],
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
