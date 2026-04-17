@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ToolTrack – Reservation Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-dark:#1a4731;--green-mid:#2d6a4f;--green-light:#52b788;
+      --green-pale:#d8f3dc;--green-mist:#f0faf3;--white:#ffffff;
+      --gray-100:#f7f9f8;--gray-200:#eef2ef;--gray-300:#d1d9d4;
+      --gray-500:#7a9187;--gray-700:#3d5047;--text:#1c2b23;
+      --blue-light:#cce4f7;--blue-mid:#4a90d9;--blue-dark:#1a5276;
+      --pink-light:#fadadd;--pink-mid:#e8a0ab;--pink-dark:#8b3a47;
+    }
+    body { font-family:'DM Sans',sans-serif; background:var(--green-mist); min-height:100vh; display:flex; flex-direction:column; }
+    .blob { position:fixed; border-radius:50%; pointer-events:none; z-index:0; }
+    .blob-1 { width:500px; height:500px; top:-160px; right:-160px; background:radial-gradient(circle,#b7e4c7 0%,transparent 65%); }
+    .blob-2 { width:400px; height:400px; bottom:-120px; left:-120px; background:radial-gradient(circle,#95d5b2 0%,transparent 65%); }
+    .navbar { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--gray-200); box-shadow:0 2px 16px rgba(26,71,49,0.06); height:66px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; }
+    .brand { display:flex; align-items:center; gap:11px; text-decoration:none; }
+    .brand-icon { width:38px; height:38px; background:var(--green-dark); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .brand-name { font-family:'DM Serif Display',serif; font-size:21px; color:var(--green-dark); }
+    .back-btn { display:flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; color:var(--gray-500); text-decoration:none; cursor:pointer; padding:8px 14px; border-radius:9px; border:1.5px solid var(--gray-300); transition:all 0.2s; }
+    .back-btn:hover { color:var(--green-dark); border-color:var(--green-light); background:var(--green-mist); }
+    .main { flex:1; display:flex; flex-direction:column; align-items:center; padding:48px 24px; position:relative; z-index:1; }
+    .page-header { text-align:center; margin-bottom:36px; animation:fadeUp 0.5s ease both; }
+    .page-header h1 { font-family:'DM Serif Display',serif; font-size:34px; color:var(--text); margin-bottom:6px; }
+    .page-header p { font-size:14px; color:var(--gray-500); }
+    .form-card { background:var(--white); border-radius:24px; box-shadow:0 8px 40px rgba(26,71,49,0.1); width:100%; max-width:680px; overflow:hidden; animation:fadeUp 0.5s ease 0.1s both; }
+    .form-header { background:linear-gradient(160deg,var(--green-dark) 0%,var(--green-mid) 100%); padding:28px 36px; display:flex; align-items:center; gap:14px; }
+    .form-header-icon { font-size:28px; }
+    .form-header h2 { font-family:'DM Serif Display',serif; font-size:22px; color:var(--white); }
+    .form-header p { font-size:13px; color:rgba(255,255,255,0.65); margin-top:2px; }
+    .form-body { padding:36px; }
+    .legend { display:flex; gap:20px; margin-bottom:28px; padding:12px 16px; background:var(--gray-100); border-radius:10px; font-size:12.5px; }
+    .legend-item { display:flex; align-items:center; gap:7px; color:var(--gray-700); }
+    .legend-dot { width:12px; height:12px; border-radius:3px; }
+    .legend-dot.pink { background:var(--pink-light); border:1px solid var(--pink-mid); }
+    .legend-dot.blue { background:var(--blue-light); border:1px solid var(--blue-mid); }
+    .section-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--green-mid); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+    .section-label::after { content:''; flex:1; height:1px; background:var(--gray-200); }
+    .field { margin-bottom:16px; }
+    .field label { display:block; font-size:12px; font-weight:600; color:var(--gray-700); margin-bottom:6px; letter-spacing:0.4px; text-transform:uppercase; }
+    .input-pink { width:100%; padding:12px 16px; border:1.5px solid var(--pink-mid); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; color:var(--text); background:var(--pink-light); outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+    .input-pink:focus { border-color:#c0697a; box-shadow:0 0 0 3px rgba(232,160,171,0.25); }
+    .input-pink::placeholder { color:#c9a0a8; }
+    .course-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .course-btn { padding:11px 14px; border:2px solid var(--blue-mid); border-radius:10px; background:var(--blue-light); color:var(--blue-dark); font-size:13.5px; font-weight:500; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.2s; text-align:center; }
+    .course-btn:hover { background:#b3d4ef; border-color:var(--blue-dark); }
+    .course-btn.selected { background:var(--blue-dark); color:var(--white); border-color:var(--blue-dark); box-shadow:0 4px 12px rgba(26,82,118,0.25); }
+    .remove-btn { background:none; border:none; cursor:pointer; color:#e74c3c; font-size:16px; padding:2px 6px; border-radius:5px; transition:background 0.2s; }
+    .remove-btn:hover { background:#fdecea; }
+    .alert { padding:12px 16px; border-radius:10px; font-size:13.5px; margin-bottom:20px; display:none; }
+    .alert.success { background:var(--green-pale); color:var(--green-dark); border:1px solid #95d5b2; display:block; }
+    .alert.error { background:#fff0f0; color:#c0392b; border:1px solid #f5c6c6; display:block; }
+    .form-footer { padding:0 36px 36px; display:flex; gap:12px; }
+    .btn { flex:1; padding:13px; border-radius:10px; font-size:14.5px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.2s; border:none; }
+    .btn-outline { background:transparent; border:1.5px solid var(--gray-300); color:var(--gray-500); }
+    .btn-outline:hover { border-color:var(--gray-500); color:var(--text); }
+    .btn-primary { background:var(--green-dark); color:var(--white); }
+    .btn-primary:hover { background:var(--green-mid); box-shadow:0 6px 20px rgba(26,71,49,0.2); }
+    .btn-primary:disabled { opacity:0.6; cursor:not-allowed; }
+    .equip-search-wrap { position:relative; margin-bottom:10px; }
+    .equip-search-input { width:100%; padding:11px 16px; border:1.5px solid var(--blue-mid); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; background:var(--blue-light); color:var(--text); outline:none; }
+    .equip-search-input:focus { border-color:var(--blue-dark); }
+    .equip-search-input::placeholder { color:#7ab3d9; }
+    .equip-dropdown { display:none; position:absolute; top:100%; left:0; right:0; z-index:50; background:var(--white); border:1.5px solid var(--blue-mid); border-radius:10px; max-height:220px; overflow-y:auto; box-shadow:0 8px 24px rgba(0,0,0,0.1); margin-top:4px; }
+    .equip-dropdown.open { display:block; }
+    .equip-option { padding:10px 16px; font-size:13.5px; cursor:pointer; display:flex; align-items:center; border-bottom:1px solid var(--gray-200); transition:background 0.15s; }
+    .equip-option:last-child { border-bottom:none; }
+    .equip-option:hover { background:var(--blue-light); }
+    .sel-table { width:100%; border-collapse:collapse; margin-top:6px; }
+    .sel-table th { background:var(--blue-light); color:var(--blue-dark); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:10px 14px; text-align:left; border:1px solid #b3d4ef; }
+    .sel-table td { padding:8px 10px; border:1px solid var(--gray-200); vertical-align:middle; }
+    .sel-table tr:nth-child(even) td { background:var(--gray-100); }
+    .sel-qty { width:70px; padding:6px 8px; text-align:center; border:1.5px solid var(--pink-mid); border-radius:8px; background:var(--pink-light); font-size:13px; font-family:'DM Sans',sans-serif; outline:none; }
+    .no-sel { text-align:center; color:var(--gray-500); font-size:13px; padding:16px; font-style:italic; }
+    .cs-box { background:var(--gray-100); border-radius:14px; padding:20px; margin-bottom:14px; border:1.5px solid var(--gray-200); }
+    .cs-label { font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--green-mid); margin-bottom:10px; }
+    .cs-choices { display:flex; flex-wrap:wrap; gap:8px; }
+    .cs-btn { padding:9px 16px; border-radius:9px; font-size:13px; font-weight:500; font-family:'DM Sans',sans-serif; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+    .cs-btn.year { background:#c8e6c9; color:#1b5e20; border-color:#81c784; }
+    .cs-btn.year:hover,.cs-btn.year.active { background:#2e7d32; color:#fff; border-color:#2e7d32; }
+    .cs-btn.sem { background:#b2dfdb; color:#004d40; border-color:#4db6ac; }
+    .cs-btn.sem:hover,.cs-btn.sem.active { background:#00695c; color:#fff; border-color:#00695c; }
+    .cs-btn.subject { background:#a5d6a7; color:#1b5e20; border-color:#66bb6a; }
+    .cs-btn.subject:hover,.cs-btn.subject.active { background:#388e3c; color:#fff; border-color:#388e3c; }
+    .cs-btn.station { background:#bbdefb; color:#0d47a1; border-color:#64b5f6; }
+    .cs-btn.station:hover,.cs-btn.station.active { background:#1565c0; color:#fff; border-color:#1565c0; }
+    .cs-btn.rd { background:#d7ccc8; color:#3e2723; border-color:#a1887f; }
+    .cs-btn.rd:hover,.cs-btn.rd.active { background:#5d4037; color:#fff; border-color:#5d4037; }
+    .cs-note { font-size:13px; color:var(--gray-500); font-style:italic; padding:10px; }
+    .cs-selected-display { margin-top:12px; padding:10px 14px; background:var(--green-pale); border-radius:9px; font-size:13px; color:var(--green-dark); font-weight:600; display:none; }
+    .equip-subsection { background:var(--gray-100); border-radius:12px; padding:16px; margin-bottom:14px; border:1.5px solid var(--gray-200); }
+    .equip-subsection-title { font-size:12px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--green-mid); margin-bottom:12px; }
+    .equip-msg-btn { width:100%; margin-top:12px; padding:10px; background:#5d4037; color:#fff; border:none; border-radius:9px; font-size:13px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; }
+    .equip-msg-btn:hover { background:#4e342e; }
+    .pink-search { border-color:var(--pink-mid) !important; background:var(--pink-light) !important; }
+    .pink-search::placeholder { color:#c9a0a8 !important; }
+    .pink-dropdown { border-color:var(--pink-mid) !important; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @media(max-width:600px) { .form-body,.form-footer{padding:24px} .course-grid{grid-template-columns:1fr} .navbar{padding:0 20px} }
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <nav class="navbar">
+    <a class="brand" href="home.html"><div class="brand-icon">🔧</div><span class="brand-name">NCF CHS-CSR</span></a>
+    <a class="back-btn" href="home.html">← Back to Menu</a>
+  </nav>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Reservation Form</h1>
+      <p>Fill in the details below to reserve laboratory equipment</p>
+    </div>
+
+    <div class="form-card">
+      <div class="form-header">
+        <div class="form-header-icon">📋</div>
+        <div><h2>NCF CHS-CSR</h2><p>Laboratory Equipment Reservation</p></div>
+      </div>
+
+      <div class="form-body">
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot pink"></div> Fill in your details</div>
+          <div class="legend-item"><div class="legend-dot blue"></div> Select from options</div>
+        </div>
+
+        <div id="form-alert" class="alert"></div>
+
+        <div class="section-label">Instructor Information</div>
+        <div class="field"><label>Clinical Instructor's Name</label><input class="input-pink" type="text" id="instructor" placeholder="Enter instructor's full name" /></div>
+        <div class="field"><label>Section</label><input class="input-pink" type="text" id="section" placeholder="e.g. 3A, 2B" /></div>
+        <div class="field"><label>Room</label><input class="input-pink" type="text" id="room" placeholder="e.g. Lab Room 101" /></div>
+
+        <div class="section-label">Course / Program</div>
+        <div class="field">
+          <div class="course-grid">
+            <button class="course-btn" onclick="selectCourse(this,'BS Nursing')">BS Nursing</button>
+            <button class="course-btn" onclick="selectCourse(this,'BS Midwifery')">BS Midwifery</button>
+            <button class="course-btn" onclick="selectCourse(this,'BS Medical Technology')">BS Medical Technology</button>
+            <button class="course-btn" onclick="selectCourse(this,'BS Biology')">BS Biology</button>
+            <button class="course-btn" onclick="selectCourse(this,'Others')" style="border-style:dashed;grid-column:span 2;">Others (Please specify)</button>
+          </div>
+          <div id="others-wrap" style="display:none;margin-top:10px;">
+            <input class="input-pink" type="text" id="other-course" placeholder="Please specify your course..." />
+          </div>
+          <input type="hidden" id="selected-course" />
+        </div>
+
+        <div id="section-clinical-equip" style="display:none;">
+          <div class="section-label">Clinical Equipment</div>
+          <div class="equip-subsection">
+            <div class="equip-subsection-title">🩷 Consumable Equipment</div>
+            <div class="equip-search-wrap">
+              <input class="equip-search-input" type="text" id="equip-search-consumable" placeholder="🔍 Search consumable..." oninput="filterEquip(this.value,'consumable')" onfocus="filterEquip(this.value,'consumable')" autocomplete="off" />
+              <div class="equip-dropdown" id="equip-dd-consumable"></div>
+            </div>
+            <table class="sel-table" id="sel-table-consumable" style="display:none;"><thead><tr><th>Equipment</th><th style="width:100px;">Quantity</th><th style="width:40px;"></th></tr></thead><tbody id="sel-body-consumable"></tbody></table>
+            <div class="no-sel" id="no-sel-consumable">No consumable equipment selected yet.</div>
+            <button class="equip-msg-btn" onclick="msgEquip('consumable')">✉️ Message Admin (Consumable)</button>
+          </div>
+          <div class="equip-subsection">
+            <div class="equip-subsection-title">📦 Non-Consumable Equipment</div>
+            <div class="equip-search-wrap">
+              <input class="equip-search-input" type="text" id="equip-search-nonconsumable" placeholder="🔍 Search non-consumable..." oninput="filterEquip(this.value,'nonconsumable')" onfocus="filterEquip(this.value,'nonconsumable')" autocomplete="off" />
+              <div class="equip-dropdown" id="equip-dd-nonconsumable"></div>
+            </div>
+            <table class="sel-table" id="sel-table-nonconsumable" style="display:none;"><thead><tr><th>Equipment</th><th style="width:100px;">Quantity</th><th style="width:40px;"></th></tr></thead><tbody id="sel-body-nonconsumable"></tbody></table>
+            <div class="no-sel" id="no-sel-nonconsumable">No non-consumable equipment selected yet.</div>
+            <button class="equip-msg-btn" onclick="msgEquip('nonconsumable')">✉️ Message Admin (Non-Consumable)</button>
+          </div>
+        </div>
+
+        <div id="section-clinical-skills">
+          <div class="section-label">Clinical Skills</div>
+          <div id="cs-coming-soon" style="display:none;padding:16px;background:#fff8e1;border:1.5px solid #ffe082;border-radius:12px;margin-bottom:14px;font-size:13.5px;color:#f57f17;text-align:center;">🚧 Clinical skills data for this course is coming soon!</div>
+          <div class="cs-box" id="cs-year-box" style="display:none;"><div class="cs-label">Step 1 — Year Level</div><div class="cs-choices" id="cs-year-choices"></div></div>
+          <div class="cs-box" id="cs-sem-box" style="display:none;"><div class="cs-label">Step 2 — Semester</div><div class="cs-choices" id="cs-sem-choices"></div></div>
+          <div class="cs-box" id="cs-subject-box" style="display:none;"><div class="cs-label">Step 3 — Subject Code</div><div class="cs-choices" id="cs-subject-choices"></div></div>
+          <div class="cs-box" id="cs-station-box" style="display:none;"><div class="cs-label">Step 4 — Station</div><div class="cs-choices" id="cs-station-choices"></div></div>
+          <div class="cs-box" id="cs-rd-box" style="display:none;"><div class="cs-label">Step 5 — Return Demonstration</div><div class="cs-choices" id="cs-rd-choices"></div></div>
+          <div class="cs-selected-display" id="cs-selected-display"></div>
+          <input type="hidden" id="procedure" />
+
+          <div id="cs-equip-panel" style="display:none;margin-top:6px;">
+            <div class="cs-box" style="border-color:#a1887f;">
+              <div class="cs-label" style="color:#5d4037;">📦 Equipment Needed</div>
+              <div id="cs-equip-list"></div>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--gray-200);">
+                <div class="cs-label" style="color:#5d4037;margin-bottom:10px;">📝 Checklist</div>
+                <table style="width:100%;border-collapse:collapse;">
+                  <thead><tr>
+                    <th style="background:#d7ccc8;color:#3e2723;font-size:12px;font-weight:700;padding:10px 14px;text-align:left;border:1px solid #bcaaa4;text-transform:uppercase;">Checklist</th>
+                    <th style="background:#d7ccc8;color:#3e2723;font-size:12px;font-weight:700;padding:10px 14px;text-align:center;border:1px solid #bcaaa4;text-transform:uppercase;width:100px;">Quantity</th>
+                  </tr></thead>
+                  <tbody id="checklist-body">
+                    <tr>
+                      <td style="padding:8px 10px;border:1px solid #e0d5d0;"><input type="text" placeholder="e.g. Check vital signs" style="width:100%;padding:7px 10px;border:1.5px solid #d7ccc8;border-radius:8px;background:#fff8f6;font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;" /></td>
+                      <td style="padding:8px 10px;border:1px solid #e0d5d0;text-align:center;"><input type="number" min="0" value="0" style="width:70px;padding:7px 8px;border:1.5px solid #d7ccc8;border-radius:8px;font-size:13px;text-align:center;font-family:'DM Sans',sans-serif;outline:none;" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button type="button" onclick="addChecklistRow()" style="margin-top:8px;padding:7px 14px;background:transparent;border:1.5px dashed #bcaaa4;border-radius:8px;font-size:13px;color:#795548;cursor:pointer;font-family:'DM Sans',sans-serif;">+ Add checklist item</button>
+              </div>
+              <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--gray-200);">
+                <button type="button" onclick="sendRDMessage()" style="width:100%;padding:11px;background:#5d4037;color:#fff;border:none;border-radius:10px;font-size:13.5px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;">✉️ Send Message to Admin</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-label">Schedule</div>
+        <div class="field"><label>Date of Reservation</label><input class="input-pink" type="date" id="date-reservation" /></div>
+        <div class="field"><label>Date of Need</label><input class="input-pink" type="date" id="date-need" /></div>
+        <div class="field"><label>Date of Return</label><input class="input-pink" type="date" id="date-return" /></div>
+
+        <div id="section-lab-equip">
+          <div class="section-label">Laboratory Equipment</div>
+          <div class="field">
+            <div class="equip-search-wrap">
+              <input class="equip-search-input" type="text" id="lab-equip-search" placeholder="🔍 Search and select equipment..." oninput="filterLabEquip(this.value)" onfocus="filterLabEquip(this.value)" autocomplete="off" />
+              <div class="equip-dropdown" id="lab-equip-dd"></div>
+            </div>
+            <table class="sel-table" id="lab-equip-table" style="display:none;"><thead><tr><th>Equipment</th><th style="width:100px;">Quantity</th><th style="width:40px;"></th></tr></thead><tbody id="lab-equip-body"></tbody></table>
+            <div class="no-sel" id="lab-equip-empty">No equipment selected yet. Search above to add.</div>
+          </div>
+        </div>
+
+        <div class="section-label">Mannequins</div>
+        <div class="field">
+          <div class="equip-search-wrap">
+            <input class="equip-search-input pink-search" type="text" id="mannequin-search" placeholder="🔍 Search and select mannequin..." oninput="filterMannequin(this.value)" onfocus="filterMannequin(this.value)" autocomplete="off" />
+            <div class="equip-dropdown pink-dropdown" id="mannequin-dd"></div>
+          </div>
+          <table class="sel-table" id="mannequin-table" style="display:none;">
+            <thead><tr>
+              <th style="background:var(--pink-light);color:var(--pink-dark);border-color:var(--pink-mid);">Mannequin</th>
+              <th style="background:var(--pink-light);color:var(--pink-dark);border-color:var(--pink-mid);width:100px;">Quantity</th>
+              <th style="background:var(--pink-light);border-color:var(--pink-mid);width:40px;"></th>
+            </tr></thead>
+            <tbody id="mannequin-body"></tbody>
+          </table>
+          <div class="no-sel" id="mannequin-empty">No mannequins selected yet. Search above to add.</div>
+          <input type="hidden" id="mannequins" />
+        </div>
+
+      </div>
+
+      <div class="form-footer">
+        <button class="btn btn-outline" onclick="handleReset()">Clear Form</button>
+        <button class="btn btn-primary" id="submit-btn" onclick="handleSubmit()">Submit Reservation</button>
+      </div>
+    </div>
+  </main>
+
+<script>
+  // ✅ New (Vercel - same domain)
+  const API = 'https://nursing-eta.vercel.app';
+  const token = localStorage.getItem('token');
+  const user  = JSON.parse(localStorage.getItem('user') || '{}');
+  if (!token || !user.id) window.location.href = 'login.html';
+
+  let selectedCourse = '';
+  let csYear = '', csSem = '', csSubject = '', csStation = '', csRD = '';
+
+  // ── COURSE SELECTION ──────────────────────────────────────
+  function selectCourse(btn, course) {
+    document.querySelectorAll('.course-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedCourse = course;
+    document.getElementById('selected-course').value = course;
+    const isOthers = course === 'Others';
+    document.getElementById('others-wrap').style.display = isOthers ? 'block' : 'none';
+    if (!isOthers) document.getElementById('other-course').value = '';
+    document.getElementById('section-clinical-equip').style.display  = isOthers ? 'block' : 'none';
+    document.getElementById('section-clinical-skills').style.display = isOthers ? 'none'  : 'block';
+    document.getElementById('section-lab-equip').style.display       = isOthers ? 'none'  : 'block';
+    csYear = ''; csSem = ''; csSubject = ''; csStation = ''; csRD = '';
+    document.getElementById('procedure').value = '';
+    document.getElementById('cs-selected-display').style.display = 'none';
+    document.getElementById('cs-equip-panel').style.display = 'none';
+    ['cs-sem-box','cs-subject-box','cs-station-box','cs-rd-box'].forEach(id =>
+      document.getElementById(id).style.display = 'none'
+    );
+    if (!isOthers) {
+      const courseData = clinicalData[course];
+      if (courseData) {
+        const years = Object.keys(courseData);
+        document.getElementById('cs-year-choices').innerHTML = years.map(y =>
+          `<button type="button" class="cs-btn year" onclick="selectYear('${y}')">${y}</button>`
+        ).join('');
+        document.getElementById('cs-year-box').style.display = 'block';
+        document.getElementById('cs-coming-soon').style.display = 'none';
+      } else {
+        document.getElementById('cs-year-box').style.display = 'none';
+        document.getElementById('cs-coming-soon').style.display = 'block';
+      }
+    }
+  }
+
+  // ── RD EQUIPMENT DATA ────────────────────────────────────
+  // Compiled from NCM 107: Care of Mother, Child, Adolescent (Well client)
+  const rdEquipment = {
+    "Perineal preparation and flushing": [
+      "Sterile gloves",
+      "Clean gloves",
+      "Sterile drapes",
+      "Sterile towels",
+      "Antiseptic solution (e.g., povidone-iodine or as ordered)",
+      "Sterile gauze",
+      "Kidney basin",
+      "Kelly pad",
+      "Trash bag",
+      "Perineal pad"
+    ],
+    "Leopold's Maneuver": [
+      "Clean gloves",
+      "Examination bed",
+      "Pillow",
+      "Measuring tape",
+      "Stethoscope (for checking fetal heart rate)"
+    ],
+    "Essential Intrapartum & Newborn Care": [
+      "Clean gloves",
+      "Sterile gloves",
+      "Sterile delivery set",
+      "Sterile cord clamp",
+      "Sterile scissors/blade (for cord cutting)",
+      "Dry clean towel",
+      "Warm blanket",
+      "Skin-to-skin covering cloth",
+      "Newborn identification band"
+    ],
+    "Urinary catheterization": [
+      "Sterile catheterization set",
+      "Foley catheter (appropriate size)",
+      "Sterile gloves",
+      "Clean gloves",
+      "Antiseptic solution",
+      "Sterile cotton balls/gauze",
+      "Sterile lubricant",
+      "Sterile water (for balloon inflation)",
+      "Syringe (10 mL)",
+      "Urine drainage bag",
+      "Waterproof pad (underpad)",
+      "Kidney basin",
+      "Trash bag"
+    ],
+    "Internal examination": [],
+
+    // NCM 109 — 2nd Year, 2nd Sem
+    "Suctioning": [
+      "Infant mannequin",
+      "Suction machine",
+      "Suction catheter (appropriate size)",
+      "Sterile gloves",
+      "Normal saline",
+      "Suction tubing",
+      "Kidney basin"
+    ],
+    "Nebulization": [],
+    "Nasogastric Tube Feeding": [
+      "Nasogastric tube (appropriate size)",
+      "Feeding syringe or feeding bag",
+      "Stethoscope",
+      "Water",
+      "Gloves",
+      "Tape (for securing tube)",
+      "Kidney basin"
+    ],
+    "FBAO (conscious & unconscious)": [
+      "Infant mannequin"
+    ],
+    "Rescue Breathing": [],
+    "Cardio Pulmonary Resuscitation": [
+      "Infant mannequin"
+    ],
+    "IV Changing": [
+      "New IV tubing",
+      "IV solution (as ordered)",
+      "Alcohol swabs",
+      "Gloves",
+      "IV pole",
+      "Labeling tape",
+      "Tourniquet"
+    ],
+    "IV Discontinuing": [
+      "Clean gloves",
+      "Sterile gauze",
+      "Adhesive tape",
+      "Alcohol swab",
+      "Disposal container for sharps",
+      "Dressing tape",
+      "Trash bag"
+    ],
+    "Oxygen Therapy": [
+      "Oxygen tank",
+      "Oxygen flowmeter",
+      "Nasal cannula / face mask (appropriate type)",
+      "Humidifier bottle (if needed)",
+      "Pulse oximeter",
+      "Gloves"
+    ],
+
+    // NCM 112 — 3rd Year, 1st Sem, Station 1: Operating Room Technique
+    "Scrubbing": [
+      "Antimicrobial soap solution (chlorhexidine or povidone-iodine)",
+      "Sterile nail cleaner",
+      "Sterile scrub brush/sponge",
+      "Sterile hand towel"
+    ],
+    "Gowning": [
+      "Sterile surgical gown",
+      "Sterile gloves (correct size)",
+      "Mask",
+      "Surgical cap",
+      "Shoe covers"
+    ],
+    "Instrumentation": [
+      "Sterile drapes (for table and mayo stand)",
+      "Basic surgical instrument set (minor/major set)",
+      "Scalpel blade",
+      "Sterile gauze",
+      "Lap sponges",
+      "Needle counter",
+      "Sponge counter"
+    ],
+    "Skin Preparation": [
+      "Sterile gloves",
+      "Antiseptic solution (povidone-iodine or chlorhexidine)",
+      "Sterile cotton balls/swab sticks",
+      "Waterproof pad (underpad)",
+      "Sterile drapes"
+    ],
+
+    // NCM 112 — 3rd Year, 1st Sem, Station 2: Adult Procedures 1
+    "ECG Placement/Training": [
+      "ECG electrodes",
+      "Conductive gel (if needed)",
+      "Alcohol swabs",
+      "Tissue/gauze",
+      "Razor (if chest shaving needed)",
+      "ECG paper"
+    ],
+    "CBG Monitoring": [
+      "Test strips (compatible with glucometer)",
+      "Lancet",
+      "Alcohol swabs",
+      "Cotton ball/gauze",
+      "Disposable gloves",
+      "Adhesive bandage (if needed)"
+    ],
+    "NGT Feeding": [
+      "Prescribed enteral feeding formula",
+      "Sterile/clean water (for flushing)",
+      "Disposable gloves",
+      "Tissue/gauze",
+      "Adhesive tape",
+      "pH paper (if checking placement)"
+    ],
+
+    // NCM 116 — 3rd Year, 2nd Sem, Station 3: Adult Procedures 2
+    "Suctioning": [
+      "Suction catheter (appropriate size)",
+      "Connecting tubing",
+      "Sterile gloves (for ET suctioning)",
+      "Clean gloves (for oral suctioning)",
+      "Sterile normal saline",
+      "Sterile water (for flushing)",
+      "Gauze"
+    ],
+    "Tracheostomy Care": [
+      "Sterile gloves",
+      "Clean gloves",
+      "Sterile normal saline",
+      "Cotton-tipped applicators",
+      "Sterile gauze pads",
+      "Tracheostomy ties",
+      "Inner cannula (if disposable type)",
+      "Hydrogen peroxide (if ordered)"
+    ],
+    "Colostomy Care": [
+      "Clean gloves",
+      "New colostomy bag/pouch",
+      "Skin barrier/wafer",
+      "Warm water",
+      "Washcloth/gauze",
+      "Tissue",
+      "Adhesive remover (if available)"
+    ],
+
+    // NCM 117 — 3rd Year, 2nd Sem, Station 4: Orthopedic Procedures
+    "Passive Range of Motion": [
+      "Clean gloves (if needed)",
+      "Towel",
+      "Bath blanket"
+    ],
+    "Crutch Walking": [
+      "Non-slip footwear",
+      "Gait belt"
+    ],
+
+    // NCM 118 — 4th Year, 1st Sem, Station 5: Emergency Procedures
+    "Emergency Basic Life Support": [
+      "Disposable gloves",
+      "Face shield / pocket mask",
+      "Alcohol swabs"
+    ],
+    "BLS-CPR": [
+      "Oxygen mask",
+      "Disposable gloves",
+      "Face shield / pocket mask",
+      "Alcohol swabs",
+      "Gauze"
+    ],
+    "Advance Cardiac Life Support": [
+      "IV cannula",
+      "IV fluids (NSS, LR, D5W as ordered)",
+      "IV tubing",
+      "Syringes and needles",
+      "Emergency drugs (e.g., epinephrine, amiodarone, atropine)",
+      "ET tube",
+      "Lubricating jelly",
+      "Gloves (clean/sterile)",
+      "Alcohol swabs",
+      "Gauze"
+    ],
+    "Bandaging": [
+      "Sterile gauze pads",
+      "Cotton balls",
+      "Elastic bandage",
+      "Roller bandage",
+      "Triangular bandage",
+      "Adhesive tape",
+      "Antiseptic solution",
+      "Gloves"
+    ],
+    "Intravenous Fluid Insertion and Therapy": [
+      "IV cannula (appropriate gauge)",
+      "IV fluids (as ordered)",
+      "IV tubing",
+      "Alcohol swabs",
+      "Cotton balls / gauze",
+      "Transparent dressing",
+      "Adhesive tape",
+      "Gloves",
+      "Syringe (for flushing, if needed)",
+      "Saline flush (if available)"
+    ],
+
+    // NCM 4th Year, 2nd Sem
+    "Blood Transfusion": [
+      "Blood components",
+      "Blood transfusion set",
+      "IV cannula - 18 gauge",
+      "0.9% normal saline",
+      "IV stand",
+      "Infusion pump",
+      "Blood pressure apparatus",
+      "Stethoscope",
+      "Thermometer",
+      "Pulse oximeter"
+    ],
+    "Colostomy Care": [
+      "Clean gloves",
+      "Kidney basin",
+      "Tissue",
+      "Gauze pads",
+      "Warm water",
+      "Mild soap",
+      "Towel",
+      "New colostomy pouch",
+      "Measuring guide",
+      "Scissors",
+      "Skin barrier",
+      "Trash bag"
+    ],
+    "NGT Insertion and Feeding": [
+      "Nasogastric tube",
+      "Water soluble lubricant",
+      "Catheter tip syringe",
+      "Glass of water with straw",
+      "Kidney basin",
+      "Clean gloves",
+      "Adhesive tape or tube holder",
+      "Stethoscope",
+      "Towel or disposable pad",
+      "Suction (if needed)",
+      "Penlight",
+      "Cup of water",
+      "Clamp"
+    ],
+
+    // BS MIDWIFERY — 1st Year
+    "Bed Making": [
+      "Bottom sheet",
+      "Top sheet",
+      "Draw sheet",
+      "Pillow",
+      "Pillow case",
+      "Blanket",
+      "Laundry bag"
+    ],
+    "Positioning": [
+      "Pillow",
+      "Blanket",
+      "Bed sheet"
+    ],
+    "Draping": [
+      "Bed sheet"
+    ],
+    "Bed Bath": [
+      "Kelly pad",
+      "Basin / Pail",
+      "Warm water",
+      "Gloves",
+      "Soap",
+      "Bath towel",
+      "Comb",
+      "Clean clothes"
+    ],
+    "Bed Shampoo": [
+      "Kelly pad",
+      "Basin / Pail",
+      "Warm water",
+      "Shampoo",
+      "Towel",
+      "Comb",
+      "Gloves",
+      "Cotton balls"
+    ],
+    "Hot Compress Procedure": [
+      "Hot water bag",
+      "Hot water",
+      "Towel",
+      "Gloves"
+    ],
+    "Cold Compress Procedure": [
+      "Ice bag / Ice cap",
+      "Ice",
+      "Towel",
+      "Gloves"
+    ],
+    "Vital Signs": [
+      "Thermometer",
+      "Sphygmomanometer (BP apparatus)",
+      "Stethoscope",
+      "Watch with second hand",
+      "Pulse oximeter",
+      "Cotton with alcohol (for disinfection)",
+      "Notebook and pen"
+    ],
+    "Handwashing": [
+      "Water",
+      "Soap / Liquid soap",
+      "Paper towel / clean towel",
+      "Orange wood stick",
+      "Alcohol / Lotion"
+    ],
+    "Gloving": [
+      "Gloves"
+    ],
+    "Wound Care": [
+      "Sterile gloves",
+      "Sterile gauze",
+      "Cotton balls",
+      "Normal saline",
+      "Antiseptic solution",
+      "Kidney basin",
+      "Tape",
+      "Sterile drape",
+      "Waste bag"
+    ],
+    "Drug Administration": [
+      "Medicine cup",
+      "Medication",
+      "Water",
+      "Tray",
+      "Gloves",
+      "Tuberculin syringe",
+      "Needle (25–27 gauge for ID)",
+      "Alcohol swabs",
+      "Cotton ball",
+      "Pen",
+      "Syringe",
+      "Needle (22–25 gauge for IM)",
+      "Kidney basin"
+    ],
+
+    // BS MIDWIFERY — 2nd Year
+    "Essential Intrapartum & Newborn Care": [
+      "Sterile gloves",
+      "Sterile towel",
+      "Dry towel",
+      "Cord clamp or cord tie",
+      "Sterile scissors",
+      "Baby identification band",
+      "Vitamin K syringe",
+      "Eye ointment (erythromycin/tetracycline)",
+      "Weighing scale",
+      "Newborn cap"
+    ],
+    "Newborn Care": [
+      "Sterile gloves",
+      "Towel",
+      "Weighing scale",
+      "Measuring tape",
+      "Thermometer",
+      "Baby clothes",
+      "Newborn cap",
+      "Diaper",
+      "Identification band"
+    ],
+    "Catheterization": [
+      "Sterile catheter",
+      "Sterile gloves",
+      "Lubricant (KY Jelly)",
+      "Antiseptic solution",
+      "Cotton balls",
+      "Kidney basin",
+      "Urine bag",
+      "Drape",
+      "Syringe with sterile water (for Foley catheter balloon)"
+    ],
+    "Perineal Flushing": [
+      "Gloves",
+      "Warm water / antiseptic solution",
+      "Kidney basin",
+      "Cotton balls",
+      "Towel",
+      "Perineal pad"
+    ],
+    "Internal Examination": [
+      "Gloves",
+      "Lubricant gel",
+      "Draping sheet",
+      "Antiseptic solution",
+      "Cotton balls / gauze",
+      "Kidney basin",
+      "Perineal pad"
+    ],
+    "Leopold's Manuever": [
+      "Gloves",
+      "Measuring tape",
+      "Doppler / fetoscope",
+      "Pillow",
+      "Draping sheet"
+    ],
+    "Partograph": [
+      "Partograph chart",
+      "Pen",
+      "Ruler",
+      "Fetal Doppler / fetoscope",
+      "Blood pressure apparatus",
+      "Thermometer",
+      "Watch with second hand"
+    ],
+    "Massage": [
+      "Gloves",
+      "Towel",
+      "Bath blanket / draping sheet",
+      "Pillow",
+      "Massage oil or lotion",
+      "Basin with warm water",
+      "Washcloth",
+      "Comb (if needed)"
+    ],
+    "Suturing - Perineal Repair": [
+      "Sterile gloves",
+      "Suturing needle",
+      "Suture material",
+      "Needle holder",
+      "Forceps",
+      "Scissors",
+      "Antiseptic solution",
+      "Gauze",
+      "Syringe with local anesthesia (lidocaine)",
+      "Drapes"
+    ],
+    "Disinfection of Equipment & Materials": [
+      "Gloves",
+      "Mask",
+      "Apron / PPE",
+      "Basin / container",
+      "Disinfectant solution (e.g., chlorine solution)",
+      "Measuring cup",
+      "Brush (for scrubbing instruments)",
+      "Detergent / soap",
+      "Clean water",
+      "Drying rack / tray",
+      "Clean towel or sterile cloth",
+      "Waste container / biohazard bag"
+    ],
+    "Emergency Care": [],
+
+    // BS MIDWIFERY — 3rd Year
+    "IV Injection": [
+      "Syringe",
+      "Needle",
+      "Medication",
+      "Alcohol swabs",
+      "Cotton ball / gauze",
+      "Gloves",
+      "Kidney basin"
+    ],
+    "IV Insertion": [
+      "IV cannula",
+      "Tourniquet",
+      "IV fluid",
+      "IV tubing",
+      "Alcohol swabs",
+      "Cotton ball / gauze",
+      "Transparent dressing / tape",
+      "Gloves",
+      "Kidney basin",
+      "IV stand"
+    ],
+    "Newborn Resuscitation": [
+      "Radiant warmer",
+      "Suction device / bulb syringe",
+      "Oxygen source",
+      "Self-inflating bag (Ambu bag)",
+      "Neonatal mask",
+      "Laryngoscope",
+      "Endotracheal tube",
+      "Stethoscope",
+      "Pulse oximeter",
+      "Warm towels / blanket"
+    ],
+    "Cardio-Pulmonary Resuscitation": [],
+    "Airway Resuscitation": [],
+    "FBAO - Conscious": [],
+    "FBAO - Unconscious": []
+  };
+
+  // ── CLINICAL SKILLS DATA ─────────────────────────────────
+  const clinicalData = {
+    'BS Nursing': {
+      '1st Year': {
+        '1st Sem': { note: 'No return demonstration for 1st Semester.' },
+        '2nd Sem': {
+          'NCM 101': ['Measuring Body Temperature','Assessing Apical & Radial Pulse','Assessing Respiration','Measuring Oxygen Respiration','Assessing Arterial Blood Pressure','Nursing History for Hair & Scalp Assessment','Nursing History for Nail Assessment','Nursing History for Head Assessment','Nursing History for Eye Assessment','Nursing History for Ear Assessment','Nursing History for Nose & Sinus Assessment','Nursing History for Mouth and Pharyngeal Assessment','Nursing History for Lung Assessment','Nursing History for Vascular Assessment','Indicator for Assessing Local Blood Flow','Nursing History for Breast Assessment','Nursing History for Abdominal Assessment','Nursing History for Assessment of Female Genitalia and Reproductive Tract','Nursing History for Assessment of Male Genitalia','Nursing History for Rectal and Anal Assessment','Nursing History for Musculoskeletal Assessment','Nursing History for Neurological Assessment','Administering Medications Through a Feeding Tube','Administering Nasal Medications','Administering Ear Medications','Administering Vaginal Medications','Administering Rectal Suppositories','Mixing two types of Insulin in One Syringe','Administering Oral Medication','Administering Ophthalmic Medication','Metered-Dose Inhalers (MDIs), Dry Powder Inhalers (DPIs), or Soft Mist Inhalers (SMIs)','Preparing Injections: Ampules and Vials','Administering Injections','Administering Medications By Intravenous Push','Administering Intravenous Medication By Piggyback and Syringe Pumps','Surgical Hand Antisepsis','Preparation of a sterile field','Hand hygiene','Applying a Disposable Mask','Applying Physical Restraints','Fall Prevention in Health Care Settings'],
+          'NCM 103': []
+        }
+      },
+      '2nd Year': {
+        '1st Sem': {
+          'NCM 104': ['Bag Technique'],
+          'NCM 107': ["Leopold's Maneuver",'Perineal preparation and flushing','Urinary catheterization','Internal examination','Essential Intrapartum & Newborn Care']
+        },
+        '2nd Sem': { 'NCM 109': ['Suctioning','Nebulization','Nasogastric Tube Feeding','FBAO (conscious & unconscious)','Rescue Breathing','Cardio Pulmonary Resuscitation','IV Changing','IV Discontinuing','Oxygen Therapy'] }
+      },
+      '3rd Year': {
+        '1st Sem': { 'NCM 112': { 'Station 1: Operating Room Technique': ['Scrubbing','Gowning','Instrumentation','Skin Preparation'], 'Station 2: Adult Procedures 1': ['ECG Placement/Training','CBG Monitoring','NGT Feeding'] } },
+        '2nd Sem': { 'NCM 116': { 'Station 3: Adult Procedures 2': ['Suctioning','Tracheostomy Care','Colostomy Care'] }, 'NCM 117': { 'Station 4: Orthopedic Procedures': ['Passive Range of Motion','Crutch Walking'] } }
+      },
+      '4th Year': {
+        '1st Sem': { 'NCM 118': { 'Station 5': ['Emergency Basic Life Support','BLS-CPR','Advance Cardiac Life Support','Bandaging','Intravenous Fluid Insertion and Therapy'] } },
+        '2nd Sem': { 'NCM (TBA)': { 'Option 1': [], 'Option 2': [] } }
+      }
+    },
+    'BS Midwifery': {
+      '1st Year': { _direct: ['Bed Making','Positioning','Draping','Bed Bath','Bed Shampoo','Hot Compress Procedure','Cold Compress Procedure','Vital Signs','Handwashing','Gloving','Wound Care','Suctioning','Drug Administration'] },
+      '2nd Year': { _direct: ['Essential Intrapartum & Newborn Care','Newborn Care','Catheterization','Perineal Flushing','Internal Examination',"Leopold's Manuever",'Partograph','Massage','Suturing - Perineal Repair','Disinfection of Equipment & Materials','Emergency Care'] },
+      '3rd Year': { _direct: ['IV Injection','IV Insertion','Newborn Resuscitation','Cardio-Pulmonary Resuscitation','Airway Resuscitation','FBAO - Unconscious','FBAO - Conscious'] }
+    }
+  };
+
+  function getCourse() { return selectedCourse; }
+
+  function selectYear(year) {
+    csYear = year; csSem = ''; csSubject = ''; csStation = ''; csRD = '';
+    document.querySelectorAll('.cs-btn.year').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    const yearData = clinicalData[getCourse()][year];
+    if (yearData._direct) {
+      ['cs-sem-box','cs-subject-box','cs-station-box'].forEach(id => document.getElementById(id).style.display = 'none');
+      document.getElementById('cs-rd-choices').innerHTML = yearData._direct.map(rd =>
+        `<button type="button" class="cs-btn rd" data-rd="${rd}" onclick="selectRD(this.dataset.rd)">${rd}</button>`
+      ).join('');
+      document.getElementById('cs-rd-box').style.display = 'block';
+      return;
+    }
+    document.getElementById('cs-sem-choices').innerHTML = Object.keys(yearData).map(s =>
+      `<button type="button" class="cs-btn sem" onclick="selectSem('${s}')">${s}</button>`
+    ).join('');
+    document.getElementById('cs-sem-box').style.display = 'block';
+    ['cs-subject-box','cs-station-box','cs-rd-box'].forEach(id => document.getElementById(id).style.display = 'none');
+  }
+
+  function selectSem(sem) {
+    csSem = sem; csSubject = ''; csStation = ''; csRD = '';
+    document.querySelectorAll('.cs-btn.sem').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    const semData = clinicalData[getCourse()][csYear][sem];
+    if (semData.note) {
+      ['cs-subject-box','cs-station-box','cs-rd-box'].forEach(id => document.getElementById(id).style.display = 'none');
+      document.getElementById('procedure').value = `${csYear} | ${sem} | No RD`;
+      const d = document.getElementById('cs-selected-display');
+      d.style.display = 'block';
+      d.textContent = `📋 ${csYear} › ${sem} › No Return Demonstration`;
+      return;
+    }
+    document.getElementById('cs-subject-choices').innerHTML = Object.keys(semData).map(s =>
+      `<button type="button" class="cs-btn subject" onclick="selectSubject('${s}')">${s}</button>`
+    ).join('');
+    document.getElementById('cs-subject-box').style.display = 'block';
+    ['cs-station-box','cs-rd-box'].forEach(id => document.getElementById(id).style.display = 'none');
+  }
+
+  function selectSubject(subject) {
+    csSubject = subject; csStation = ''; csRD = '';
+    document.querySelectorAll('.cs-btn.subject').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    const data = clinicalData[getCourse()][csYear][csSem][subject];
+    if (Array.isArray(data)) {
+      document.getElementById('cs-station-box').style.display = 'none';
+      document.getElementById('cs-rd-choices').innerHTML = data.length === 0
+        ? '<div class="cs-note">No return demonstrations listed yet.</div>'
+        : data.map(rd => `<button type="button" class="cs-btn rd" data-rd="${rd}" onclick="selectRD(this.dataset.rd)">${rd}</button>`).join('');
+      document.getElementById('cs-rd-box').style.display = 'block';
+    } else {
+      document.getElementById('cs-station-choices').innerHTML = Object.keys(data).map(s =>
+        `<button type="button" class="cs-btn station" data-station="${s}" onclick="selectStation(this.dataset.station)">${s}</button>`
+      ).join('');
+      document.getElementById('cs-station-box').style.display = 'block';
+      document.getElementById('cs-rd-box').style.display = 'none';
+    }
+  }
+
+  function selectStation(station) {
+    csStation = station; csRD = '';
+    document.querySelectorAll('.cs-btn.station').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    const rds = clinicalData[getCourse()][csYear][csSem][csSubject][station];
+    document.getElementById('cs-rd-choices').innerHTML = (!rds || rds.length === 0)
+      ? '<div class="cs-note">No return demonstrations listed yet.</div>'
+      : rds.map(rd => `<button type="button" class="cs-btn rd" data-rd="${rd}" onclick="selectRD(this.dataset.rd)">${rd}</button>`).join('');
+    document.getElementById('cs-rd-box').style.display = 'block';
+  }
+
+  function selectRD(rd) {
+    csRD = rd;
+    document.querySelectorAll('.cs-btn.rd').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    const val = `${getCourse()} | ${csYear}${csSem?' | '+csSem:''}${csSubject?' | '+csSubject:''}${csStation?' | '+csStation:''} | ${rd}`;
+    document.getElementById('procedure').value = val;
+    const d = document.getElementById('cs-selected-display');
+    d.style.display = 'block';
+    d.textContent = `📋 ${val.replace(/\|/g,'›')}`;
+    showEquipPanel(rd);
+  }
+
+  function showEquipPanel(rd) {
+    const panel  = document.getElementById('cs-equip-panel');
+    const list   = document.getElementById('cs-equip-list');
+    const equips = rdEquipment[rd];
+    if (equips && equips.length > 0) {
+      list.innerHTML = equips.map((eq, i) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;margin-bottom:8px;background:#fff;border:1.5px solid #d7ccc8;border-radius:10px;">
+          <span style="font-size:13.5px;color:#3e2723;font-weight:500;">🔹 ${eq}</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label style="font-size:12px;color:#795548;font-weight:600;">Qty:</label>
+            <input type="number" min="0" value="0" id="eq-qty-${i}" style="width:65px;padding:6px 8px;border:1.5px solid #bcaaa4;border-radius:8px;font-size:13px;text-align:center;font-family:'DM Sans',sans-serif;outline:none;" />
+          </div>
+        </div>`).join('');
+    } else {
+      list.innerHTML = `<div style="font-size:13px;color:var(--gray-500);font-style:italic;padding:8px;">No equipment list available yet.</div>`;
+    }
+    panel.style.display = 'block';
+  }
+
+  function sendRDMessage() {
+    const equips  = rdEquipment[csRD] || [];
+    const summary = equips.map((eq, i) => `${eq} x${document.getElementById('eq-qty-'+i)?.value||0}`).join(', ');
+    alert(`📋 Message to Admin:\n\nRD: ${csRD}\nEquipment: ${summary||'N/A'}`);
+  }
+
+  function addChecklistRow() {
+    const tbody = document.getElementById('checklist-body');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="padding:8px 10px;border:1px solid #e0d5d0;"><input type="text" placeholder="e.g. Check vital signs" style="width:100%;padding:7px 10px;border:1.5px solid #d7ccc8;border-radius:8px;background:#fff8f6;font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;" /></td>
+      <td style="padding:8px 10px;border:1px solid #e0d5d0;text-align:center;"><input type="number" min="0" value="0" style="width:70px;padding:7px 8px;border:1.5px solid #d7ccc8;border-radius:8px;font-size:13px;text-align:center;font-family:'DM Sans',sans-serif;outline:none;" /></td>`;
+    tbody.appendChild(tr);
+  }
+
+  // ── CLINICAL EQUIPMENT (Others) ──────────────────────────
+  let selEquip = { consumable: [], nonconsumable: [] };
+
+  function getInventory(type) {
+    return JSON.parse(localStorage.getItem(type==='consumable'?'consumable_items':'nonconsumable_items')||'[]');
+  }
+
+  function filterEquip(query, type) {
+    const all = getInventory(type);
+    const dd  = document.getElementById('equip-dd-'+type);
+    const filtered = all.filter(i => i.name.toLowerCase().includes(query.toLowerCase()) && !selEquip[type].find(s=>s.name===i.name));
+    dd.innerHTML = filtered.length === 0
+      ? `<div class="equip-option" style="color:var(--gray-500);cursor:default;">No items found</div>`
+      : filtered.map(i => `<div class="equip-option" data-name="${i.name.replace(/"/g,'&quot;')}" onmousedown="addEquip(this.dataset.name,'${type}')">${i.name}</div>`).join('');
+    dd.classList.add('open');
+  }
+
+  function addEquip(name, type) {
+    selEquip[type].push({ name, quantity: 1 });
+    document.getElementById('equip-search-'+type).value = '';
+    document.getElementById('equip-dd-'+type).classList.remove('open');
+    renderEquip(type);
+  }
+
+  function removeEquip(idx, type) { selEquip[type].splice(idx,1); renderEquip(type); }
+
+  function renderEquip(type) {
+    const tbody = document.getElementById('sel-body-'+type);
+    const table = document.getElementById('sel-table-'+type);
+    const noMsg = document.getElementById('no-sel-'+type);
+    if (selEquip[type].length === 0) { table.style.display='none'; noMsg.style.display='block'; return; }
+    table.style.display='table'; noMsg.style.display='none';
+    tbody.innerHTML = selEquip[type].map((item,i) => `
+      <tr>
+        <td>${item.name}</td>
+        <td><input type="number" class="sel-qty" min="1" value="${item.quantity}" onchange="selEquip['${type}'][${i}].quantity=parseInt(this.value)||1" /></td>
+        <td><button class="remove-btn" onclick="removeEquip(${i},'${type}')">✕</button></td>
+      </tr>`).join('');
+  }
+
+  function msgEquip(type) {
+    const items = selEquip[type];
+    if (!items.length) { alert('No '+type+' equipment selected.'); return; }
+    alert(`✉️ Message to Admin (${type}):\n\n`+items.map(i=>`${i.name} x${i.quantity}`).join(', '));
+  }
+
+  // ── LAB EQUIPMENT ────────────────────────────────────────
+  const labList = ['Microscope slides','Digital microscope','Compound microscope - Binocular','Compound microscope - Monocular'];
+  let selLab = [];
+
+  function filterLabEquip(query) {
+    const dd = document.getElementById('lab-equip-dd');
+    const filtered = labList.filter(i => i.toLowerCase().includes(query.toLowerCase()) && !selLab.find(s=>s.name===i));
+    dd.innerHTML = filtered.length === 0
+      ? `<div class="equip-option" style="color:var(--gray-500);cursor:default;">No items found</div>`
+      : filtered.map(i => `<div class="equip-option" data-name="${i}" onmousedown="addLabEquip(this.dataset.name)">${i}</div>`).join('');
+    dd.classList.add('open');
+  }
+
+  function addLabEquip(name) {
+    if (selLab.find(s=>s.name===name)) return;
+    selLab.push({ name, quantity: 1 });
+    document.getElementById('lab-equip-search').value = '';
+    document.getElementById('lab-equip-dd').classList.remove('open');
+    renderLab();
+  }
+
+  function removeLabEquip(idx) { selLab.splice(idx,1); renderLab(); }
+
+  function renderLab() {
+    const tbody = document.getElementById('lab-equip-body');
+    const table = document.getElementById('lab-equip-table');
+    const noMsg = document.getElementById('lab-equip-empty');
+    if (selLab.length === 0) { table.style.display='none'; noMsg.style.display='block'; return; }
+    table.style.display='table'; noMsg.style.display='none';
+    tbody.innerHTML = selLab.map((item,i) => `
+      <tr>
+        <td>${item.name}</td>
+        <td><input type="number" class="sel-qty" min="1" value="${item.quantity}" onchange="selLab[${i}].quantity=parseInt(this.value)||1" /></td>
+        <td><button class="remove-btn" onclick="removeLabEquip(${i})">✕</button></td>
+      </tr>`).join('');
+  }
+
+  // ── MANNEQUINS ───────────────────────────────────────────
+  const mannequinList = ['Female sex organ','Teeth model','Breast model','Male sex organ','CPR model','Mama Natalie','Child birth stimulator','Bag valve mask','Neck brace','Catheterization model','Injection model','Suctioning machine','Weighing scale','Weighing scale for baby','Upper torso head child','Upper torso head infant','Toy syringe pump','Nebulizer'];
+  let selMannequins = [];
+
+  function filterMannequin(query) {
+    const dd = document.getElementById('mannequin-dd');
+    const filtered = mannequinList.filter(m => m.toLowerCase().includes(query.toLowerCase()) && !selMannequins.find(s=>s.name===m));
+    dd.innerHTML = filtered.length === 0
+      ? `<div class="equip-option" style="color:var(--gray-500);cursor:default;">No items found</div>`
+      : filtered.map(m => `<div class="equip-option" data-name="${m}" onmousedown="addMannequin(this.dataset.name)">${m}</div>`).join('');
+    dd.classList.add('open');
+  }
+
+  function addMannequin(name) {
+    selMannequins.push({ name, quantity: 1 });
+    document.getElementById('mannequin-search').value = '';
+    document.getElementById('mannequin-dd').classList.remove('open');
+    renderMannequins();
+  }
+
+  function removeMannequin(idx) { selMannequins.splice(idx,1); renderMannequins(); }
+
+  function renderMannequins() {
+    const tbody = document.getElementById('mannequin-body');
+    const table = document.getElementById('mannequin-table');
+    const noMsg = document.getElementById('mannequin-empty');
+    document.getElementById('mannequins').value = selMannequins.map(m=>`${m.name} x${m.quantity}`).join(', ');
+    if (selMannequins.length === 0) { table.style.display='none'; noMsg.style.display='block'; return; }
+    table.style.display='table'; noMsg.style.display='none';
+    tbody.innerHTML = selMannequins.map((item,i) => `
+      <tr>
+        <td>${item.name}</td>
+        <td><input type="number" class="sel-qty" min="1" value="${item.quantity}"
+          style="border-color:var(--pink-mid);background:var(--pink-light);"
+          onchange="selMannequins[${i}].quantity=parseInt(this.value)||1;document.getElementById('mannequins').value=selMannequins.map(m=>m.name+' x'+m.quantity).join(', ');" /></td>
+        <td><button class="remove-btn" onclick="removeMannequin(${i})">✕</button></td>
+      </tr>`).join('');
+  }
+
+  // ── CLOSE DROPDOWNS ──────────────────────────────────────
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.equip-search-wrap')) {
+      document.querySelectorAll('.equip-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+
+  // ── ALERTS ───────────────────────────────────────────────
+  function showAlert(type, msg) {
+    const el = document.getElementById('form-alert');
+    el.className = 'alert ' + type;
+    el.textContent = msg;
+    el.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+
+  // ── RESET ────────────────────────────────────────────────
+  function handleReset() {
+    if (!confirm('Clear all form fields?')) return;
+    ['instructor','section','room','date-reservation','date-need','date-return','other-course'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    document.getElementById('procedure').value = '';
+    document.getElementById('mannequins').value = '';
+    document.querySelectorAll('.course-btn').forEach(b => b.classList.remove('selected'));
+    selectedCourse = '';
+    csYear=''; csSem=''; csSubject=''; csStation=''; csRD='';
+    selLab=[]; selEquip={consumable:[],nonconsumable:[]}; selMannequins=[];
+    renderLab(); renderEquip('consumable'); renderEquip('nonconsumable'); renderMannequins();
+    document.getElementById('form-alert').className = 'alert';
+    document.getElementById('others-wrap').style.display = 'none';
+    document.getElementById('section-clinical-equip').style.display = 'none';
+    document.getElementById('section-clinical-skills').style.display = 'block';
+    document.getElementById('section-lab-equip').style.display = 'block';
+    document.getElementById('cs-equip-panel').style.display = 'none';
+    document.getElementById('cs-selected-display').style.display = 'none';
+    ['cs-year-box','cs-sem-box','cs-subject-box','cs-station-box','cs-rd-box','cs-coming-soon'].forEach(id =>
+      document.getElementById(id).style.display = 'none'
+    );
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date-reservation').value = today;
+  }
+
+  // ── SUBMIT ───────────────────────────────────────────────
+  async function handleSubmit() {
+    const instructor = document.getElementById('instructor').value.trim();
+    const section    = document.getElementById('section').value.trim();
+    const room       = document.getElementById('room').value.trim();
+    const dateRes    = document.getElementById('date-reservation').value;
+    const dateNeed   = document.getElementById('date-need').value;
+    const dateReturn = document.getElementById('date-return').value;
+    const procedure  = document.getElementById('procedure').value.trim();
+    const mannequins = selMannequins.length > 0 ? selMannequins.map(m=>`${m.name} x${m.quantity}`).join(', ') : '0';
+    const isOthers   = selectedCourse === 'Others';
+    const actualCourse = isOthers ? document.getElementById('other-course').value.trim() : selectedCourse;
+
+    if (!instructor || !section || !room || !actualCourse || !dateRes || !dateNeed || !dateReturn) {
+      showAlert('error', '⚠️ Please fill in all required fields and select a course.');
+      return;
+    }
+    if (!isOthers && !procedure) {
+      showAlert('error', '⚠️ Please select a Clinical Skill / Return Demonstration.');
+      return;
+    }
+
+    const equipment = [];
+    (rdEquipment[csRD] || []).forEach((eq, i) => {
+      const qty = parseInt(document.getElementById(`eq-qty-${i}`)?.value || 0);
+      if (qty > 0) equipment.push({ name: eq, quantity: qty });
+    });
+    if (!isOthers) {
+      selLab.forEach(item => { if (item.quantity > 0) equipment.push({ name: item.name, quantity: item.quantity }); });
+    }
+    if (isOthers) {
+      [...selEquip.consumable, ...selEquip.nonconsumable].forEach(item => {
+        if (item.quantity > 0) equipment.push({ name: item.name, quantity: item.quantity });
+      });
+    }
+
+    const checklist = [];
+    document.querySelectorAll('#checklist-body tr').forEach(row => {
+      const item = row.querySelector('input[type="text"]')?.value.trim();
+      const qty  = parseInt(row.querySelector('input[type="number"]')?.value || 0);
+      if (item) checklist.push({ item, quantity: qty });
+    });
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    try {
+      const res = await fetch(`${API}/reservations`, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization': token },
+        body: JSON.stringify({ instructor, section, room, course: actualCourse, date_reservation: dateRes, date_need: dateNeed, date_return: dateReturn, procedure: procedure || 'N/A', equipment, mannequins, checklist })
+      });
+      const data = await res.json();
+      if (!res.ok) { showAlert('error', data.message || 'Submission failed.'); return; }
+      showAlert('success', '✅ Reservation submitted successfully! Awaiting admin approval.');
+      setTimeout(() => { window.location.href = 'home.html'; }, 2000);
+    } catch (err) {
+      showAlert('error', 'Cannot connect to server. Make sure backend is running.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Submit Reservation';
+    }
+  }
+
+  // Set today's date
+  document.getElementById('date-reservation').value = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
