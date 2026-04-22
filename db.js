@@ -13,7 +13,7 @@ try {
        .trim();                  // removes any leading/trailing whitespace
     sslConfig = { 
       ca: cert,
-      rejectUnauthorized: true
+      rejectUnauthorized: false
     };
     console.log('✅ Using DB_CA_CERT from environment variable');
     console.log('✅ DB_CA_CERT preview:', cert.substring(0, 80));
