@@ -55,33 +55,67 @@
     .card.logout .card-title { color: #c0392b; }
     .card.logout:hover { border-color: #f5c6c6; }
     .card.disabled { opacity: 0.4; pointer-events: none; cursor: not-allowed; }
-
-    /* Badge for pending count */
     .badge { display: inline-flex; align-items: center; justify-content: center; background: #f59e0b; color: #fff; font-size: 10px; font-weight: 700; min-width: 20px; height: 20px; border-radius: 20px; padding: 0 6px; position: absolute; top: 14px; right: 14px; }
 
-    /* Modal */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
+    /* ── Modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--white); border-radius: 20px; padding: 32px; width: 100%; max-width: 560px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: fadeUp 0.3s ease; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .modal-header h2 { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--text); }
-    .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--gray-500); }
-    .reservation-item { background: var(--gray-100); border-radius: 12px; padding: 16px; margin-bottom: 12px; border-left: 4px solid var(--gray-300); }
-    .reservation-item.approved { border-left-color: #52b788; }
-    .reservation-item.rejected { border-left-color: #e74c3c; }
-    .reservation-item.pending  { border-left-color: #f59e0b; }
-    .res-tool { font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
-    .res-date { font-size: 12px; color: var(--gray-500); margin-bottom: 8px; }
-    .res-status { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; }
-    .res-status.approved { background: #d8f3dc; color: #1a4731; }
-    .res-status.rejected { background: #fdecea; color: #c0392b; }
-    .res-status.pending  { background: #fff3cd; color: #92600a; }
-    .empty-state { text-align: center; padding: 40px; color: var(--gray-500); }
-    .empty-state div { font-size: 40px; margin-bottom: 12px; }
-    .loading { text-align: center; padding: 40px; color: var(--gray-500); }
+    .modal { background: var(--white); border-radius: 24px; padding: 32px; width: 100%; max-width: 620px; max-height: 85vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.22); animation: fadeUp 0.3s ease; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .modal-header h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); }
+    .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--gray-500); line-height: 1; transition: color 0.2s; }
+    .modal-close:hover { color: var(--text); }
+    .modal-subtitle { font-size: 13px; color: var(--gray-500); margin-bottom: 24px; }
+
+    /* Filter tabs */
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-tab { padding: 6px 16px; border-radius: 20px; border: 1.5px solid var(--gray-300); background: none; font-size: 12px; font-weight: 600; color: var(--gray-500); cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+    .filter-tab.active { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+    .filter-tab:hover:not(.active) { border-color: var(--green-light); color: var(--green-mid); }
+
+    /* Reservation Cards */
+    .res-card { background: var(--gray-100); border-radius: 16px; padding: 20px; margin-bottom: 14px; border: 1.5px solid var(--gray-200); transition: box-shadow 0.2s; position: relative; overflow: hidden; }
+    .res-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
+    .res-card.approved::before { background: #52b788; }
+    .res-card.rejected::before  { background: #e74c3c; }
+    .res-card.pending::before   { background: #f59e0b; }
+    .res-card:hover { box-shadow: 0 4px 20px rgba(26,71,49,0.10); }
+
+    .res-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .res-tool-name { font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 3px; }
+    .res-quantity { font-size: 12px; color: var(--gray-500); }
+    .res-status-pill { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; padding: 4px 12px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+    .res-status-pill.approved { background: #d8f3dc; color: #1a4731; }
+    .res-status-pill.rejected { background: #fdecea; color: #c0392b; }
+    .res-status-pill.pending  { background: #fff3cd; color: #92600a; }
+
+    .res-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .res-date-block { background: var(--white); border-radius: 10px; padding: 10px 14px; }
+    .res-date-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-500); margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+    .res-date-value { font-size: 13px; font-weight: 600; color: var(--text); }
+    .res-date-sub { font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+
+    .res-purpose { margin-top: 12px; font-size: 12.5px; color: var(--gray-500); background: var(--white); border-radius: 10px; padding: 10px 14px; }
+    .res-purpose strong { color: var(--gray-700); font-weight: 600; }
+
+    .res-reject-reason { margin-top: 10px; font-size: 12.5px; color: #c0392b; background: #fdecea; border-radius: 10px; padding: 10px 14px; }
+    .res-reject-reason strong { font-weight: 700; }
+
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--gray-500); }
+    .empty-state div { font-size: 44px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+    .loading { text-align: center; padding: 48px; color: var(--gray-500); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--green-light); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 500px) { .cards-grid { grid-template-columns: 1fr; } .navbar { padding: 0 20px; } .page-header h1 { font-size: 28px; } }
+    @media (max-width: 500px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .navbar { padding: 0 20px; }
+      .page-header h1 { font-size: 28px; }
+      .res-dates { grid-template-columns: 1fr; }
+      .modal { padding: 24px 18px; }
+    }
   </style>
 </head>
 <body>
@@ -115,11 +149,10 @@
         <div class="card-desc">Reserve laboratory equipment for your class</div>
       </a>
 
-      <!-- My Reservations -->
       <div class="card my-reservations" onclick="openMyReservations()">
         <div class="card-icon">🗂️</div>
         <div class="card-title">My Reservations</div>
-        <div class="card-desc">View your approved or rejected reservation requests</div>
+        <div class="card-desc">View your borrow records, dates & return schedules</div>
         <div class="badge" id="pending-badge" style="display:none">0</div>
       </div>
 
@@ -149,11 +182,20 @@
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal">
       <div class="modal-header">
-        <h2>My Reservations</h2>
+        <h2>🗂️ My Reservations</h2>
         <button class="modal-close" onclick="closeMyReservations()">✕</button>
       </div>
+      <p class="modal-subtitle">Your equipment borrow records, borrow dates, and return schedules</p>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterReservations('all', this)">All</button>
+        <button class="filter-tab" onclick="filterReservations('pending', this)">⏳ Pending</button>
+        <button class="filter-tab" onclick="filterReservations('approved', this)">✅ Approved</button>
+        <button class="filter-tab" onclick="filterReservations('rejected', this)">❌ Rejected</button>
+      </div>
+
       <div id="modal-body">
-        <div class="loading">Loading...</div>
+        <div class="loading"><div class="spinner"></div>Loading your reservations…</div>
       </div>
     </div>
   </div>
@@ -181,7 +223,7 @@
     document.getElementById('card-settings').style.display = 'none';
   }
 
-  // Load pending count for badge
+  // ── Badge ──
   async function loadBadge() {
     try {
       const res = await fetch(`${API}/reservations/my`, { headers: { Authorization: token } });
@@ -197,25 +239,121 @@
   }
   loadBadge();
 
+  // ── Helpers ──
+  let allReservations = [];
+
+  function formatDate(val) {
+    if (!val) return null;
+    const d = new Date(val);
+    if (isNaN(d)) return val; // return raw string if not parseable
+    return d.toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function formatTime(val) {
+    if (!val) return null;
+    // Try parsing as time string (HH:MM or HH:MM:SS)
+    const match = String(val).match(/^(\d{1,2}):(\d{2})/);
+    if (match) {
+      let h = parseInt(match[1]);
+      const m = match[2];
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      return `${h}:${m} ${ampm}`;
+    }
+    return val;
+  }
+
+  function renderCard(r) {
+    const toolName  = r.tool_name || r.item || r.equipment_name || 'Equipment';
+    const quantity  = r.quantity  ? `Qty: ${r.quantity}` : '';
+    const status    = r.status || 'pending';
+
+    // Borrow date — try multiple field names
+    const borrowDateRaw  = r.borrow_date  || r.date || r.reservation_date || r.start_date || null;
+    const borrowTimeRaw  = r.borrow_time  || r.time || null;
+    const returnDateRaw  = r.return_date  || r.due_date || r.end_date || null;
+    const returnTimeRaw  = r.return_time  || null;
+    const purpose        = r.purpose      || r.reason || null;
+    const rejectReason   = r.reject_reason || r.rejection_reason || null;
+
+    const borrowDate = formatDate(borrowDateRaw);
+    const borrowTime = formatTime(borrowTimeRaw);
+    const returnDate = formatDate(returnDateRaw);
+    const returnTime = formatTime(returnTimeRaw);
+
+    const statusLabels = { approved: '✅ Approved', rejected: '❌ Rejected', pending: '⏳ Pending' };
+    const statusLabel  = statusLabels[status] || status;
+
+    return `
+      <div class="res-card ${status}">
+        <div class="res-top">
+          <div>
+            <div class="res-tool-name">🔧 ${toolName}</div>
+            ${quantity ? `<div class="res-quantity">${quantity}</div>` : ''}
+          </div>
+          <span class="res-status-pill ${status}">${statusLabel}</span>
+        </div>
+
+        <div class="res-dates">
+          <div class="res-date-block">
+            <div class="res-date-label">📅 Borrow Date</div>
+            <div class="res-date-value">${borrowDate || '—'}</div>
+            ${borrowTime ? `<div class="res-date-sub">⏰ ${borrowTime}</div>` : ''}
+          </div>
+          <div class="res-date-block">
+            <div class="res-date-label">📤 Return Date</div>
+            <div class="res-date-value">${returnDate || (status === 'pending' ? 'Awaiting approval' : '—')}</div>
+            ${returnTime ? `<div class="res-date-sub">⏰ ${returnTime}</div>` : ''}
+          </div>
+        </div>
+
+        ${purpose ? `
+        <div class="res-purpose">
+          <strong>Purpose:</strong> ${purpose}
+        </div>` : ''}
+
+        ${(status === 'rejected' && rejectReason) ? `
+        <div class="res-reject-reason">
+          <strong>Reason for rejection:</strong> ${rejectReason}
+        </div>` : ''}
+      </div>
+    `;
+  }
+
+  function renderList(data) {
+    if (!data.length) {
+      return `<div class="empty-state"><div>📭</div><p>No reservations found.</p></div>`;
+    }
+    return data.map(renderCard).join('');
+  }
+
+  function filterReservations(status, btn) {
+    // Update active tab
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filtered = status === 'all'
+      ? allReservations
+      : allReservations.filter(r => r.status === status);
+
+    document.getElementById('modal-body').innerHTML = renderList(filtered);
+  }
+
   async function openMyReservations() {
     document.getElementById('modal-overlay').classList.add('open');
-    document.getElementById('modal-body').innerHTML = '<div class="loading">Loading your reservations...</div>';
+    document.getElementById('modal-body').innerHTML = '<div class="loading"><div class="spinner"></div>Loading your reservations…</div>';
+
+    // Reset filter tabs to "All"
+    document.querySelectorAll('.filter-tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+
     try {
       const res = await fetch(`${API}/reservations/my`, { headers: { Authorization: token } });
       const data = await res.json();
-      if (!data.length) {
-        document.getElementById('modal-body').innerHTML = '<div class="empty-state"><div>📭</div>No reservations found.</div>';
-        return;
-      }
-      document.getElementById('modal-body').innerHTML = data.map(r => `
-        <div class="reservation-item ${r.status}">
-          <div class="res-tool">${r.tool_name || r.item || 'Equipment'}</div>
-          <div class="res-date">📅 ${r.date || r.reservation_date || '—'} ${r.time ? '@ ' + r.time : ''}</div>
-          <span class="res-status ${r.status}">${r.status}</span>
-        </div>
-      `).join('');
+      allReservations = Array.isArray(data) ? data : [];
+      document.getElementById('modal-body').innerHTML = renderList(allReservations);
     } catch(e) {
-      document.getElementById('modal-body').innerHTML = '<div class="empty-state"><div>⚠️</div>Could not load reservations.</div>';
+      document.getElementById('modal-body').innerHTML = `
+        <div class="empty-state"><div>⚠️</div><p>Could not load reservations. Please try again.</p></div>`;
     }
   }
 
