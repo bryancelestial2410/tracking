@@ -3,97 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ToolTrack – System Settings</title>
+  <title>System Settings – NCF CHS-CSR</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --green-dark:#1a4731;--green-mid:#2d6a4f;--green-light:#52b788;
-      --green-pale:#d8f3dc;--green-mist:#f0faf3;--white:#ffffff;
-      --gray-100:#f7f9f8;--gray-200:#eef2ef;--gray-300:#d1d9d4;
-      --gray-500:#7a9187;--gray-700:#3d5047;--text:#1c2b23;
-      --blue-light:#cce4f7;--blue-mid:#4a90d9;--blue-dark:#1a5276;
-      --pink-light:#fadadd;--pink-mid:#e8a0ab;--pink-dark:#8b3a47;
-      --red:#e63946;--red-pale:#fdecea;
+      --green-dark:  #1a4731;
+      --green-mid:   #2d6a4f;
+      --green-light: #52b788;
+      --green-pale:  #d8f3dc;
+      --green-mist:  #f0faf3;
+      --white:       #ffffff;
+      --gray-100:    #f7f9f8;
+      --gray-200:    #eef2ef;
+      --gray-300:    #d1d9d4;
+      --gray-500:    #7a9187;
+      --gray-700:    #3d5047;
+      --text:        #1c2b23;
     }
-    body { font-family:'DM Sans',sans-serif; background:var(--green-mist); min-height:100vh; display:flex; flex-direction:column; }
-    .blob { position:fixed; border-radius:50%; pointer-events:none; z-index:0; }
-    .blob-1 { width:500px; height:500px; top:-160px; right:-160px; background:radial-gradient(circle,#b7e4c7 0%,transparent 65%); }
-    .blob-2 { width:400px; height:400px; bottom:-120px; left:-120px; background:radial-gradient(circle,#95d5b2 0%,transparent 65%); }
-    .navbar { position:sticky; top:0; z-index:100; background:var(--white); border-bottom:1px solid var(--gray-200); box-shadow:0 2px 16px rgba(26,71,49,0.06); height:66px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; }
-    .brand { display:flex; align-items:center; gap:11px; text-decoration:none; }
-    .brand-icon { width:38px; height:38px; background:var(--green-dark); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
-    .brand-name { font-family:'DM Serif Display',serif; font-size:21px; color:var(--green-dark); }
-    .back-btn { display:flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; color:var(--gray-500); text-decoration:none; padding:8px 14px; border-radius:9px; border:1.5px solid var(--gray-300); transition:all 0.2s; }
-    .back-btn:hover { color:var(--green-dark); border-color:var(--green-light); background:var(--green-mist); }
-    .main { flex:1; padding:48px 40px; position:relative; z-index:1; max-width:960px; margin:0 auto; width:100%; }
-    .page-header { margin-bottom:36px; animation:fadeUp 0.4s ease both; }
-    .page-header h1 { font-family:'DM Serif Display',serif; font-size:34px; color:var(--text); margin-bottom:4px; }
-    .page-header p { font-size:14px; color:var(--gray-500); }
-    .settings-grid { display:flex; flex-direction:column; gap:20px; }
-    .section-card { background:var(--white); border-radius:20px; box-shadow:0 4px 20px rgba(26,71,49,0.07); overflow:hidden; animation:fadeUp 0.4s ease both; }
-    .section-card:nth-child(1){animation-delay:0.05s} .section-card:nth-child(2){animation-delay:0.10s} .section-card:nth-child(3){animation-delay:0.15s}
-    .section-header { display:flex; align-items:center; justify-content:space-between; padding:20px 28px; cursor:pointer; border-bottom:1px solid transparent; transition:background 0.2s; }
-    .section-header:hover { background:var(--gray-100); }
-    .section-card.open .section-header { border-bottom-color:var(--gray-200); }
-    .section-header-left { display:flex; align-items:center; gap:14px; }
-    .section-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; }
-    .section-icon.blue{background:var(--blue-light)} .section-icon.red{background:var(--red-pale)}
-    .section-title { font-family:'DM Serif Display',serif; font-size:20px; color:var(--text); }
-    .section-desc { font-size:13px; color:var(--gray-500); margin-top:2px; }
-    .chevron { font-size:14px; color:var(--gray-300); transition:transform 0.3s; }
-    .section-card.open .chevron { transform:rotate(180deg); }
-    .section-body { display:none; padding:24px 28px; }
-    .section-card.open .section-body { display:block; }
-    .sub-tabs { display:flex; gap:8px; margin-bottom:24px; }
-    .sub-tab { padding:9px 20px; border-radius:20px; font-size:13.5px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; border:2px solid var(--pink-mid); background:var(--pink-light); color:var(--pink-dark); transition:all 0.2s; }
-    .sub-tab.active,.sub-tab:hover { background:var(--pink-dark); color:var(--white); border-color:var(--pink-dark); }
-    .sub-panel { display:none; }
-    .sub-panel.active { display:block; }
-    .tool-toolbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:12px; flex-wrap:wrap; }
-    .tool-search { padding:9px 16px; border:1.5px solid var(--gray-300); border-radius:20px; font-size:13px; font-family:'DM Sans',sans-serif; color:var(--text); outline:none; width:220px; transition:border-color 0.2s; }
-    .tool-search:focus { border-color:var(--green-light); }
-    .btn-add { padding:9px 18px; border-radius:9px; background:var(--green-dark); color:var(--white); border:none; font-size:13.5px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.2s; }
-    .btn-add:hover { background:var(--green-mid); }
-    .data-table { width:100%; border-collapse:collapse; }
-    .data-table th { background:var(--gray-100); padding:11px 14px; font-size:11.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gray-700); text-align:left; border-bottom:2px solid var(--gray-200); }
-    .data-table td { padding:11px 14px; font-size:13.5px; color:var(--text); border-bottom:1px solid var(--gray-200); vertical-align:middle; }
-    .data-table tr:last-child td { border-bottom:none; }
-    .data-table tr:hover td { background:var(--gray-100); }
-    .qty-badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; background:var(--green-pale); color:var(--green-dark); }
-    .tbl-actions { display:flex; gap:6px; }
-    .tbl-btn { padding:5px 12px; border-radius:7px; font-size:12px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; border:none; transition:all 0.2s; }
-    .tbl-btn.edit{background:var(--blue-light);color:var(--blue-dark)} .tbl-btn.edit:hover{background:var(--blue-dark);color:var(--white)}
-    .tbl-btn.del{background:var(--red-pale);color:var(--red)} .tbl-btn.del:hover{background:var(--red);color:var(--white)}
-    .empty-table { text-align:center; padding:32px; color:var(--gray-500); font-size:14px; }
-    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:999; align-items:center; justify-content:center; }
-    .modal-overlay.open { display:flex; }
-    .modal { background:var(--white); border-radius:20px; padding:32px; width:440px; max-width:95vw; box-shadow:0 24px 60px rgba(0,0,0,0.2); animation:fadeUp 0.3s ease both; }
-    .modal h3 { font-family:'DM Serif Display',serif; font-size:22px; color:var(--text); margin-bottom:20px; }
-    .modal-field { margin-bottom:16px; }
-    .modal-field label { display:block; font-size:12px; font-weight:600; color:var(--gray-700); margin-bottom:6px; letter-spacing:0.4px; text-transform:uppercase; }
-    .modal-field input,.modal-field textarea { width:100%; padding:11px 14px; border:1.5px solid var(--gray-300); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; color:var(--text); outline:none; transition:border-color 0.2s; }
-    .modal-field input:focus,.modal-field textarea:focus { border-color:var(--green-light); box-shadow:0 0 0 3px rgba(82,183,136,0.15); }
-    .modal-field textarea { resize:vertical; min-height:80px; }
-    .modal-btns { display:flex; gap:10px; margin-top:20px; }
-    .modal-btn { flex:1; padding:12px; border-radius:10px; font-size:14px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; border:none; transition:all 0.2s; }
-    .modal-btn.cancel-btn{background:var(--gray-100);color:var(--gray-700)} .modal-btn.cancel-btn:hover{background:var(--gray-200)}
-    .modal-btn.save-btn{background:var(--green-dark);color:var(--white)} .modal-btn.save-btn:hover{background:var(--green-mid)}
-    .history-filters { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
-    .history-filter-btn { padding:7px 16px; border-radius:20px; border:1.5px solid var(--gray-300); background:var(--white); font-size:13px; font-weight:500; font-family:'DM Sans',sans-serif; color:var(--gray-500); cursor:pointer; transition:all 0.2s; }
-    .history-filter-btn.active{background:var(--green-dark);color:var(--white);border-color:var(--green-dark)}
-    .history-filter-btn:hover{border-color:var(--green-light);color:var(--green-dark)}
-    .reset-options { display:flex; flex-direction:column; gap:14px; }
-    .reset-item { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-radius:12px; border:1.5px solid var(--gray-200); background:var(--gray-100); }
-    .reset-item-info h4{font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px} .reset-item-info p{font-size:13px;color:var(--gray-500)}
-    .btn-reset { padding:9px 18px; border-radius:9px; border:none; font-size:13px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all 0.2s; white-space:nowrap; flex-shrink:0; }
-    .btn-reset.danger{background:var(--red-pale);color:var(--red)} .btn-reset.danger:hover{background:var(--red);color:var(--white)}
-    .btn-reset.warning{background:#fef9c3;color:#7d6a00} .btn-reset.warning:hover{background:#f0d000;color:var(--white)}
-    .alert{padding:11px 16px;border-radius:10px;font-size:13.5px;margin-bottom:16px;display:none}
-    .alert.success{background:var(--green-pale);color:var(--green-dark);border:1px solid #95d5b2;display:block}
-    .alert.error{background:var(--red-pale);color:var(--red);border:1px solid #f5c6c6;display:block}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    @media(max-width:600px){.main{padding:28px 16px}.navbar{padding:0 20px}.sub-tabs{flex-direction:column}}
+    body { font-family: 'DM Sans', sans-serif; background: var(--green-mist); min-height: 100vh; display: flex; flex-direction: column; }
+    .blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
+    .blob-1 { width: 500px; height: 500px; top: -160px; right: -160px; background: radial-gradient(circle, #b7e4c7 0%, transparent 65%); }
+    .blob-2 { width: 400px; height: 400px; bottom: -120px; left: -120px; background: radial-gradient(circle, #95d5b2 0%, transparent 65%); }
+
+    .navbar { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--gray-200); box-shadow: 0 2px 16px rgba(26,71,49,0.06); height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .brand-icon { width: 38px; height: 38px; background: var(--green-dark); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .brand-name { font-family: 'DM Serif Display', serif; font-size: 21px; color: var(--green-dark); }
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green-dark); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+    .user-details { text-align: right; }
+    .user-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .user-role { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--green-mid); }
+
+    .main { flex: 1; padding: 48px 32px; position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+    .page-header { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+    .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 34px; color: var(--text); margin-bottom: 6px; }
+    .page-header p { font-size: 14px; color: var(--gray-500); }
+
+    .section-card { background: var(--white); border-radius: 20px; box-shadow: 0 4px 24px rgba(26,71,49,0.08); padding: 32px; margin-bottom: 28px; animation: fadeUp 0.5s ease 0.1s both; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .section-icon { width: 52px; height: 52px; background: var(--green-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); }
+    .section-subtitle { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
+
+
+
+    /* Search + Add */
+    .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .search-wrap { position: relative; flex: 1; }
+    .search-wrap input { width: 100%; padding: 10px 16px 10px 40px; border-radius: 12px; border: 1.5px solid var(--gray-300); font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: var(--text); outline: none; transition: border-color 0.2s; }
+    .search-wrap input:focus { border-color: var(--green-light); background: var(--white); }
+    .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
+    .btn-add { padding: 10px 20px; background: var(--green-dark); color: #fff; border: none; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: background 0.2s; }
+    .btn-add:hover { background: var(--green-mid); }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; border-radius: 14px; border: 1.5px solid var(--gray-200); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead { background: var(--gray-100); }
+    thead th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--gray-500); white-space: nowrap; }
+    tbody tr { border-top: 1px solid var(--gray-200); transition: background 0.15s; }
+    tbody tr:hover { background: var(--green-mist); }
+    tbody td { padding: 13px 16px; color: var(--text); vertical-align: middle; }
+    .td-num { color: var(--gray-500); font-size: 12px; font-weight: 600; width: 40px; }
+    .td-code { font-size: 11px; color: var(--gray-500); font-weight: 500; white-space: nowrap; }
+    .td-name { font-weight: 600; }
+    .td-unit { font-size: 12px; color: var(--gray-500); }
+    .qty-pill { display: inline-flex; align-items: center; justify-content: center; background: var(--green-pale); color: var(--green-dark); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 20px; }
+    .condition-pill { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .condition-good { background: #d8f3dc; color: #1a4731; }
+    .condition-defective { background: #fdecea; color: #c0392b; }
+    .condition-mixed { background: #fff3cd; color: #92600a; }
+    .location-tag { font-size: 11px; font-weight: 600; color: var(--green-mid); background: var(--green-pale); padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+    .actions { display: flex; gap: 6px; }
+    .btn-edit { padding: 5px 14px; background: #e8f4fd; color: #1a6fa8; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+    .btn-edit:hover { background: #cce4f7; }
+    .btn-del { padding: 5px 14px; background: #fdecea; color: #c0392b; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+    .btn-del:hover { background: #f9b8b3; }
+
+    .ideal-stock { font-size: 12px; color: var(--gray-500); }
+    .supply-num { font-weight: 600; color: var(--text); }
+
+    .count-label { font-size: 13px; color: var(--gray-500); margin-bottom: 12px; }
+    .count-label strong { color: var(--text); }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--white); border-radius: 24px; padding: 32px; width: 100%; max-width: 480px; box-shadow: 0 24px 80px rgba(0,0,0,0.22); animation: fadeUp 0.3s ease; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .modal-header h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); }
+    .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--gray-500); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--gray-300); border-radius: 10px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--text); outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--green-light); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-save { width: 100%; padding: 12px; background: var(--green-dark); color: #fff; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px; transition: background 0.2s; }
+    .btn-save:hover { background: var(--green-mid); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 768px) {
+      .main { padding: 28px 16px; }
+      .navbar { padding: 0 20px; }
+      .section-card { padding: 20px 16px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -101,8 +117,17 @@
   <div class="blob blob-2"></div>
 
   <nav class="navbar">
-    <a class="brand" href="home.html"><div class="brand-icon">🔧</div><span class="brand-name">NCF CHS-CSR</span></a>
-    <a class="back-btn" href="home.html">← Back to Menu</a>
+    <a class="brand" href="home.html">
+      <div class="brand-icon">🔧</div>
+      <span class="brand-name">NCF CHS-CSR</span>
+    </a>
+    <div class="user-info">
+      <div class="user-details">
+        <div class="user-name" id="nav-name">—</div>
+        <div class="user-role" id="nav-role">Admin</div>
+      </div>
+      <div class="user-avatar" id="nav-avatar">A</div>
+    </div>
   </nav>
 
   <main class="main">
@@ -111,417 +136,359 @@
       <p>Manage inventory, records, and system configurations</p>
     </div>
 
-    <div id="settings-alert" class="alert"></div>
-    <div class="settings-grid">
-
-      <!-- INVENTORY -->
-      <div class="section-card" id="card-inventory">
-        <div class="section-header" onclick="toggleSection('inventory')">
-          <div class="section-header-left">
-            <div class="section-icon blue">📦</div>
-            <div><div class="section-title">Inventory</div><div class="section-desc">Manage consumable and non-consumable equipment</div></div>
-          </div>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="section-body">
-          <div class="sub-tabs">
-            <button class="sub-tab active" onclick="switchTab('consumable',this)">🩷 Consumable</button>
-            <button class="sub-tab" onclick="switchTab('nonconsumable',this)">🩷 Non-consumable</button>
-          </div>
-          <!-- Consumable -->
-          <div class="sub-panel active" id="panel-consumable">
-            <div class="tool-toolbar">
-              <input class="tool-search" type="text" placeholder="🔍 Search consumable..." oninput="filterTable('consumable-body',this.value)" />
-              <button class="btn-add" onclick="openModal('consumable')">+ Add Item</button>
-            </div>
-            <table class="data-table">
-              <thead><tr><th>#</th><th>Item Name</th><th>Quantity</th><th>Actions</th></tr></thead>
-              <tbody id="consumable-body"></tbody>
-            </table>
-          </div>
-          <!-- Non-consumable -->
-          <div class="sub-panel" id="panel-nonconsumable">
-            <div class="tool-toolbar">
-              <input class="tool-search" type="text" placeholder="🔍 Search non-consumable..." oninput="filterTable('nonconsumable-body',this.value)" />
-              <button class="btn-add" onclick="openModal('nonconsumable')">+ Add Item</button>
-            </div>
-            <table class="data-table">
-              <thead><tr><th>#</th><th>Item Name</th><th>Quantity</th><th>Actions</th></tr></thead>
-              <tbody id="nonconsumable-body"></tbody>
-            </table>
-          </div>
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon">📦</div>
+        <div>
+          <div class="section-title">Inventory</div>
+          <div class="section-subtitle">Manage consumable and non-consumable equipment</div>
         </div>
       </div>
 
-      <!-- HISTORY -->
-      <div class="section-card" id="card-history">
-        <div class="section-header" onclick="toggleSection('history')">
-          <div class="section-header-left">
-            <div class="section-icon blue">📊</div>
-            <div><div class="section-title">Recent & History Records</div><div class="section-desc">View recent activity and full reservation history</div></div>
+      <div>
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Search non-consumable…" oninput="filterTable()">
           </div>
-          <span class="chevron">▼</span>
+          <button class="btn-add" onclick="openAddModal()">+ Add Item</button>
         </div>
-        <div class="section-body">
-          <div class="history-filters">
-            <button class="history-filter-btn active" onclick="filterHistory('all',this)">All</button>
-            <button class="history-filter-btn" onclick="filterHistory('pending',this)">Pending</button>
-            <button class="history-filter-btn" onclick="filterHistory('approved',this)">Approved</button>
-            <button class="history-filter-btn" onclick="filterHistory('borrowed',this)">Borrowed</button>
-            <button class="history-filter-btn" onclick="filterHistory('returned',this)">Returned</button>
-          </div>
-          <table class="data-table">
-            <thead><tr><th>#</th><th>Instructor</th><th>Course</th><th>Section</th><th>Date Reserved</th><th>Status</th></tr></thead>
-            <tbody id="history-body"><tr><td colspan="6" class="empty-table">Loading...</td></tr></tbody>
+        <div class="count-label" id="count-label">Showing <strong>144</strong> items</div>
+        <div class="table-wrap">
+          <table id="inventory-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Item Code</th>
+                <th>Item Name</th>
+                <th>Unit</th>
+                <th>Ideal Stock</th>
+                <th>Total Stock</th>
+                <th>Supply on Hand</th>
+                <th>Location</th>
+                <th>Condition</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-body"></tbody>
           </table>
         </div>
       </div>
-
-      <!-- RESET -->
-      <div class="section-card" id="card-reset">
-        <div class="section-header" onclick="toggleSection('reset')">
-          <div class="section-header-left">
-            <div class="section-icon red">⚙️</div>
-            <div><div class="section-title">Reset</div><div class="section-desc">Clear records or reset system data</div></div>
-          </div>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="section-body">
-          <div class="reset-options">
-            <div class="reset-item">
-              <div class="reset-item-info"><h4>Clear All Reservations</h4><p>Permanently delete all reservation records.</p></div>
-              <button class="btn-reset danger" onclick="handleReset('reservations')">Clear Records</button>
-            </div>
-            <div class="reset-item">
-              <div class="reset-item-info"><h4>Clear Returned Records</h4><p>Remove only returned reservation records.</p></div>
-              <button class="btn-reset warning" onclick="handleReset('returned')">Clear Returned</button>
-            </div>
-            <div class="reset-item">
-              <div class="reset-item-info"><h4>Reset Inventory to Default</h4><p>Restore consumable inventory to default quantities.</p></div>
-              <button class="btn-reset warning" onclick="handleReset('inventory')">Reset Inventory</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </main>
 
-  <!-- Modal -->
+  <!-- Add/Edit Modal -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal">
-      <h3 id="modal-title">Add Item</h3>
-      <div class="modal-field"><label>Item Name</label><input type="text" id="modal-name" placeholder="e.g. Alcohol" /></div>
-      <div class="modal-field"><label>Quantity</label><input type="text" id="modal-qty" placeholder="e.g. 10 gallon" /></div>
-      <div class="modal-btns">
-        <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
-        <button class="modal-btn save-btn" id="modal-save-btn" onclick="saveItem()">Save</button>
+      <div class="modal-header">
+        <h2 id="modal-title">Add Item</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Item Code</label>
+          <input type="text" id="f-code" placeholder="CSR-NCON-C1A-01">
+        </div>
+        <div class="form-group">
+          <label>Unit</label>
+          <input type="text" id="f-unit" placeholder="pcs">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Item Name</label>
+        <input type="text" id="f-name" placeholder="Item name">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ideal Stock</label>
+          <input type="number" id="f-ideal" placeholder="525">
+        </div>
+        <div class="form-group">
+          <label>Total Stock</label>
+          <input type="number" id="f-total" placeholder="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Supply on Hand</label>
+          <input type="number" id="f-supply" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="f-location" placeholder="CSR CABINET 1A">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Item Condition</label>
+        <input type="text" id="f-condition" placeholder="good condition">
+      </div>
+      <button class="btn-save" onclick="saveItem()">Save Item</button>
     </div>
   </div>
 
 <script>
-  const API = 'https://tracking-xge7.vercel.app';
-  const token = localStorage.getItem('token');
-  const user  = JSON.parse(localStorage.getItem('user') || '{}');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  document.getElementById('nav-name').textContent = user.name || 'Admin';
+  document.getElementById('nav-avatar').textContent = (user.name || 'A')[0].toUpperCase();
 
-  if (!token || !user.id) window.location.href = 'login.html';
-  if (user.role !== 'admin') window.location.href = 'home.html';
-
-  let modalType  = 'consumable';
-  let editingIdx = null;
-  let allHistory = [];
-
-  // ── DEFAULT DATA ─────────────────────────────────────────
-  const defaultNonConsumables = [
-    { name:'Soaking jar',                  quantity:'29 pcs' },
-    { name:'Canister',                     quantity:'12 pcs' },
-    { name:'Pitcher',                      quantity:'25 pcs' },
-    { name:'Spirometer',                   quantity:'6 pcs' },
-    { name:'Medicine tray',                quantity:'86 pcs' },
-    { name:'Kelly pad',                    quantity:'10 pcs' },
-    { name:'Kidney basin',                 quantity:'96 pcs' },
-    { name:'Hypotray',                     quantity:'110 pcs' },
-    { name:'Hot water bag',                quantity:'4 pcs' },
-    { name:'Ice cap',                      quantity:'12 pcs' },
-    { name:'Tray',                         quantity:'30 pcs' },
-    { name:'Medication tray',              quantity:'26 pcs' },
-    { name:'Tape measure',                 quantity:'36 pcs' },
-    { name:'Plastic cup',                  quantity:'14 pcs' },
-    { name:'Mayo table',                   quantity:'' },
-    { name:'Flex hammer',                  quantity:'5 box' },
-    { name:'Tuning fork',                  quantity:'6 set' },
-    { name:'Pediatric blood pressure cuff',quantity:'1 pc' },
-    { name:'Stethoscope',                  quantity:'' },
-    { name:'Infrared thermometer',         quantity:'5 pcs' },
-    { name:'Sphygmomanometer',             quantity:'9 pcs' },
-    { name:'Identification bracelets',     quantity:'2 box' },
-    { name:'Foley catheter',               quantity:'7 box' },
-    { name:'Cord clamp',                   quantity:'2 box' },
-    { name:'Suction tube',                 quantity:'2 box' },
-    { name:'Surgical brush',               quantity:'' },
-    { name:'Nebulizing kit w/ mouthpiece', quantity:'' },
-    { name:'Stomach tube',                 quantity:'' },
-    { name:'Stool container',              quantity:'' },
-    { name:'IV infusion set',              quantity:'' },
-    { name:'Burette-type infusion set',    quantity:'' },
-    { name:'Oxygen mask',                  quantity:'' },
-    { name:'Oxygen cannula',               quantity:'' },
-    { name:'Urine bag',                    quantity:'' },
-    { name:'IV cannula',                   quantity:'' },
-    { name:'Asepto syringe',               quantity:'' },
-    { name:'Sterile IV infusion set',      quantity:'' },
-    { name:'Opthalmoscope',                quantity:'' },
-    { name:'Bucket',                       quantity:'8 pcs' },
-    { name:'Bulb syringe',                 quantity:'2 pcs' },
-    { name:'CHN bag',                      quantity:'15 pcs' },
-    { name:'Green lab gown',               quantity:'14 pcs' },
-    { name:'White lab gown',               quantity:'39 pcs' },
-    { name:'Patient gown',                 quantity:'12 pcs' },
-    { name:'Head cap',                     quantity:'2 pcs' },
-    { name:'Rubber sheet',                 quantity:'3 pcs' },
-    { name:'Surgical gown',                quantity:'1 pcs' },
-    { name:'Pillow case',                  quantity:'44 pcs' },
-    { name:'Apron',                        quantity:'13 pcs' },
-    { name:'Drawsheet',                    quantity:'92 pcs (13 Damage/Old)' },
-    { name:'Mayo cover green',             quantity:'210 pcs' },
-    { name:'Linen',                        quantity:'77 pcs' },
-    { name:'Bedsheet',                     quantity:'16 pcs (11 Damage/Old)' },
-    { name:'Franela',                      quantity:'17 pcs' },
-    { name:'Bib',                          quantity:'20 pcs' },
-    { name:'Baby sock',                    quantity:'8 pcs' },
-    { name:'Baby blouse',                  quantity:'6 pcs' },
-    { name:'Mittens',                      quantity:'11 pcs' },
-    { name:'Bonnet',                       quantity:'7 pcs' },
-    { name:'Triangular bandage',           quantity:'63 pcs' },
-    { name:'Curtains',                     quantity:'18 pcs' },
-    { name:'Ovum forcep',                  quantity:'' },
-    { name:'Reflex hammer',                quantity:'' },
-    { name:'Metzenbaum scissor',           quantity:'' },
-    { name:'Babcock/tissue Forcep',        quantity:'' },
-    { name:'Mosquito Forcep straight',     quantity:'' },
-    { name:'Towel clamps',                 quantity:'' },
-    { name:'Mayo scissor straight',        quantity:'' },
-    { name:'Bandage scissor',              quantity:'' },
-    { name:'Mayo scissor curve',           quantity:'' },
-    { name:'Iris scissor curve',           quantity:'' },
-    { name:'Penlight',                     quantity:'' },
-    { name:'Mosquito Forcep curve',        quantity:'' },
-    { name:'Crutches',                     quantity:'4 pairs' },
-    { name:'Stretchers',                   quantity:'1 pc' },
+  // ── Full inventory data (144 items) ──
+  const inventoryData = [
+    { code:'CSR-NCON-C7-01',  name:'Abdomen/Injection model',             unit:'pc',    ideal:525, total:3,   supply:1,  location:'CSR CABINET 7',   condition:'good condition' },
+    { code:'CSR-NCON-C5A-02', name:'Adapter',                             unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-03', name:'Alice Tissue Forceps',                unit:'pcs',   ideal:525, total:20,  supply:5,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C2A-04', name:'Ambu IV Trainer',                     unit:'pcs',   ideal:525, total:8,   supply:5,  location:'CSR CABINET 2A',  condition:'1 good condition' },
+    { code:'CSR-NCON-C11-05', name:'Apron (colored)',                     unit:'pcs',   ideal:525, total:20,  supply:6,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C11-06', name:'Apron (colored)',                     unit:'pcs',   ideal:525, total:30,  supply:9,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-07', name:'Auxiliary thermometer',               unit:'pcs',   ideal:525, total:20,  supply:9,  location:'CSR CABINET 4A',  condition:'7 good condition, 2 defective' },
+    { code:'CSR-NCON-C12-08', name:'Baby Dress',                          unit:'pcs',   ideal:525, total:30,  supply:10, location:'CSR CABINET 12',  condition:'9 good condition, 1 old/damaged' },
+    { code:'CSR-NCON-C2B-09', name:'Baby for FBAO & CPR',                 unit:'set',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 2B',  condition:'good condition' },
+    { code:'CSR-NCON-C2B-10', name:'Baby for Intubation',                 unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2B',  condition:'1 good condition' },
+    { code:'CSR-NCON-C2B-11', name:'Baby For NSD',                        unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-12', name:'Babcock (Tissue) Forceps',            unit:'pcs',   ideal:525, total:15,  supply:2,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-13', name:'Bandage Scissors',                    unit:'pcs',   ideal:525, total:25,  supply:6,  location:'CSR CABINET 4A',  condition:'5 good condition, 1 defective' },
+    { code:'CSR-NCON-C12-14', name:'Bedsheet',                            unit:'pcs',   ideal:525, total:40,  supply:5,  location:'CSR CABINET 12',  condition:'all good condition' },
+    { code:'CSR-NCON-C12-15', name:'Bib',                                 unit:'pcs',   ideal:525, total:40,  supply:21, location:'CSR CABINET 12',  condition:'all good condition' },
+    { code:'CSR-NCON-C2A-16', name:'Big toothbrush',                      unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 2A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-17', name:'Blade handle',                        unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-18', name:'Blood Glucose Monitoring',            unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-19', name:'Blood Glucose Test Tip',              unit:'box',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-20', name:'Blood Pressure for Infant',           unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-21', name:'Blood glucose monitor',               unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C12-22', name:'Bonnet',                              unit:'pcs',   ideal:525, total:40,  supply:17, location:'CSR CABINET 12',  condition:'all good condition' },
+    { code:'CSR-NCON-C12-23', name:'Bonnet',                              unit:'pairs', ideal:525, total:30,  supply:8,  location:'CSR CABINET 12',  condition:'all good condition' },
+    { code:'CSR-NCON-C9-24',  name:'Breast Model',                        unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C2A-25', name:'Breast Model',                        unit:'sets',  ideal:525, total:6,   supply:3,  location:'CSR CABINET 2A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-26', name:'Canister',                            unit:'pcs',   ideal:525, total:15,  supply:7,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C9-27',  name:'Cervical Dilatation Model',           unit:'set',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C3B-28', name:'CHN Bag Condition',                   unit:'set',   ideal:525, total:30,  supply:21, location:'CSR CABINET 3B',  condition:'' },
+    { code:'CSR-NCON-C3A-29', name:'Child Birth Simulator',               unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 3A',  condition:'good condition' },
+    { code:'CSR-NCON-C9-30',  name:'Chopping board',                      unit:'pcs',   ideal:525, total:15,  supply:9,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C1A-31', name:'Compound microscope',                 unit:'unit',  ideal:525, total:40,  supply:24, location:'CSR CABINET 1A',  condition:'7 good condition, 5 defective' },
+    { code:'CSR-NCON-C2A-32', name:'Condom training model',               unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 2A',  condition:'good condition' },
+    { code:'CSR-NCON-C7-33',  name:'CPR model',                           unit:'pc',    ideal:525, total:6,   supply:1,  location:'CSR CABINET 7',   condition:'defective' },
+    { code:'CSR-NCON-WR-34',  name:'Crutches',                            unit:'pairs', ideal:525, total:10,  supply:4,  location:'CSR RIGHT WALL',  condition:'good condition' },
+    { code:'CSR-NCON-C11-35', name:'Delivery Model with fetus',           unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C11-36', name:'Curtains Blue (Large)',               unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C11-37', name:'Curtains Blue (Medium)',              unit:'pcs',   ideal:525, total:20,  supply:12, location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C11-38', name:'Curtains Blue (Small)',               unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C8-39',  name:'Delivery Model with fetus',           unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 8',   condition:'good condition' },
+    { code:'CSR-NCON-C9-40',  name:'Dial Weighing Scale',                 unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'defective' },
+    { code:'CSR-NCON-C5A-41', name:'Digital BP Monitoring',               unit:'set',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'1 complete, 1 incomplete' },
+    { code:'CSR-NCON-C1A-42', name:'Digital Microscope',                  unit:'pcs',   ideal:525, total:40,  supply:25, location:'CSR CABINET 1A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-43', name:'Digital Thermometer',                 unit:'pcs',   ideal:525, total:25,  supply:4,  location:'CSR CABINET 5A',  condition:'3 good condition, 1 defective' },
+    { code:'CSR-NCON-C9-44',  name:'Digital Weighing Scale',              unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C12-45', name:'Drawsheet',                           unit:'pcs',   ideal:525, total:120, supply:92, location:'CSR CABINET 12',  condition:'84 good condition, 8 old/damaged' },
+    { code:'CSR-NCON-C5A-46', name:'Dust Blower',                         unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C3B-47', name:'ECG',                                 unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 3B',  condition:'defective' },
+    { code:'CSR-NCON-C9-48',  name:'Endotracheal intubation model',       unit:'pc',    ideal:525, total:3,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C9-49',  name:'Feeding bottle',                      unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 9',   condition:'1 good condition, 1 no cap' },
+    { code:'CSR-NCON-C2A-50', name:'Female organ model',                  unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2A',  condition:'good condition' },
+    { code:'CSR-NCON-C8-51',  name:'Female Pelvic / Perineal training model', unit:'pcs', ideal:525, total:4, supply:2,  location:'CSR CABINET 8',   condition:'1 defective, 1 good condition' },
+    { code:'CSR-NCON-C2A-52', name:'Female Sex Organ',                    unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2A',  condition:'1 good condition' },
+    { code:'CSR-NCON-C3A-53', name:'Female Sex Organ (w low torso)',      unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 3A',  condition:'good condition' },
+    { code:'CSR-NCON-C2A-54', name:'Female sex organ w/ lower torso',     unit:'pc',    ideal:525, total:4,   supply:2,  location:'CSR CABINET 2A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5A-55', name:'Fetal Doppler',                       unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 5A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C12-56', name:'Franela',                             unit:'pcs',   ideal:525, total:30,  supply:17, location:'CSR CABINET 12',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5A-57', name:'Goniometer',                          unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-58', name:'Good Glucose Meter',                  unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 5A',  condition:'2 good condition, 1 defective' },
+    { code:'CSR-NCON-C9-59',  name:'Google Cardboard',                    unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C9-60',  name:'Graduated Cylinder/Test tube',        unit:'pcs',   ideal:525, total:20,  supply:8,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C4A-61', name:'Histology Slide',                     unit:'box',   ideal:525, total:10,  supply:4,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C5B-62', name:'Hot bag',                             unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 5B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5B-63', name:'Hypo tray',                           unit:'pcs',   ideal:525, total:20,  supply:95, location:'CSR CABINET 5B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5B-64', name:'Ice cap',                             unit:'pcs',   ideal:525, total:20,  supply:12, location:'CSR CABINET 5B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5A-65', name:'Infrared Thermometer',                unit:'pcs',   ideal:525, total:15,  supply:5,  location:'CSR CABINET 5A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5A-66', name:'Infrared thermometer',                unit:'pcs',   ideal:525, total:15,  supply:4,  location:'CSR CABINET 5A',  condition:'3 good condition, 1 defective' },
+    { code:'CSR-NCON-C2A-67', name:'Injection Model',                     unit:'pcs',   ideal:525, total:10,  supply:6,  location:'CSR CABINET 2A',  condition:'6 good condition' },
+    { code:'CSR-NCON-C10-68', name:'Infant Simulator',                    unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 10',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-69', name:'Iris Scissors (Curve)',               unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-70', name:'Kelly Forceps (Curve)',               unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-71', name:'Kelly forceps (straight)',            unit:'pcs',   ideal:525, total:25,  supply:9,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5B-72', name:'Kelly pad',                           unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 5B',  condition:'6 good condition, 4 defective' },
+    { code:'CSR-NCON-C5B-73', name:'Kidney basin',                        unit:'pcs',   ideal:525, total:100, supply:100,location:'CSR CABINET 5B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C11-74', name:'Lab Gown (green)',                    unit:'pcs',   ideal:525, total:30,  supply:15, location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C11-75', name:'Lab Gown (white)',                    unit:'pcs',   ideal:525, total:50,  supply:40, location:'CSR CABINET 11',  condition:'good condition, 13 with rust, 1 damage' },
+    { code:'CSR-NCON-C12-76', name:'Linens',                              unit:'pcs',   ideal:525, total:100, supply:78, location:'CSR CABINET 12',  condition:'good condition, 11 old damage' },
+    { code:'CSR-NCON-C8-77',  name:'Life form simulator',                 unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 8',   condition:'good condition' },
+    { code:'CSR-NCON-C2A-78', name:'Male Sex Organ',                      unit:'pcs',   ideal:525, total:5,   supply:3,  location:'CSR CABINET 2A',  condition:'3 good condition' },
+    { code:'CSR-NCON-C4A-79', name:'Magnifying glass (large)',            unit:'pcs',   ideal:525, total:10,  supply:4,  location:'CSR CABINET 4A',  condition:'all good' },
+    { code:'CSR-NCON-C4A-80', name:'Magnifying glass (small)',            unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4A',  condition:'1 defective, 1 good condition' },
+    { code:'CSR-NCON-C3A-81', name:'Mama Natalie',                        unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 3A',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-82', name:'Manual Automated External Defibrillator', unit:'set', ideal:525, total:3, supply:1,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C12-83', name:'Mayo cover (pouch type) / pillowcase (green)', unit:'pcs', ideal:525, total:180, supply:174, location:'CSR CABINET 12', condition:'170 good condition, 4 old/damaged' },
+    { code:'CSR-NCON-C12-84', name:'Mayo drape (big)',                    unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 12',  condition:'all good condition' },
+    { code:'CSR-NCON-C12-85', name:'Mayo drape (small)',                  unit:'pcs',   ideal:525, total:20,  supply:8,  location:'CSR CABINET 12',  condition:'7 good condition, 1 old/damaged' },
+    { code:'CSR-NCON-C4A-86', name:'Mayo Scissors (Straight)',            unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C5B-87', name:'Measuring tape',                      unit:'pcs',   ideal:525, total:50,  supply:37, location:'CSR CABINET 5B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C9-88',  name:'Medicine Cup',                        unit:'pcs',   ideal:525, total:50,  supply:37, location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C5B-89', name:'Medicine tray',                       unit:'pcs',   ideal:525, total:100, supply:85, location:'CSR CABINET 5B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-90', name:'Metzembaum Scissors',                 unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C12-91', name:'Mittens',                             unit:'pairs', ideal:525, total:30,  supply:11, location:'CSR CABINET 12',  condition:'all good condition' },
+    { code:'CSR-NCON-C9-92',  name:'Mortar (big)',                        unit:'pcs',   ideal:525, total:15,  supply:8,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C9-93',  name:'Mortar (small)',                      unit:'pcs',   ideal:525, total:20,  supply:12, location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C4A-94', name:'Mosquito Forceps (Curve)',            unit:'pcs',   ideal:525, total:20,  supply:6,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-95', name:'Mosquito Forceps (Straight)',         unit:'pcs',   ideal:525, total:20,  supply:9,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-96', name:'Nasal speculum',                      unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C3B-97', name:'Neck Brace',                          unit:'pcs',   ideal:525, total:20,  supply:13, location:'CSR CABINET 3B',  condition:'12 good condition, 1 defective' },
+    { code:'CSR-NCON-C3B-98', name:'Nebulizer',                           unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 3B',  condition:'1 good condition, 1 defective' },
+    { code:'CSR-NCON-C4A-99', name:'Needle holder',                       unit:'pcs',   ideal:525, total:20,  supply:8,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C7-100', name:'Obstetric Childbirth Simulator torso',unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 7',   condition:'defective' },
+    { code:'CSR-NCON-C5A-101',name:'Otoscope',                            unit:'set',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-102',name:'Ovum Forceps',                        unit:'pcs',   ideal:525, total:30,  supply:22, location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-103',name:'Pathophysiology Slides',              unit:'box',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4A',  condition:'good condition' },
+    { code:'CSR-NCON-C11-104',name:'Patient Gown (green) & Head Cap',     unit:'pcs',   ideal:525, total:40,  supply:12, location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C2A-105',name:'Pelvic bone',                         unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-106',name:'Pediatric BP cuff',                   unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-107',name:'Penlight',                            unit:'pcs',   ideal:525, total:20,  supply:11, location:'CSR CABINET 4A',  condition:'9 good condition, 2 defective' },
+    { code:'CSR-NCON-C9-108', name:'Pestle (big)',                         unit:'pcs',   ideal:525, total:15,  supply:9,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C9-109', name:'Pestle (small)',                       unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C3A-110',name:'Pillow',                              unit:'pcs',   ideal:525, total:20,  supply:3,  location:'CSR CABINET 3A',  condition:'good condition' },
+    { code:'CSR-NCON-C11-111',name:'Pillowcase (White)',                  unit:'pcs',   ideal:525, total:60,  supply:43, location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C11-112',name:'Pillows',                             unit:'pcs',   ideal:525, total:20,  supply:2,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C4B-113',name:'Pitcher',                             unit:'pcs',   ideal:525, total:40,  supply:25, location:'CSR CABINET 4B',  condition:'all in good condition' },
+    { code:'CSR-NCON-C9-114', name:'Pitcher',                              unit:'pcs',   ideal:525, total:20,  supply:3,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C5A-115',name:'Pulse Oximeter',                      unit:'pcs',   ideal:525, total:8,   supply:2,  location:'CSR CABINET 5A',  condition:'1 good condition, 1 defective' },
+    { code:'CSR-NCON-C4A-116',name:'Reflex Hammer',                       unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 4A',  condition:'9 good condition, 1 defective' },
+    { code:'CSR-NCON-C10-117',name:'Rosenbaum pocket vision screener',    unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 10',  condition:'good condition' },
+    { code:'CSR-NCON-C11-118',name:'Rubber Sheet',                        unit:'pcs',   ideal:525, total:20,  supply:3,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-11p',name:'Sewing Machine (Singer)',             unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-120',name:'Slides',                              unit:'box',   ideal:525, total:10,  supply:4,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C10-121',name:'Snellen Chart',                       unit:'pc',    ideal:525, total:5,   supply:2,  location:'CSR CABINET 10',  condition:'good condition' },
+    { code:'CSR-NCON-C4A-122',name:'Soaking Jar',                         unit:'pcs',   ideal:525, total:40,  supply:33, location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C2A-122',name:'Spirometer',                          unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 2A',  condition:'1 defective' },
+    { code:'CSR-NCON-C4A-123',name:'Stethoscope',                         unit:'pcs',   ideal:525, total:30,  supply:12, location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C3B-124',name:'Suction Machine',                     unit:'pcs',   ideal:525, total:4,   supply:2,  location:'CSR CABINET 3B',  condition:'good condition' },
+    { code:'CSR-NCON-C11-125',name:'Surgical Gown',                       unit:'pc',    ideal:525, total:20,  supply:1,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C2A-126',name:'Teeth model',                         unit:'pcs',   ideal:525, total:6,   supply:4,  location:'CSR CABINET 2A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-127',name:'Thumb forceps',                       unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C4A-128',name:'Tissue forceps',                      unit:'pcs',   ideal:525, total:25,  supply:13, location:'CSR CABINET 4A',  condition:'12 good condition, 1 defective' },
+    { code:'CSR-NCON-C8-129', name:'Toilet seat',                          unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 8',   condition:'good condition' },
+    { code:'CSR-NCON-C9-130', name:'Toilet Set Reducer',                   unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C2A-131',name:'Top Syringe Pump',                    unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 2A',  condition:'defective' },
+    { code:'CSR-NCON-C4A-132',name:'Towel clamps',                        unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 4A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C9-133', name:'Tracheostomy care mannequin',          unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
+    { code:'CSR-NCON-C4B-134',name:'Tray',                                unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4B',  condition:'good condition' },
+    { code:'CSR-NCON-C12-135',name:'Triangular Bandage',                  unit:'pcs',   ideal:525, total:100, supply:63, location:'CSR CABINET 12',  condition:'all in good condition' },
+    { code:'CSR-NCON-C11-136',name:'Triangular Bandage (old)',             unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 11',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-137',name:'Tuning Fork',                         unit:'pcs',   ideal:525, total:50,  supply:20, location:'CSR CABINET 5A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C5A-138',name:'Tympanic thermometer',                unit:'pcs',   ideal:525, total:15,  supply:5,  location:'CSR CABINET 5A',  condition:'all in good condition' },
+    { code:'CSR-NCON-C2A-139',name:'Upper Torso Head Child',              unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 2A',  condition:'1 good condition' },
+    { code:'CSR-NCON-C2A-140',name:'Upper Torso Head Infant',             unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 2A',  condition:'1 good condition' },
+    { code:'CSR-NCON-C2A-141',name:'UV lights sensitive fluid',           unit:'unit',  ideal:525, total:5,   supply:2,  location:'CSR CABINET 2A',  condition:'good condition' },
+    { code:'CSR-NCON-C5A-142',name:'Visual Electronic Stethoscope',       unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
+    { code:'CSR-NCON-C3B-143',name:'Weighing Scale',                      unit:'pcs',   ideal:525, total:10,  supply:5,  location:'CSR CABINET 3B',  condition:'good condition' },
+    { code:'CSR-NCON-C11-144',name:'White cloth',                         unit:'pcs',   ideal:525, total:10,  supply:5,  location:'CSR CABINET 11',  condition:'good condition' },
   ];
 
-  const defaultConsumables = [
-    { name:'Alcohol',                quantity:'10 gallon' },
-    { name:'Hand soap',              quantity:'10 bottles' },
-    { name:'Betadine',               quantity:'1 gallon' },
-    { name:'Hair cap',               quantity:'5 box' },
-    { name:'Lubricating jelly',      quantity:'1 box' },
-    { name:'Tongue depressor',       quantity:'1 box' },
-    { name:'Gauze swab',             quantity:'' },
-    { name:'Sterile water',          quantity:'' },
-    { name:'IV fluid',               quantity:'16 bottles' },
-    { name:'Blood glucose test tip', quantity:'3' },
-    { name:'Distilled water',        quantity:'2' },
-    { name:'Ampule Phytomen',        quantity:'' },
-    { name:'Cotton balls',           quantity:'' },
-    { name:'Syringe 10cc',           quantity:'' },
-    { name:'Syringe 5cc',            quantity:'' },
-    { name:'Syringe 3cc',            quantity:'' },
-    { name:'Syringe 1cc',            quantity:'' },
-    { name:'Gauze',                  quantity:'' },
-    { name:'Cherries',               quantity:'' },
-    { name:'Surgical gloves 8',      quantity:'' },
-    { name:'Surgical gloves 7.5',    quantity:'' },
-    { name:'Surgical gloves 7',      quantity:'' },
-  ];
+  let editingIndex = null;
 
-  // ── LOCALSTORAGE HELPERS ─────────────────────────────────
-  function getItems(type) {
-    const key  = type === 'consumable' ? 'consumable_items' : 'nonconsumable_items';
-    const data = localStorage.getItem(key);
-    if (data) return JSON.parse(data);
-    // Auto-seed on first load
-    if (type === 'consumable') {
-      localStorage.setItem(key, JSON.stringify(defaultConsumables));
-      return defaultConsumables;
-    }
-    if (type === 'nonconsumable') {
-      localStorage.setItem(key, JSON.stringify(defaultNonConsumables));
-      return defaultNonConsumables;
-    }
-    return [];
+  function conditionClass(c) {
+    if (!c) return 'condition-mixed';
+    const lc = c.toLowerCase();
+    if (lc === 'defective') return 'condition-defective';
+    if (lc.includes('defective') || lc.includes('damaged') || lc.includes('old') || lc.includes('rust') || lc.includes('incomplete')) return 'condition-mixed';
+    return 'condition-good';
   }
 
-  function saveItems(type, items) {
-    const key = type === 'consumable' ? 'consumable_items' : 'nonconsumable_items';
-    localStorage.setItem(key, JSON.stringify(items));
-  }
-
-  // ── Toggle sections ──────────────────────────────────────
-  function toggleSection(name) {
-    const card = document.getElementById('card-' + name);
-    card.classList.toggle('open');
-    if (card.classList.contains('open')) {
-      if (name === 'inventory') { renderInventory('consumable'); renderInventory('nonconsumable'); }
-      if (name === 'history')   loadHistory();
-    }
-  }
-
-  function switchTab(tab, btn) {
-    document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + tab).classList.add('active');
-  }
-
-  // ── Render Inventory ─────────────────────────────────────
-  function renderInventory(type) {
-    const items = getItems(type);
-    const tbody = document.getElementById(type + '-body');
-    if (!items.length) {
-      tbody.innerHTML = `<tr><td colspan="4" class="empty-table">No ${type} items yet.</td></tr>`;
+  function renderTable(data) {
+    const tbody = document.getElementById('inventory-body');
+    document.getElementById('count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${inventoryData.length}</strong> items`;
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
       return;
     }
-    tbody.innerHTML = items.map((item, i) => `
+    tbody.innerHTML = data.map((item, i) => `
       <tr>
-        <td>${i + 1}</td>
-        <td>${item.name}</td>
-        <td><span class="qty-badge">${item.quantity || '—'}</span></td>
+        <td class="td-num">${inventoryData.indexOf(item) + 1}</td>
+        <td class="td-code">${item.code}</td>
+        <td class="td-name">${item.name}</td>
+        <td class="td-unit">${item.unit}</td>
+        <td class="ideal-stock">${item.ideal}</td>
+        <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+        <td class="supply-num">${item.supply}</td>
+        <td><span class="location-tag">${item.location}</span></td>
+        <td><span class="condition-pill ${conditionClass(item.condition)}">${item.condition || '—'}</span></td>
         <td>
-          <div class="tbl-actions">
-            <button class="tbl-btn edit" onclick="openEditModal('${type}', ${i})">Edit</button>
-            <button class="tbl-btn del"  onclick="deleteItem('${type}', ${i})">Delete</button>
+          <div class="actions">
+            <button class="btn-edit" onclick="openEditModal(${inventoryData.indexOf(item)})">Edit</button>
+            <button class="btn-del" onclick="deleteItem(${inventoryData.indexOf(item)})">Delete</button>
           </div>
         </td>
-      </tr>`).join('');
+      </tr>
+    `).join('');
   }
 
-  function filterTable(tbodyId, query) {
-    document.querySelectorAll(`#${tbodyId} tr`).forEach(row => {
-      row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
-    });
+  function filterTable() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    const filtered = inventoryData.filter(item =>
+      item.name.toLowerCase().includes(q) ||
+      item.code.toLowerCase().includes(q) ||
+      item.location.toLowerCase().includes(q)
+    );
+    renderTable(filtered);
   }
 
-  // ── Modal ─────────────────────────────────────────────────
-  function openModal(type) {
-    modalType = type; editingIdx = null;
-    document.getElementById('modal-title').textContent = `Add ${type === 'consumable' ? 'Consumable' : 'Non-consumable'} Item`;
-    document.getElementById('modal-name').value = '';
-    document.getElementById('modal-qty').value  = '';
-    document.getElementById('modal-save-btn').textContent = 'Add Item';
+  function openAddModal() {
+    editingIndex = null;
+    document.getElementById('modal-title').textContent = 'Add Item';
+    ['f-code','f-name','f-unit','f-ideal','f-total','f-supply','f-location','f-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-ideal').value = 525;
     document.getElementById('modal-overlay').classList.add('open');
   }
 
-  function openEditModal(type, idx) {
-    const items = getItems(type);
-    const item  = items[idx];
-    modalType = type; editingIdx = idx;
+  function openEditModal(idx) {
+    editingIndex = idx;
+    const item = inventoryData[idx];
     document.getElementById('modal-title').textContent = 'Edit Item';
-    document.getElementById('modal-name').value = item.name;
-    document.getElementById('modal-qty').value  = item.quantity || '';
-    document.getElementById('modal-save-btn').textContent = 'Save Changes';
+    document.getElementById('f-code').value = item.code;
+    document.getElementById('f-name').value = item.name;
+    document.getElementById('f-unit').value = item.unit;
+    document.getElementById('f-ideal').value = item.ideal;
+    document.getElementById('f-total').value = item.total;
+    document.getElementById('f-supply').value = item.supply;
+    document.getElementById('f-location').value = item.location;
+    document.getElementById('f-condition').value = item.condition;
     document.getElementById('modal-overlay').classList.add('open');
   }
 
-  function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
 
   function saveItem() {
-    const name = document.getElementById('modal-name').value.trim();
-    const qty  = document.getElementById('modal-qty').value.trim();
-    if (!name) { alert('Please enter an item name.'); return; }
-
-    const items = getItems(modalType);
-    if (editingIdx !== null) {
-      items[editingIdx] = { name, quantity: qty };
+    const item = {
+      code: document.getElementById('f-code').value.trim(),
+      name: document.getElementById('f-name').value.trim(),
+      unit: document.getElementById('f-unit').value.trim(),
+      ideal: parseInt(document.getElementById('f-ideal').value) || 525,
+      total: parseInt(document.getElementById('f-total').value) || 0,
+      supply: parseInt(document.getElementById('f-supply').value) || 0,
+      location: document.getElementById('f-location').value.trim(),
+      condition: document.getElementById('f-condition').value.trim(),
+    };
+    if (!item.name) { alert('Item name is required.'); return; }
+    if (editingIndex !== null) {
+      inventoryData[editingIndex] = item;
     } else {
-      items.push({ name, quantity: qty });
+      inventoryData.push(item);
     }
-    saveItems(modalType, items);
-    renderInventory(modalType);
     closeModal();
-    showAlert('settings-alert', 'success', `✅ Item ${editingIdx !== null ? 'updated' : 'added'} successfully!`);
+    filterTable();
   }
 
-  function deleteItem(type, idx) {
-    if (!confirm('Delete this item? This cannot be undone.')) return;
-    const items = getItems(type);
-    items.splice(idx, 1);
-    saveItems(type, items);
-    renderInventory(type);
-    showAlert('settings-alert', 'success', '✅ Item deleted successfully!');
-  }
-
-  // ── History (from backend) ────────────────────────────────
-  async function loadHistory() {
-    try {
-      const res  = await fetch(`${API}/reservations`, { headers: { Authorization: token } });
-      const data = await res.json();
-      if (!res.ok) return;
-      allHistory = data;
-      renderHistory(data);
-    } catch { }
-  }
-
-  function filterHistory(status, btn) {
-    document.querySelectorAll('.history-filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderHistory(status === 'all' ? allHistory : allHistory.filter(r => r.status === status));
-  }
-
-  function renderHistory(records) {
-    const sc = {
-      pending:   { bg:'#fef9c3',           color:'#7d6a00' },
-      approved:  { bg:'var(--green-pale)',  color:'var(--green-dark)' },
-      borrowed:  { bg:'var(--blue-light)',  color:'var(--blue-dark)' },
-      returned:  { bg:'var(--green-pale)',  color:'var(--green-dark)' },
-      cancelled: { bg:'var(--gray-200)',    color:'var(--gray-500)' },
-    };
-    const tbody = document.getElementById('history-body');
-    if (!records.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-table">No records found.</td></tr>'; return; }
-    tbody.innerHTML = records.map((r, i) => {
-      const s = sc[r.status] || { bg:'var(--gray-100)', color:'var(--gray-500)' };
-      return `<tr>
-        <td>${i+1}</td>
-        <td>${r.instructor || '—'}</td>
-        <td>${r.course || '—'}</td>
-        <td>${r.section || '—'}</td>
-        <td>${r.reserved_at ? new Date(r.reserved_at).toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'numeric'}) : '—'}</td>
-        <td><span class="qty-badge" style="background:${s.bg};color:${s.color}">${r.status}</span></td>
-      </tr>`;
-    }).join('');
-  }
-
-  // ── Reset ─────────────────────────────────────────────────
-  async function handleReset(type) {
-    const messages = {
-      reservations: 'This will permanently delete ALL reservation records. Are you sure?',
-      returned:     'This will delete all RETURNED reservation records. Are you sure?',
-      inventory:    'This will restore inventory to default quantities. Are you sure?'
-    };
-    if (!confirm(messages[type])) return;
-
-    if (type === 'inventory') {
-      localStorage.setItem('consumable_items', JSON.stringify(defaultConsumables));
-      localStorage.setItem('nonconsumable_items', JSON.stringify(defaultNonConsumables));
-      renderInventory('consumable');
-      renderInventory('nonconsumable');
-      showAlert('settings-alert', 'success', '✅ Inventory reset to default!');
-    } else {
-      showAlert('settings-alert', 'success', '✅ Reset action noted.');
+  function deleteItem(idx) {
+    if (confirm(`Delete "${inventoryData[idx].name}"?`)) {
+      inventoryData.splice(idx, 1);
+      filterTable();
     }
-  }
-
-  function showAlert(id, type, msg) {
-    const el = document.getElementById(id);
-    el.className = 'alert ' + type;
-    el.textContent = msg;
-    setTimeout(() => { el.className = 'alert'; }, 4000);
   }
 
   document.getElementById('modal-overlay').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
+
+  // Initial render
+  renderTable(inventoryData);
 </script>
 </body>
 </html>
