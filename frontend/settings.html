@@ -8,24 +8,15 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --green-dark:  #1a4731;
-      --green-mid:   #2d6a4f;
-      --green-light: #52b788;
-      --green-pale:  #d8f3dc;
-      --green-mist:  #f0faf3;
-      --white:       #ffffff;
-      --gray-100:    #f7f9f8;
-      --gray-200:    #eef2ef;
-      --gray-300:    #d1d9d4;
-      --gray-500:    #7a9187;
-      --gray-700:    #3d5047;
-      --text:        #1c2b23;
+      --green-dark:  #1a4731; --green-mid: #2d6a4f; --green-light: #52b788;
+      --green-pale: #d8f3dc; --green-mist: #f0faf3; --white: #ffffff;
+      --gray-100: #f7f9f8; --gray-200: #eef2ef; --gray-300: #d1d9d4;
+      --gray-500: #7a9187; --gray-700: #3d5047; --text: #1c2b23;
     }
     body { font-family: 'DM Sans', sans-serif; background: var(--green-mist); min-height: 100vh; display: flex; flex-direction: column; }
     .blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; }
     .blob-1 { width: 500px; height: 500px; top: -160px; right: -160px; background: radial-gradient(circle, #b7e4c7 0%, transparent 65%); }
     .blob-2 { width: 400px; height: 400px; bottom: -120px; left: -120px; background: radial-gradient(circle, #95d5b2 0%, transparent 65%); }
-
     .navbar { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--gray-200); box-shadow: 0 2px 16px rgba(26,71,49,0.06); height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; }
     .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
     .brand-icon { width: 38px; height: 38px; background: var(--green-dark); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
@@ -35,21 +26,15 @@
     .user-details { text-align: right; }
     .user-name { font-size: 14px; font-weight: 600; color: var(--text); }
     .user-role { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--green-mid); }
-
     .main { flex: 1; padding: 48px 32px; position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
     .page-header { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
     .page-header h1 { font-family: 'DM Serif Display', serif; font-size: 34px; color: var(--text); margin-bottom: 6px; }
     .page-header p { font-size: 14px; color: var(--gray-500); }
-
     .section-card { background: var(--white); border-radius: 20px; box-shadow: 0 4px 24px rgba(26,71,49,0.08); padding: 32px; margin-bottom: 28px; animation: fadeUp 0.5s ease 0.1s both; }
     .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
     .section-icon { width: 52px; height: 52px; background: var(--green-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
     .section-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); }
     .section-subtitle { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
-
-
-
-    /* Search + Add */
     .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
     .search-wrap { position: relative; flex: 1; }
     .search-wrap input { width: 100%; padding: 10px 16px 10px 40px; border-radius: 12px; border: 1.5px solid var(--gray-300); font-size: 13px; font-family: 'DM Sans', sans-serif; background: var(--gray-100); color: var(--text); outline: none; transition: border-color 0.2s; }
@@ -57,8 +42,6 @@
     .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
     .btn-add { padding: 10px 20px; background: var(--green-dark); color: #fff; border: none; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: background 0.2s; }
     .btn-add:hover { background: var(--green-mid); }
-
-    /* Table */
     .table-wrap { overflow-x: auto; border-radius: 14px; border: 1.5px solid var(--gray-200); }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     thead { background: var(--gray-100); }
@@ -75,20 +58,17 @@
     .condition-good { background: #d8f3dc; color: #1a4731; }
     .condition-defective { background: #fdecea; color: #c0392b; }
     .condition-mixed { background: #fff3cd; color: #92600a; }
+    .condition-notfound { background: #f0f0f0; color: #666; }
     .location-tag { font-size: 11px; font-weight: 600; color: var(--green-mid); background: var(--green-pale); padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
     .actions { display: flex; gap: 6px; }
     .btn-edit { padding: 5px 14px; background: #e8f4fd; color: #1a6fa8; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
     .btn-edit:hover { background: #cce4f7; }
     .btn-del { padding: 5px 14px; background: #fdecea; color: #c0392b; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
     .btn-del:hover { background: #f9b8b3; }
-
     .ideal-stock { font-size: 12px; color: var(--gray-500); }
     .supply-num { font-weight: 600; color: var(--text); }
-
     .count-label { font-size: 13px; color: var(--gray-500); margin-bottom: 12px; }
     .count-label strong { color: var(--text); }
-
-    /* Modal */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
     .modal { background: var(--white); border-radius: 24px; padding: 32px; width: 100%; max-width: 480px; box-shadow: 0 24px 80px rgba(0,0,0,0.22); animation: fadeUp 0.3s ease; }
@@ -102,20 +82,23 @@
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .btn-save { width: 100%; padding: 12px; background: var(--green-dark); color: #fff; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px; transition: background 0.2s; }
     .btn-save:hover { background: var(--green-mid); }
-
+    .inv-category-btn { display:flex;align-items:center;gap:14px;padding:18px 24px;background:var(--green-pale);border:2px solid var(--green-light);border-radius:16px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--green-dark);transition:all 0.2s;text-align:left; }
+    .inv-category-btn:hover { background:var(--green-light);color:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,71,49,0.15); }
+    .inv-category-btn.consumable-btn { background:#fce4d6;border-color:#f4845f;color:#7a2e0e; }
+    .inv-category-btn.consumable-btn:hover { background:#f4845f;color:#fff; }
+    .inv-category-btn.np2-btn { background:#e4e8fc;border-color:#5f6ff4;color:#1a227a; }
+    .inv-category-btn.np2-btn:hover { background:#5f6ff4;color:#fff; }
+    .inv-category-btn.np2-con-btn { background:#fef9e7;border-color:#f0b429;color:#7a5a00; }
+    .inv-category-btn.np2-con-btn:hover { background:#f0b429;color:#fff; }
+    .inv-category-btn.mnh-btn { background:#f0e6fc;border-color:#9b59b6;color:#5b1e8a; }
+    .inv-category-btn.mnh-btn:hover { background:#9b59b6;color:#fff; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 768px) {
-      .main { padding: 28px 16px; }
-      .navbar { padding: 0 20px; }
-      .section-card { padding: 20px 16px; }
-      .form-row { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 768px) { .main { padding: 28px 16px; } .navbar { padding: 0 20px; } .section-card { padding: 20px 16px; } .form-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
-
   <nav class="navbar">
     <a class="brand" href="home.html">
       <div class="brand-icon">🔧</div>
@@ -129,13 +112,11 @@
       <div class="user-avatar" id="nav-avatar">A</div>
     </div>
   </nav>
-
   <main class="main">
     <div class="page-header">
       <h1>System Settings</h1>
       <p>Manage inventory, records, and system configurations</p>
     </div>
-
     <div class="section-card">
       <div class="section-header">
         <div class="section-icon">📦</div>
@@ -144,40 +125,252 @@
           <div class="section-subtitle">Manage consumable and non-consumable equipment</div>
         </div>
       </div>
-
-      <div>
-        <div class="toolbar">
-          <div class="search-wrap">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="search-input" placeholder="Search non-consumable…" oninput="filterTable()">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="inv-category-btn" onclick="openInventoryModal()">
+          <span style="font-size:20px;">📦</span>
+          <div>
+            <div style="font-weight:700;font-size:14px;">CSR-Non Consumable</div>
+            <div style="font-size:11px;opacity:0.75;margin-top:2px;">144 items</div>
           </div>
-          <button class="btn-add" onclick="openAddModal()">+ Add Item</button>
-        </div>
-        <div class="count-label" id="count-label">Showing <strong>144</strong> items</div>
-        <div class="table-wrap">
-          <table id="inventory-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Item Code</th>
-                <th>Item Name</th>
-                <th>Unit</th>
-                <th>Ideal Stock</th>
-                <th>Total Stock</th>
-                <th>Supply on Hand</th>
-                <th>Location</th>
-                <th>Condition</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="inventory-body"></tbody>
-          </table>
-        </div>
+        </button>
+        <button class="inv-category-btn consumable-btn" onclick="openConsumableModal()">
+          <span style="font-size:20px;">🧴</span>
+          <div>
+            <div style="font-weight:700;font-size:14px;">CSR Consumable</div>
+            <div style="font-size:11px;opacity:0.75;margin-top:2px;">157 items</div>
+          </div>
+        </button>
+        <button class="inv-category-btn np2-btn" onclick="openNP2Modal()">
+          <span style="font-size:20px;">🏥</span>
+          <div>
+            <div style="font-weight:700;font-size:14px;">NP2 Non Consumable</div>
+            <div style="font-size:11px;opacity:0.75;margin-top:2px;">60 items</div>
+          </div>
+        </button>
+        <button class="inv-category-btn np2-con-btn" onclick="openNP2ConModal()">
+          <span style="font-size:20px;">💊</span>
+          <div>
+            <div style="font-weight:700;font-size:14px;">NP2 Consumable</div>
+            <div style="font-size:11px;opacity:0.75;margin-top:2px;">6 items</div>
+          </div>
+        </button>
+        <button class="inv-category-btn mnh-btn" onclick="openMNHModal()">
+          <span style="font-size:20px;">🏨</span>
+          <div>
+            <div style="font-weight:700;font-size:14px;">MNH Non Consumable</div>
+            <div style="font-size:11px;opacity:0.75;margin-top:2px;">85 items</div>
+          </div>
+        </button>
       </div>
     </div>
   </main>
 
-  <!-- Add/Edit Modal -->
+  <!-- CSR Non-Consumable Modal -->
+  <div class="modal-overlay" id="inventory-modal-overlay">
+    <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+      <div class="modal-header">
+        <h2>📦 CSR-Non Consumable</h2>
+        <button class="modal-close" onclick="closeInventoryModal()">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage non-consumable equipment inventory</p>
+      <div class="toolbar">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="Search non-consumable…" oninput="filterTable()"></div>
+        <button class="btn-add" onclick="openAddModal()">+ Add Item</button>
+      </div>
+      <div class="count-label" id="count-label">Showing <strong>0</strong> items</div>
+      <div class="table-wrap">
+        <table id="inventory-table">
+          <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Ideal Stock</th><th>Total Stock</th><th>Supply on Hand</th><th>Location</th><th>Condition</th><th>Actions</th></tr></thead>
+          <tbody id="inventory-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSR Consumable Modal -->
+  <div class="modal-overlay" id="consumable-modal-overlay">
+    <div class="modal" style="max-width:1150px;width:95vw;max-height:90vh;overflow-y:auto;">
+      <div class="modal-header">
+        <h2>🧴 CSR Consumable</h2>
+        <button class="modal-close" onclick="closeConsumableModal()">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage consumable equipment inventory</p>
+      <div class="toolbar">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="con-search-input" placeholder="Search consumable…" oninput="filterConsumableTable()"></div>
+        <button class="btn-add" onclick="openAddConsumableModal()">+ Add Item</button>
+      </div>
+      <div class="count-label" id="con-count-label">Showing <strong>0</strong> items</div>
+      <div class="table-wrap">
+        <table id="consumable-table">
+          <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Ideal Stock</th><th>Total Stock</th><th>Supply on Hand</th><th>Location</th><th>Condition</th><th>Expiration Date</th><th>Last Restock</th><th>Actions</th></tr></thead>
+          <tbody id="consumable-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- NP2 Non-Consumable Modal -->
+  <div class="modal-overlay" id="np2-modal-overlay">
+    <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+      <div class="modal-header">
+        <h2>🏥 NP2 Non Consumable</h2>
+        <button class="modal-close" onclick="closeNP2Modal()">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage NP2 non-consumable equipment inventory</p>
+      <div class="toolbar">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="np2-search-input" placeholder="Search NP2 items…" oninput="filterNP2Table()"></div>
+        <button class="btn-add" onclick="openAddNP2Modal()">+ Add Item</button>
+      </div>
+      <div class="count-label" id="np2-count-label">Showing <strong>0</strong> items</div>
+      <div class="table-wrap">
+        <table id="np2-table">
+          <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Total Stocks</th><th>Supply on Hand</th><th>Location</th><th>Item Condition</th><th>Actions</th></tr></thead>
+          <tbody id="np2-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- NP2 Consumable Modal -->
+  <div class="modal-overlay" id="np2con-modal-overlay">
+    <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+      <div class="modal-header">
+        <h2>💊 NP2 Consumable</h2>
+        <button class="modal-close" onclick="closeNP2ConModal()">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage NP2 consumable inventory</p>
+      <div class="toolbar">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="np2con-search-input" placeholder="Search NP2 consumable…" oninput="filterNP2ConTable()"></div>
+        <button class="btn-add" onclick="openAddNP2ConModal()">+ Add Item</button>
+      </div>
+      <div class="count-label" id="np2con-count-label">Showing <strong>0</strong> items</div>
+      <div class="table-wrap">
+        <table id="np2con-table">
+          <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Total Stocks</th><th>Supply on Hand</th><th>Location</th><th>Item Condition</th><th>Actions</th></tr></thead>
+          <tbody id="np2con-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- NP2 Add/Edit Form Modal -->
+  <div class="modal-overlay" id="np2-form-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="np2-modal-title">Add NP2 Item</h2>
+        <button class="modal-close" onclick="closeNP2FormModal()">✕</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Item Code</label><input type="text" id="nf-code" placeholder="NP2-NCON-LSD1-01"></div>
+        <div class="form-group"><label>Unit</label><input type="text" id="nf-unit" placeholder="units"></div>
+      </div>
+      <div class="form-group"><label>Item Name</label><input type="text" id="nf-name" placeholder="Item name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Total Stocks</label><input type="number" id="nf-total" placeholder="0"></div>
+        <div class="form-group"><label>Supply on Hand</label><input type="number" id="nf-supply" placeholder="0"></div>
+      </div>
+      <div class="form-group"><label>Location</label><input type="text" id="nf-location" placeholder="NP2-NCON-LSD1"></div>
+      <div class="form-group"><label>Item Condition</label><input type="text" id="nf-condition" placeholder="Good Condition"></div>
+      <button class="btn-save" onclick="saveNP2Item()">Save Item</button>
+    </div>
+  </div>
+
+  <!-- MNH Non-Consumable Modal -->
+  <div class="modal-overlay" id="mnh-modal-overlay">
+    <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+      <div class="modal-header">
+        <h2>🏨 MNH Non Consumable</h2>
+        <button class="modal-close" onclick="closeMNHModal()">✕</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage MNH non-consumable equipment inventory</p>
+      <div class="toolbar">
+        <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="mnh-search-input" placeholder="Search MNH items…" oninput="filterMNHTable()"></div>
+        <button class="btn-add" onclick="openAddMNHModal()">+ Add Item</button>
+      </div>
+      <div class="count-label" id="mnh-count-label">Showing <strong>0</strong> items</div>
+      <div class="table-wrap">
+        <table id="mnh-table">
+          <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Total Stocks</th><th>Supply on Hand</th><th>Location</th><th>Item Condition</th><th>Actions</th></tr></thead>
+          <tbody id="mnh-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MNH Add/Edit Form Modal -->
+  <div class="modal-overlay" id="mnh-form-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="mnh-modal-title">Add MNH Item</h2>
+        <button class="modal-close" onclick="closeMNHFormModal()">✕</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Item Code</label><input type="text" id="mf-code" placeholder="MNH-NCON-IMN-01"></div>
+        <div class="form-group"><label>Unit</label><input type="text" id="mf-unit" placeholder="unit"></div>
+      </div>
+      <div class="form-group"><label>Item Name</label><input type="text" id="mf-name" placeholder="Item name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Total Stocks</label><input type="number" id="mf-total" placeholder="0"></div>
+        <div class="form-group"><label>Supply on Hand</label><input type="number" id="mf-supply" placeholder="0"></div>
+      </div>
+      <div class="form-group"><label>Location</label><input type="text" id="mf-location" placeholder="IMN"></div>
+      <div class="form-group"><label>Item Condition</label><input type="text" id="mf-condition" placeholder="Good Condition"></div>
+      <button class="btn-save" onclick="saveMNHItem()">Save Item</button>
+    </div>
+  </div>
+
+  <!-- NP2 Consumable Add/Edit Form Modal -->
+  <div class="modal-overlay" id="np2con-form-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="np2con-modal-title">Add NP2 Consumable Item</h2>
+        <button class="modal-close" onclick="closeNP2ConFormModal()">✕</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Item Code</label><input type="text" id="ncf-code" placeholder="NP2-CON-MSHL1-01"></div>
+        <div class="form-group"><label>Unit</label><input type="text" id="ncf-unit" placeholder="pcs"></div>
+      </div>
+      <div class="form-group"><label>Item Name</label><input type="text" id="ncf-name" placeholder="Item name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Total Stocks</label><input type="number" id="ncf-total" placeholder="0"></div>
+        <div class="form-group"><label>Supply on Hand</label><input type="number" id="ncf-supply" placeholder="0"></div>
+      </div>
+      <div class="form-group"><label>Location</label><input type="text" id="ncf-location" placeholder="NP2-CON-MSHL1"></div>
+      <div class="form-group"><label>Item Condition</label><input type="text" id="ncf-condition" placeholder="All In Good Condition"></div>
+      <button class="btn-save" onclick="saveNP2ConItem()">Save Item</button>
+    </div>
+  </div>
+
+  <!-- CSR Consumable Add/Edit Form Modal -->
+  <div class="modal-overlay" id="con-modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="con-modal-title">Add Consumable Item</h2>
+        <button class="modal-close" onclick="closeConModal()">✕</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Item Code</label><input type="text" id="cf-code" placeholder="CSR-CON-C5B-01"></div>
+        <div class="form-group"><label>Unit</label><input type="text" id="cf-unit" placeholder="pcs"></div>
+      </div>
+      <div class="form-group"><label>Item Name</label><input type="text" id="cf-name" placeholder="Item name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Ideal Stock</label><input type="number" id="cf-ideal" placeholder="2475"></div>
+        <div class="form-group"><label>Total Stock</label><input type="text" id="cf-total" placeholder="0"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Supply on Hand</label><input type="text" id="cf-supply" placeholder="0"></div>
+        <div class="form-group"><label>Location</label><input type="text" id="cf-location" placeholder="C5B"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Condition</label><input type="text" id="cf-condition" placeholder="Good"></div>
+        <div class="form-group"><label>Expiration Date</label><input type="text" id="cf-expiry" placeholder="N/A"></div>
+      </div>
+      <div class="form-group"><label>Last Restock Date</label><input type="text" id="cf-restock" placeholder="Unknown"></div>
+      <button class="btn-save" onclick="saveConsumableItem()">Save Item</button>
+    </div>
+  </div>
+
+  <!-- CSR Non-Consumable Add/Edit Form Modal -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal">
       <div class="modal-header">
@@ -185,43 +378,19 @@
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label>Item Code</label>
-          <input type="text" id="f-code" placeholder="CSR-NCON-C1A-01">
-        </div>
-        <div class="form-group">
-          <label>Unit</label>
-          <input type="text" id="f-unit" placeholder="pcs">
-        </div>
+        <div class="form-group"><label>Item Code</label><input type="text" id="f-code" placeholder="CSR-NCON-C1A-01"></div>
+        <div class="form-group"><label>Unit</label><input type="text" id="f-unit" placeholder="pcs"></div>
       </div>
-      <div class="form-group">
-        <label>Item Name</label>
-        <input type="text" id="f-name" placeholder="Item name">
+      <div class="form-group"><label>Item Name</label><input type="text" id="f-name" placeholder="Item name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Ideal Stock</label><input type="number" id="f-ideal" placeholder="525"></div>
+        <div class="form-group"><label>Total Stock</label><input type="number" id="f-total" placeholder="0"></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label>Ideal Stock</label>
-          <input type="number" id="f-ideal" placeholder="525">
-        </div>
-        <div class="form-group">
-          <label>Total Stock</label>
-          <input type="number" id="f-total" placeholder="0">
-        </div>
+        <div class="form-group"><label>Supply on Hand</label><input type="number" id="f-supply" placeholder="0"></div>
+        <div class="form-group"><label>Location</label><input type="text" id="f-location" placeholder="CSR CABINET 1A"></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Supply on Hand</label>
-          <input type="number" id="f-supply" placeholder="0">
-        </div>
-        <div class="form-group">
-          <label>Location</label>
-          <input type="text" id="f-location" placeholder="CSR CABINET 1A">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Item Condition</label>
-        <input type="text" id="f-condition" placeholder="good condition">
-      </div>
+      <div class="form-group"><label>Item Condition</label><input type="text" id="f-condition" placeholder="good condition"></div>
       <button class="btn-save" onclick="saveItem()">Save Item</button>
     </div>
   </div>
@@ -231,264 +400,525 @@
   document.getElementById('nav-name').textContent = user.name || 'Admin';
   document.getElementById('nav-avatar').textContent = (user.name || 'A')[0].toUpperCase();
 
-  // ── Full inventory data (144 items) ──
   const inventoryData = [
-    { code:'CSR-NCON-C7-01',  name:'Abdomen/Injection model',             unit:'pc',    ideal:525, total:3,   supply:1,  location:'CSR CABINET 7',   condition:'good condition' },
-    { code:'CSR-NCON-C5A-02', name:'Adapter',                             unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-03', name:'Alice Tissue Forceps',                unit:'pcs',   ideal:525, total:20,  supply:5,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C2A-04', name:'Ambu IV Trainer',                     unit:'pcs',   ideal:525, total:8,   supply:5,  location:'CSR CABINET 2A',  condition:'1 good condition' },
-    { code:'CSR-NCON-C11-05', name:'Apron (colored)',                     unit:'pcs',   ideal:525, total:20,  supply:6,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C11-06', name:'Apron (colored)',                     unit:'pcs',   ideal:525, total:30,  supply:9,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-07', name:'Auxiliary thermometer',               unit:'pcs',   ideal:525, total:20,  supply:9,  location:'CSR CABINET 4A',  condition:'7 good condition, 2 defective' },
-    { code:'CSR-NCON-C12-08', name:'Baby Dress',                          unit:'pcs',   ideal:525, total:30,  supply:10, location:'CSR CABINET 12',  condition:'9 good condition, 1 old/damaged' },
-    { code:'CSR-NCON-C2B-09', name:'Baby for FBAO & CPR',                 unit:'set',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 2B',  condition:'good condition' },
-    { code:'CSR-NCON-C2B-10', name:'Baby for Intubation',                 unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2B',  condition:'1 good condition' },
-    { code:'CSR-NCON-C2B-11', name:'Baby For NSD',                        unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-12', name:'Babcock (Tissue) Forceps',            unit:'pcs',   ideal:525, total:15,  supply:2,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-13', name:'Bandage Scissors',                    unit:'pcs',   ideal:525, total:25,  supply:6,  location:'CSR CABINET 4A',  condition:'5 good condition, 1 defective' },
-    { code:'CSR-NCON-C12-14', name:'Bedsheet',                            unit:'pcs',   ideal:525, total:40,  supply:5,  location:'CSR CABINET 12',  condition:'all good condition' },
-    { code:'CSR-NCON-C12-15', name:'Bib',                                 unit:'pcs',   ideal:525, total:40,  supply:21, location:'CSR CABINET 12',  condition:'all good condition' },
-    { code:'CSR-NCON-C2A-16', name:'Big toothbrush',                      unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 2A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-17', name:'Blade handle',                        unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-18', name:'Blood Glucose Monitoring',            unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-19', name:'Blood Glucose Test Tip',              unit:'box',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-20', name:'Blood Pressure for Infant',           unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-21', name:'Blood glucose monitor',               unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C12-22', name:'Bonnet',                              unit:'pcs',   ideal:525, total:40,  supply:17, location:'CSR CABINET 12',  condition:'all good condition' },
-    { code:'CSR-NCON-C12-23', name:'Bonnet',                              unit:'pairs', ideal:525, total:30,  supply:8,  location:'CSR CABINET 12',  condition:'all good condition' },
-    { code:'CSR-NCON-C9-24',  name:'Breast Model',                        unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C2A-25', name:'Breast Model',                        unit:'sets',  ideal:525, total:6,   supply:3,  location:'CSR CABINET 2A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-26', name:'Canister',                            unit:'pcs',   ideal:525, total:15,  supply:7,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C9-27',  name:'Cervical Dilatation Model',           unit:'set',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C3B-28', name:'CHN Bag Condition',                   unit:'set',   ideal:525, total:30,  supply:21, location:'CSR CABINET 3B',  condition:'' },
-    { code:'CSR-NCON-C3A-29', name:'Child Birth Simulator',               unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 3A',  condition:'good condition' },
-    { code:'CSR-NCON-C9-30',  name:'Chopping board',                      unit:'pcs',   ideal:525, total:15,  supply:9,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C1A-31', name:'Compound microscope',                 unit:'unit',  ideal:525, total:40,  supply:24, location:'CSR CABINET 1A',  condition:'7 good condition, 5 defective' },
-    { code:'CSR-NCON-C2A-32', name:'Condom training model',               unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 2A',  condition:'good condition' },
-    { code:'CSR-NCON-C7-33',  name:'CPR model',                           unit:'pc',    ideal:525, total:6,   supply:1,  location:'CSR CABINET 7',   condition:'defective' },
-    { code:'CSR-NCON-WR-34',  name:'Crutches',                            unit:'pairs', ideal:525, total:10,  supply:4,  location:'CSR RIGHT WALL',  condition:'good condition' },
-    { code:'CSR-NCON-C11-35', name:'Delivery Model with fetus',           unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C11-36', name:'Curtains Blue (Large)',               unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C11-37', name:'Curtains Blue (Medium)',              unit:'pcs',   ideal:525, total:20,  supply:12, location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C11-38', name:'Curtains Blue (Small)',               unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C8-39',  name:'Delivery Model with fetus',           unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 8',   condition:'good condition' },
-    { code:'CSR-NCON-C9-40',  name:'Dial Weighing Scale',                 unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'defective' },
-    { code:'CSR-NCON-C5A-41', name:'Digital BP Monitoring',               unit:'set',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 5A',  condition:'1 complete, 1 incomplete' },
-    { code:'CSR-NCON-C1A-42', name:'Digital Microscope',                  unit:'pcs',   ideal:525, total:40,  supply:25, location:'CSR CABINET 1A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-43', name:'Digital Thermometer',                 unit:'pcs',   ideal:525, total:25,  supply:4,  location:'CSR CABINET 5A',  condition:'3 good condition, 1 defective' },
-    { code:'CSR-NCON-C9-44',  name:'Digital Weighing Scale',              unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C12-45', name:'Drawsheet',                           unit:'pcs',   ideal:525, total:120, supply:92, location:'CSR CABINET 12',  condition:'84 good condition, 8 old/damaged' },
-    { code:'CSR-NCON-C5A-46', name:'Dust Blower',                         unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C3B-47', name:'ECG',                                 unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 3B',  condition:'defective' },
-    { code:'CSR-NCON-C9-48',  name:'Endotracheal intubation model',       unit:'pc',    ideal:525, total:3,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C9-49',  name:'Feeding bottle',                      unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 9',   condition:'1 good condition, 1 no cap' },
-    { code:'CSR-NCON-C2A-50', name:'Female organ model',                  unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2A',  condition:'good condition' },
-    { code:'CSR-NCON-C8-51',  name:'Female Pelvic / Perineal training model', unit:'pcs', ideal:525, total:4, supply:2,  location:'CSR CABINET 8',   condition:'1 defective, 1 good condition' },
-    { code:'CSR-NCON-C2A-52', name:'Female Sex Organ',                    unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2A',  condition:'1 good condition' },
-    { code:'CSR-NCON-C3A-53', name:'Female Sex Organ (w low torso)',      unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 3A',  condition:'good condition' },
-    { code:'CSR-NCON-C2A-54', name:'Female sex organ w/ lower torso',     unit:'pc',    ideal:525, total:4,   supply:2,  location:'CSR CABINET 2A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5A-55', name:'Fetal Doppler',                       unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 5A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C12-56', name:'Franela',                             unit:'pcs',   ideal:525, total:30,  supply:17, location:'CSR CABINET 12',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5A-57', name:'Goniometer',                          unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-58', name:'Good Glucose Meter',                  unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 5A',  condition:'2 good condition, 1 defective' },
-    { code:'CSR-NCON-C9-59',  name:'Google Cardboard',                    unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C9-60',  name:'Graduated Cylinder/Test tube',        unit:'pcs',   ideal:525, total:20,  supply:8,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C4A-61', name:'Histology Slide',                     unit:'box',   ideal:525, total:10,  supply:4,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C5B-62', name:'Hot bag',                             unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 5B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5B-63', name:'Hypo tray',                           unit:'pcs',   ideal:525, total:20,  supply:95, location:'CSR CABINET 5B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5B-64', name:'Ice cap',                             unit:'pcs',   ideal:525, total:20,  supply:12, location:'CSR CABINET 5B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5A-65', name:'Infrared Thermometer',                unit:'pcs',   ideal:525, total:15,  supply:5,  location:'CSR CABINET 5A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5A-66', name:'Infrared thermometer',                unit:'pcs',   ideal:525, total:15,  supply:4,  location:'CSR CABINET 5A',  condition:'3 good condition, 1 defective' },
-    { code:'CSR-NCON-C2A-67', name:'Injection Model',                     unit:'pcs',   ideal:525, total:10,  supply:6,  location:'CSR CABINET 2A',  condition:'6 good condition' },
-    { code:'CSR-NCON-C10-68', name:'Infant Simulator',                    unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 10',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-69', name:'Iris Scissors (Curve)',               unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-70', name:'Kelly Forceps (Curve)',               unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-71', name:'Kelly forceps (straight)',            unit:'pcs',   ideal:525, total:25,  supply:9,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5B-72', name:'Kelly pad',                           unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 5B',  condition:'6 good condition, 4 defective' },
-    { code:'CSR-NCON-C5B-73', name:'Kidney basin',                        unit:'pcs',   ideal:525, total:100, supply:100,location:'CSR CABINET 5B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C11-74', name:'Lab Gown (green)',                    unit:'pcs',   ideal:525, total:30,  supply:15, location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C11-75', name:'Lab Gown (white)',                    unit:'pcs',   ideal:525, total:50,  supply:40, location:'CSR CABINET 11',  condition:'good condition, 13 with rust, 1 damage' },
-    { code:'CSR-NCON-C12-76', name:'Linens',                              unit:'pcs',   ideal:525, total:100, supply:78, location:'CSR CABINET 12',  condition:'good condition, 11 old damage' },
-    { code:'CSR-NCON-C8-77',  name:'Life form simulator',                 unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 8',   condition:'good condition' },
-    { code:'CSR-NCON-C2A-78', name:'Male Sex Organ',                      unit:'pcs',   ideal:525, total:5,   supply:3,  location:'CSR CABINET 2A',  condition:'3 good condition' },
-    { code:'CSR-NCON-C4A-79', name:'Magnifying glass (large)',            unit:'pcs',   ideal:525, total:10,  supply:4,  location:'CSR CABINET 4A',  condition:'all good' },
-    { code:'CSR-NCON-C4A-80', name:'Magnifying glass (small)',            unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4A',  condition:'1 defective, 1 good condition' },
-    { code:'CSR-NCON-C3A-81', name:'Mama Natalie',                        unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 3A',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-82', name:'Manual Automated External Defibrillator', unit:'set', ideal:525, total:3, supply:1,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C12-83', name:'Mayo cover (pouch type) / pillowcase (green)', unit:'pcs', ideal:525, total:180, supply:174, location:'CSR CABINET 12', condition:'170 good condition, 4 old/damaged' },
-    { code:'CSR-NCON-C12-84', name:'Mayo drape (big)',                    unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 12',  condition:'all good condition' },
-    { code:'CSR-NCON-C12-85', name:'Mayo drape (small)',                  unit:'pcs',   ideal:525, total:20,  supply:8,  location:'CSR CABINET 12',  condition:'7 good condition, 1 old/damaged' },
-    { code:'CSR-NCON-C4A-86', name:'Mayo Scissors (Straight)',            unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C5B-87', name:'Measuring tape',                      unit:'pcs',   ideal:525, total:50,  supply:37, location:'CSR CABINET 5B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C9-88',  name:'Medicine Cup',                        unit:'pcs',   ideal:525, total:50,  supply:37, location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C5B-89', name:'Medicine tray',                       unit:'pcs',   ideal:525, total:100, supply:85, location:'CSR CABINET 5B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-90', name:'Metzembaum Scissors',                 unit:'pcs',   ideal:525, total:10,  supply:1,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C12-91', name:'Mittens',                             unit:'pairs', ideal:525, total:30,  supply:11, location:'CSR CABINET 12',  condition:'all good condition' },
-    { code:'CSR-NCON-C9-92',  name:'Mortar (big)',                        unit:'pcs',   ideal:525, total:15,  supply:8,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C9-93',  name:'Mortar (small)',                      unit:'pcs',   ideal:525, total:20,  supply:12, location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C4A-94', name:'Mosquito Forceps (Curve)',            unit:'pcs',   ideal:525, total:20,  supply:6,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-95', name:'Mosquito Forceps (Straight)',         unit:'pcs',   ideal:525, total:20,  supply:9,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-96', name:'Nasal speculum',                      unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C3B-97', name:'Neck Brace',                          unit:'pcs',   ideal:525, total:20,  supply:13, location:'CSR CABINET 3B',  condition:'12 good condition, 1 defective' },
-    { code:'CSR-NCON-C3B-98', name:'Nebulizer',                           unit:'pcs',   ideal:525, total:5,   supply:2,  location:'CSR CABINET 3B',  condition:'1 good condition, 1 defective' },
-    { code:'CSR-NCON-C4A-99', name:'Needle holder',                       unit:'pcs',   ideal:525, total:20,  supply:8,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C7-100', name:'Obstetric Childbirth Simulator torso',unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 7',   condition:'defective' },
-    { code:'CSR-NCON-C5A-101',name:'Otoscope',                            unit:'set',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-102',name:'Ovum Forceps',                        unit:'pcs',   ideal:525, total:30,  supply:22, location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-103',name:'Pathophysiology Slides',              unit:'box',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4A',  condition:'good condition' },
-    { code:'CSR-NCON-C11-104',name:'Patient Gown (green) & Head Cap',     unit:'pcs',   ideal:525, total:40,  supply:12, location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C2A-105',name:'Pelvic bone',                         unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 2A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-106',name:'Pediatric BP cuff',                   unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-107',name:'Penlight',                            unit:'pcs',   ideal:525, total:20,  supply:11, location:'CSR CABINET 4A',  condition:'9 good condition, 2 defective' },
-    { code:'CSR-NCON-C9-108', name:'Pestle (big)',                         unit:'pcs',   ideal:525, total:15,  supply:9,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C9-109', name:'Pestle (small)',                       unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C3A-110',name:'Pillow',                              unit:'pcs',   ideal:525, total:20,  supply:3,  location:'CSR CABINET 3A',  condition:'good condition' },
-    { code:'CSR-NCON-C11-111',name:'Pillowcase (White)',                  unit:'pcs',   ideal:525, total:60,  supply:43, location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C11-112',name:'Pillows',                             unit:'pcs',   ideal:525, total:20,  supply:2,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C4B-113',name:'Pitcher',                             unit:'pcs',   ideal:525, total:40,  supply:25, location:'CSR CABINET 4B',  condition:'all in good condition' },
-    { code:'CSR-NCON-C9-114', name:'Pitcher',                              unit:'pcs',   ideal:525, total:20,  supply:3,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C5A-115',name:'Pulse Oximeter',                      unit:'pcs',   ideal:525, total:8,   supply:2,  location:'CSR CABINET 5A',  condition:'1 good condition, 1 defective' },
-    { code:'CSR-NCON-C4A-116',name:'Reflex Hammer',                       unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 4A',  condition:'9 good condition, 1 defective' },
-    { code:'CSR-NCON-C10-117',name:'Rosenbaum pocket vision screener',    unit:'pc',    ideal:525, total:5,   supply:1,  location:'CSR CABINET 10',  condition:'good condition' },
-    { code:'CSR-NCON-C11-118',name:'Rubber Sheet',                        unit:'pcs',   ideal:525, total:20,  supply:3,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-11p',name:'Sewing Machine (Singer)',             unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-120',name:'Slides',                              unit:'box',   ideal:525, total:10,  supply:4,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C10-121',name:'Snellen Chart',                       unit:'pc',    ideal:525, total:5,   supply:2,  location:'CSR CABINET 10',  condition:'good condition' },
-    { code:'CSR-NCON-C4A-122',name:'Soaking Jar',                         unit:'pcs',   ideal:525, total:40,  supply:33, location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C2A-122',name:'Spirometer',                          unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 2A',  condition:'1 defective' },
-    { code:'CSR-NCON-C4A-123',name:'Stethoscope',                         unit:'pcs',   ideal:525, total:30,  supply:12, location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C3B-124',name:'Suction Machine',                     unit:'pcs',   ideal:525, total:4,   supply:2,  location:'CSR CABINET 3B',  condition:'good condition' },
-    { code:'CSR-NCON-C11-125',name:'Surgical Gown',                       unit:'pc',    ideal:525, total:20,  supply:1,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C2A-126',name:'Teeth model',                         unit:'pcs',   ideal:525, total:6,   supply:4,  location:'CSR CABINET 2A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-127',name:'Thumb forceps',                       unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C4A-128',name:'Tissue forceps',                      unit:'pcs',   ideal:525, total:25,  supply:13, location:'CSR CABINET 4A',  condition:'12 good condition, 1 defective' },
-    { code:'CSR-NCON-C8-129', name:'Toilet seat',                          unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 8',   condition:'good condition' },
-    { code:'CSR-NCON-C9-130', name:'Toilet Set Reducer',                   unit:'pcs',   ideal:525, total:10,  supply:3,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C2A-131',name:'Top Syringe Pump',                    unit:'pcs',   ideal:525, total:5,   supply:1,  location:'CSR CABINET 2A',  condition:'defective' },
-    { code:'CSR-NCON-C4A-132',name:'Towel clamps',                        unit:'pcs',   ideal:525, total:20,  supply:10, location:'CSR CABINET 4A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C9-133', name:'Tracheostomy care mannequin',          unit:'pc',    ideal:525, total:2,   supply:1,  location:'CSR CABINET 9',   condition:'good condition' },
-    { code:'CSR-NCON-C4B-134',name:'Tray',                                unit:'pcs',   ideal:525, total:10,  supply:2,  location:'CSR CABINET 4B',  condition:'good condition' },
-    { code:'CSR-NCON-C12-135',name:'Triangular Bandage',                  unit:'pcs',   ideal:525, total:100, supply:63, location:'CSR CABINET 12',  condition:'all in good condition' },
-    { code:'CSR-NCON-C11-136',name:'Triangular Bandage (old)',             unit:'pcs',   ideal:525, total:20,  supply:4,  location:'CSR CABINET 11',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-137',name:'Tuning Fork',                         unit:'pcs',   ideal:525, total:50,  supply:20, location:'CSR CABINET 5A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C5A-138',name:'Tympanic thermometer',                unit:'pcs',   ideal:525, total:15,  supply:5,  location:'CSR CABINET 5A',  condition:'all in good condition' },
-    { code:'CSR-NCON-C2A-139',name:'Upper Torso Head Child',              unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 2A',  condition:'1 good condition' },
-    { code:'CSR-NCON-C2A-140',name:'Upper Torso Head Infant',             unit:'pcs',   ideal:525, total:2,   supply:1,  location:'CSR CABINET 2A',  condition:'1 good condition' },
-    { code:'CSR-NCON-C2A-141',name:'UV lights sensitive fluid',           unit:'unit',  ideal:525, total:5,   supply:2,  location:'CSR CABINET 2A',  condition:'good condition' },
-    { code:'CSR-NCON-C5A-142',name:'Visual Electronic Stethoscope',       unit:'pcs',   ideal:525, total:3,   supply:1,  location:'CSR CABINET 5A',  condition:'good condition' },
-    { code:'CSR-NCON-C3B-143',name:'Weighing Scale',                      unit:'pcs',   ideal:525, total:10,  supply:5,  location:'CSR CABINET 3B',  condition:'good condition' },
-    { code:'CSR-NCON-C11-144',name:'White cloth',                         unit:'pcs',   ideal:525, total:10,  supply:5,  location:'CSR CABINET 11',  condition:'good condition' },
+    {code:'CSR-NCON-C7-01',name:'Abdomen/Injection model',unit:'pc',ideal:525,total:3,supply:1,location:'CSR CABINET 7',condition:'good condition'},
+    {code:'CSR-NCON-C5A-02',name:'Adapter',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C4A-03',name:'Alice Tissue Forceps',unit:'pcs',ideal:525,total:20,supply:5,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C2A-04',name:'Ambu IV Trainer',unit:'pcs',ideal:525,total:8,supply:5,location:'CSR CABINET 2A',condition:'1 good condition'},
+    {code:'CSR-NCON-C11-05',name:'Apron (colored)',unit:'pcs',ideal:525,total:20,supply:6,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C11-06',name:'Apron (colored)',unit:'pcs',ideal:525,total:30,supply:9,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C4A-07',name:'Auxiliary thermometer',unit:'pcs',ideal:525,total:20,supply:9,location:'CSR CABINET 4A',condition:'7 good condition, 2 defective'},
+    {code:'CSR-NCON-C12-08',name:'Baby Dress',unit:'pcs',ideal:525,total:30,supply:10,location:'CSR CABINET 12',condition:'9 good condition, 1 old/damaged'},
+    {code:'CSR-NCON-C2B-09',name:'Baby for FBAO & CPR',unit:'set',ideal:525,total:5,supply:2,location:'CSR CABINET 2B',condition:'good condition'},
+    {code:'CSR-NCON-C2B-10',name:'Baby for Intubation',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 2B',condition:'1 good condition'},
+    {code:'CSR-NCON-C2B-11',name:'Baby For NSD',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 2B',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-12',name:'Babcock (Tissue) Forceps',unit:'pcs',ideal:525,total:15,supply:2,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C4A-13',name:'Bandage Scissors',unit:'pcs',ideal:525,total:25,supply:6,location:'CSR CABINET 4A',condition:'5 good condition, 1 defective'},
+    {code:'CSR-NCON-C12-14',name:'Bedsheet',unit:'pcs',ideal:525,total:40,supply:5,location:'CSR CABINET 12',condition:'all good condition'},
+    {code:'CSR-NCON-C12-15',name:'Bib',unit:'pcs',ideal:525,total:40,supply:21,location:'CSR CABINET 12',condition:'all good condition'},
+    {code:'CSR-NCON-C2A-16',name:'Big toothbrush',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 2A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-17',name:'Blade handle',unit:'pcs',ideal:525,total:10,supply:1,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-18',name:'Blood Glucose Monitoring',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-19',name:'Blood Glucose Test Tip',unit:'box',ideal:525,total:10,supply:2,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-20',name:'Blood Pressure for Infant',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-21',name:'Blood glucose monitor',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 5A',condition:'all in good condition'},
+    {code:'CSR-NCON-C12-22',name:'Bonnet',unit:'pcs',ideal:525,total:40,supply:17,location:'CSR CABINET 12',condition:'all good condition'},
+    {code:'CSR-NCON-C12-23',name:'Bonnet',unit:'pairs',ideal:525,total:30,supply:8,location:'CSR CABINET 12',condition:'all good condition'},
+    {code:'CSR-NCON-C9-24',name:'Breast Model',unit:'pc',ideal:525,total:5,supply:1,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C2A-25',name:'Breast Model',unit:'sets',ideal:525,total:6,supply:3,location:'CSR CABINET 2A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-26',name:'Canister',unit:'pcs',ideal:525,total:15,supply:7,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C9-27',name:'Cervical Dilatation Model',unit:'set',ideal:525,total:2,supply:1,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C3B-28',name:'CHN Bag Condition',unit:'set',ideal:525,total:30,supply:21,location:'CSR CABINET 3B',condition:''},
+    {code:'CSR-NCON-C3A-29',name:'Child Birth Simulator',unit:'pcs',ideal:525,total:2,supply:1,location:'CSR CABINET 3A',condition:'good condition'},
+    {code:'CSR-NCON-C9-30',name:'Chopping board',unit:'pcs',ideal:525,total:15,supply:9,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C1A-31',name:'Compound microscope',unit:'unit',ideal:525,total:40,supply:24,location:'CSR CABINET 1A',condition:'7 good condition, 5 defective'},
+    {code:'CSR-NCON-C2A-32',name:'Condom training model',unit:'pcs',ideal:525,total:5,supply:2,location:'CSR CABINET 2A',condition:'good condition'},
+    {code:'CSR-NCON-C7-33',name:'CPR model',unit:'pc',ideal:525,total:6,supply:1,location:'CSR CABINET 7',condition:'defective'},
+    {code:'CSR-NCON-WR-34',name:'Crutches',unit:'pairs',ideal:525,total:10,supply:4,location:'CSR RIGHT WALL',condition:'good condition'},
+    {code:'CSR-NCON-C11-35',name:'Delivery Model with fetus',unit:'pc',ideal:525,total:5,supply:1,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C11-36',name:'Curtains Blue (Large)',unit:'pcs',ideal:525,total:10,supply:3,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C11-37',name:'Curtains Blue (Medium)',unit:'pcs',ideal:525,total:20,supply:12,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C11-38',name:'Curtains Blue (Small)',unit:'pcs',ideal:525,total:10,supply:3,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C8-39',name:'Delivery Model with fetus',unit:'pc',ideal:525,total:2,supply:1,location:'CSR CABINET 8',condition:'good condition'},
+    {code:'CSR-NCON-C9-40',name:'Dial Weighing Scale',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 9',condition:'defective'},
+    {code:'CSR-NCON-C5A-41',name:'Digital BP Monitoring',unit:'set',ideal:525,total:10,supply:2,location:'CSR CABINET 5A',condition:'1 complete, 1 incomplete'},
+    {code:'CSR-NCON-C1A-42',name:'Digital Microscope',unit:'pcs',ideal:525,total:40,supply:25,location:'CSR CABINET 1A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-43',name:'Digital Thermometer',unit:'pcs',ideal:525,total:25,supply:4,location:'CSR CABINET 5A',condition:'3 good condition, 1 defective'},
+    {code:'CSR-NCON-C9-44',name:'Digital Weighing Scale',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C12-45',name:'Drawsheet',unit:'pcs',ideal:525,total:120,supply:92,location:'CSR CABINET 12',condition:'84 good condition, 8 old/damaged'},
+    {code:'CSR-NCON-C5A-46',name:'Dust Blower',unit:'pcs',ideal:525,total:5,supply:2,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C3B-47',name:'ECG',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 3B',condition:'defective'},
+    {code:'CSR-NCON-C9-48',name:'Endotracheal intubation model',unit:'pc',ideal:525,total:3,supply:1,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C9-49',name:'Feeding bottle',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 9',condition:'1 good condition, 1 no cap'},
+    {code:'CSR-NCON-C2A-50',name:'Female organ model',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 2A',condition:'good condition'},
+    {code:'CSR-NCON-C8-51',name:'Female Pelvic / Perineal training model',unit:'pcs',ideal:525,total:4,supply:2,location:'CSR CABINET 8',condition:'1 defective, 1 good condition'},
+    {code:'CSR-NCON-C2A-52',name:'Female Sex Organ',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 2A',condition:'1 good condition'},
+    {code:'CSR-NCON-C3A-53',name:'Female Sex Organ (w low torso)',unit:'pcs',ideal:525,total:2,supply:1,location:'CSR CABINET 3A',condition:'good condition'},
+    {code:'CSR-NCON-C2A-54',name:'Female sex organ w/ lower torso',unit:'pc',ideal:525,total:4,supply:2,location:'CSR CABINET 2A',condition:'all in good condition'},
+    {code:'CSR-NCON-C5A-55',name:'Fetal Doppler',unit:'pcs',ideal:525,total:5,supply:2,location:'CSR CABINET 5A',condition:'all in good condition'},
+    {code:'CSR-NCON-C12-56',name:'Franela',unit:'pcs',ideal:525,total:30,supply:17,location:'CSR CABINET 12',condition:'all in good condition'},
+    {code:'CSR-NCON-C5A-57',name:'Goniometer',unit:'pcs',ideal:525,total:10,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-58',name:'Good Glucose Meter',unit:'pcs',ideal:525,total:10,supply:3,location:'CSR CABINET 5A',condition:'2 good condition, 1 defective'},
+    {code:'CSR-NCON-C9-59',name:'Google Cardboard',unit:'pc',ideal:525,total:5,supply:1,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C9-60',name:'Graduated Cylinder/Test tube',unit:'pcs',ideal:525,total:20,supply:8,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C4A-61',name:'Histology Slide',unit:'box',ideal:525,total:10,supply:4,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C5B-62',name:'Hot bag',unit:'pcs',ideal:525,total:20,supply:4,location:'CSR CABINET 5B',condition:'all in good condition'},
+    {code:'CSR-NCON-C5B-63',name:'Hypo tray',unit:'pcs',ideal:525,total:20,supply:95,location:'CSR CABINET 5B',condition:'all in good condition'},
+    {code:'CSR-NCON-C5B-64',name:'Ice cap',unit:'pcs',ideal:525,total:20,supply:12,location:'CSR CABINET 5B',condition:'all in good condition'},
+    {code:'CSR-NCON-C5A-65',name:'Infrared Thermometer',unit:'pcs',ideal:525,total:15,supply:5,location:'CSR CABINET 5A',condition:'all in good condition'},
+    {code:'CSR-NCON-C5A-66',name:'Infrared thermometer',unit:'pcs',ideal:525,total:15,supply:4,location:'CSR CABINET 5A',condition:'3 good condition, 1 defective'},
+    {code:'CSR-NCON-C2A-67',name:'Injection Model',unit:'pcs',ideal:525,total:10,supply:6,location:'CSR CABINET 2A',condition:'6 good condition'},
+    {code:'CSR-NCON-C10-68',name:'Infant Simulator',unit:'pc',ideal:525,total:2,supply:1,location:'CSR CABINET 10',condition:'good condition'},
+    {code:'CSR-NCON-C4A-69',name:'Iris Scissors (Curve)',unit:'pcs',ideal:525,total:10,supply:1,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-70',name:'Kelly Forceps (Curve)',unit:'pcs',ideal:525,total:20,supply:4,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-71',name:'Kelly forceps (straight)',unit:'pcs',ideal:525,total:25,supply:9,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C5B-72',name:'Kelly pad',unit:'pcs',ideal:525,total:20,supply:10,location:'CSR CABINET 5B',condition:'6 good condition, 4 defective'},
+    {code:'CSR-NCON-C5B-73',name:'Kidney basin',unit:'pcs',ideal:525,total:100,supply:100,location:'CSR CABINET 5B',condition:'all in good condition'},
+    {code:'CSR-NCON-C11-74',name:'Lab Gown (green)',unit:'pcs',ideal:525,total:30,supply:15,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C11-75',name:'Lab Gown (white)',unit:'pcs',ideal:525,total:50,supply:40,location:'CSR CABINET 11',condition:'good condition, 13 with rust, 1 damage'},
+    {code:'CSR-NCON-C12-76',name:'Linens',unit:'pcs',ideal:525,total:100,supply:78,location:'CSR CABINET 12',condition:'good condition, 11 old damage'},
+    {code:'CSR-NCON-C8-77',name:'Life form simulator',unit:'pc',ideal:525,total:2,supply:1,location:'CSR CABINET 8',condition:'good condition'},
+    {code:'CSR-NCON-C2A-78',name:'Male Sex Organ',unit:'pcs',ideal:525,total:5,supply:3,location:'CSR CABINET 2A',condition:'3 good condition'},
+    {code:'CSR-NCON-C4A-79',name:'Magnifying glass (large)',unit:'pcs',ideal:525,total:10,supply:4,location:'CSR CABINET 4A',condition:'all good'},
+    {code:'CSR-NCON-C4A-80',name:'Magnifying glass (small)',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 4A',condition:'1 defective, 1 good condition'},
+    {code:'CSR-NCON-C3A-81',name:'Mama Natalie',unit:'pcs',ideal:525,total:2,supply:1,location:'CSR CABINET 3A',condition:'good condition'},
+    {code:'CSR-NCON-C4A-82',name:'Manual Automated External Defibrillator',unit:'set',ideal:525,total:3,supply:1,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C12-83',name:'Mayo cover (pouch type) / pillowcase (green)',unit:'pcs',ideal:525,total:180,supply:174,location:'CSR CABINET 12',condition:'170 good condition, 4 old/damaged'},
+    {code:'CSR-NCON-C12-84',name:'Mayo drape (big)',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 12',condition:'all good condition'},
+    {code:'CSR-NCON-C12-85',name:'Mayo drape (small)',unit:'pcs',ideal:525,total:20,supply:8,location:'CSR CABINET 12',condition:'7 good condition, 1 old/damaged'},
+    {code:'CSR-NCON-C4A-86',name:'Mayo Scissors (Straight)',unit:'pcs',ideal:525,total:10,supply:1,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C5B-87',name:'Measuring tape',unit:'pcs',ideal:525,total:50,supply:37,location:'CSR CABINET 5B',condition:'all in good condition'},
+    {code:'CSR-NCON-C9-88',name:'Medicine Cup',unit:'pcs',ideal:525,total:50,supply:37,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C5B-89',name:'Medicine tray',unit:'pcs',ideal:525,total:100,supply:85,location:'CSR CABINET 5B',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-90',name:'Metzembaum Scissors',unit:'pcs',ideal:525,total:10,supply:1,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C12-91',name:'Mittens',unit:'pairs',ideal:525,total:30,supply:11,location:'CSR CABINET 12',condition:'all good condition'},
+    {code:'CSR-NCON-C9-92',name:'Mortar (big)',unit:'pcs',ideal:525,total:15,supply:8,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C9-93',name:'Mortar (small)',unit:'pcs',ideal:525,total:20,supply:12,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C4A-94',name:'Mosquito Forceps (Curve)',unit:'pcs',ideal:525,total:20,supply:6,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-95',name:'Mosquito Forceps (Straight)',unit:'pcs',ideal:525,total:20,supply:9,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-96',name:'Nasal speculum',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C3B-97',name:'Neck Brace',unit:'pcs',ideal:525,total:20,supply:13,location:'CSR CABINET 3B',condition:'12 good condition, 1 defective'},
+    {code:'CSR-NCON-C3B-98',name:'Nebulizer',unit:'pcs',ideal:525,total:5,supply:2,location:'CSR CABINET 3B',condition:'1 good condition, 1 defective'},
+    {code:'CSR-NCON-C4A-99',name:'Needle holder',unit:'pcs',ideal:525,total:20,supply:8,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C7-100',name:'Obstetric Childbirth Simulator torso',unit:'pc',ideal:525,total:2,supply:1,location:'CSR CABINET 7',condition:'defective'},
+    {code:'CSR-NCON-C5A-101',name:'Otoscope',unit:'set',ideal:525,total:5,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C4A-102',name:'Ovum Forceps',unit:'pcs',ideal:525,total:30,supply:22,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-103',name:'Pathophysiology Slides',unit:'box',ideal:525,total:10,supply:2,location:'CSR CABINET 4A',condition:'good condition'},
+    {code:'CSR-NCON-C11-104',name:'Patient Gown (green) & Head Cap',unit:'pcs',ideal:525,total:40,supply:12,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C2A-105',name:'Pelvic bone',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 2A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-106',name:'Pediatric BP cuff',unit:'pc',ideal:525,total:5,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C4A-107',name:'Penlight',unit:'pcs',ideal:525,total:20,supply:11,location:'CSR CABINET 4A',condition:'9 good condition, 2 defective'},
+    {code:'CSR-NCON-C9-108',name:'Pestle (big)',unit:'pcs',ideal:525,total:15,supply:9,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C9-109',name:'Pestle (small)',unit:'pcs',ideal:525,total:20,supply:10,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C3A-110',name:'Pillow',unit:'pcs',ideal:525,total:20,supply:3,location:'CSR CABINET 3A',condition:'good condition'},
+    {code:'CSR-NCON-C11-111',name:'Pillowcase (White)',unit:'pcs',ideal:525,total:60,supply:43,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C11-112',name:'Pillows',unit:'pcs',ideal:525,total:20,supply:2,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C4B-113',name:'Pitcher',unit:'pcs',ideal:525,total:40,supply:25,location:'CSR CABINET 4B',condition:'all in good condition'},
+    {code:'CSR-NCON-C9-114',name:'Pitcher',unit:'pcs',ideal:525,total:20,supply:3,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C5A-115',name:'Pulse Oximeter',unit:'pcs',ideal:525,total:8,supply:2,location:'CSR CABINET 5A',condition:'1 good condition, 1 defective'},
+    {code:'CSR-NCON-C4A-116',name:'Reflex Hammer',unit:'pcs',ideal:525,total:20,supply:10,location:'CSR CABINET 4A',condition:'9 good condition, 1 defective'},
+    {code:'CSR-NCON-C10-117',name:'Rosenbaum pocket vision screener',unit:'pc',ideal:525,total:5,supply:1,location:'CSR CABINET 10',condition:'good condition'},
+    {code:'CSR-NCON-C11-118',name:'Rubber Sheet',unit:'pcs',ideal:525,total:20,supply:3,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C5A-11p',name:'Sewing Machine (Singer)',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-120',name:'Slides',unit:'box',ideal:525,total:10,supply:4,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C10-121',name:'Snellen Chart',unit:'pc',ideal:525,total:5,supply:2,location:'CSR CABINET 10',condition:'good condition'},
+    {code:'CSR-NCON-C4A-122',name:'Soaking Jar',unit:'pcs',ideal:525,total:40,supply:33,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C2A-122',name:'Spirometer',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 2A',condition:'1 defective'},
+    {code:'CSR-NCON-C4A-123',name:'Stethoscope',unit:'pcs',ideal:525,total:30,supply:12,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C3B-124',name:'Suction Machine',unit:'pcs',ideal:525,total:4,supply:2,location:'CSR CABINET 3B',condition:'good condition'},
+    {code:'CSR-NCON-C11-125',name:'Surgical Gown',unit:'pc',ideal:525,total:20,supply:1,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C2A-126',name:'Teeth model',unit:'pcs',ideal:525,total:6,supply:4,location:'CSR CABINET 2A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-127',name:'Thumb forceps',unit:'pcs',ideal:525,total:20,supply:4,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C4A-128',name:'Tissue forceps',unit:'pcs',ideal:525,total:25,supply:13,location:'CSR CABINET 4A',condition:'12 good condition, 1 defective'},
+    {code:'CSR-NCON-C8-129',name:'Toilet seat',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 8',condition:'good condition'},
+    {code:'CSR-NCON-C9-130',name:'Toilet Set Reducer',unit:'pcs',ideal:525,total:10,supply:3,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C2A-131',name:'Top Syringe Pump',unit:'pcs',ideal:525,total:5,supply:1,location:'CSR CABINET 2A',condition:'defective'},
+    {code:'CSR-NCON-C4A-132',name:'Towel clamps',unit:'pcs',ideal:525,total:20,supply:10,location:'CSR CABINET 4A',condition:'all in good condition'},
+    {code:'CSR-NCON-C9-133',name:'Tracheostomy care mannequin',unit:'pc',ideal:525,total:2,supply:1,location:'CSR CABINET 9',condition:'good condition'},
+    {code:'CSR-NCON-C4B-134',name:'Tray',unit:'pcs',ideal:525,total:10,supply:2,location:'CSR CABINET 4B',condition:'good condition'},
+    {code:'CSR-NCON-C12-135',name:'Triangular Bandage',unit:'pcs',ideal:525,total:100,supply:63,location:'CSR CABINET 12',condition:'all in good condition'},
+    {code:'CSR-NCON-C11-136',name:'Triangular Bandage (old)',unit:'pcs',ideal:525,total:20,supply:4,location:'CSR CABINET 11',condition:'good condition'},
+    {code:'CSR-NCON-C5A-137',name:'Tuning Fork',unit:'pcs',ideal:525,total:50,supply:20,location:'CSR CABINET 5A',condition:'all in good condition'},
+    {code:'CSR-NCON-C5A-138',name:'Tympanic thermometer',unit:'pcs',ideal:525,total:15,supply:5,location:'CSR CABINET 5A',condition:'all in good condition'},
+    {code:'CSR-NCON-C2A-139',name:'Upper Torso Head Child',unit:'pcs',ideal:525,total:2,supply:1,location:'CSR CABINET 2A',condition:'1 good condition'},
+    {code:'CSR-NCON-C2A-140',name:'Upper Torso Head Infant',unit:'pcs',ideal:525,total:2,supply:1,location:'CSR CABINET 2A',condition:'1 good condition'},
+    {code:'CSR-NCON-C2A-141',name:'UV lights sensitive fluid',unit:'unit',ideal:525,total:5,supply:2,location:'CSR CABINET 2A',condition:'good condition'},
+    {code:'CSR-NCON-C5A-142',name:'Visual Electronic Stethoscope',unit:'pcs',ideal:525,total:3,supply:1,location:'CSR CABINET 5A',condition:'good condition'},
+    {code:'CSR-NCON-C3B-143',name:'Weighing Scale',unit:'pcs',ideal:525,total:10,supply:5,location:'CSR CABINET 3B',condition:'good condition'},
+    {code:'CSR-NCON-C11-144',name:'White cloth',unit:'pcs',ideal:525,total:10,supply:5,location:'CSR CABINET 11',condition:'good condition'},
   ];
 
-  let editingIndex = null;
+  const np2Data = [
+    {code:'NP2-NCON-BWL01-01',name:'2HP Window Type Aircon - carrier',unit:'units',total:4,supply:2,location:'NP2-NCON-BWL1',condition:'All In Good Condition'},
+    {code:'NP2-NCON-LSD2-02',name:'Adjustable Voerhead Feeding Table / Feeding Table',unit:'pcs',total:10,supply:1,location:'NP2-NCON-LSD2',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD3-03',name:'Adjustable Wooden Feeding Table',unit:'unit',total:6,supply:1,location:'NP2-NCON-LSD3',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD4-04',name:'Ambu CPR Pal',unit:'unit',total:10,supply:1,location:'NP2-NCON-LSD4',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD5-05',name:'Ambu Man Car Training Model',unit:'unit',total:6,supply:1,location:'NP2-NCON-LSD5',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD6-06',name:'Ambu Mecacode Man',unit:'unit',total:2,supply:1,location:'NP2-NCON-LSD6',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD7-07',name:'Ambu Ventilation (Kid)',unit:'unit',total:6,supply:1,location:'NP2-NCON-LSD7',condition:'Slightly In Good Condition'},
+    {code:'NP2-NCON-LSD8-07',name:'Ambu Ventilation (Monitor)',unit:'unit',total:4,supply:1,location:'NP2-NCON-LSD8',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD9-09',name:'Ambu Ventilation - SN. C30145-1287',unit:'unit',total:2,supply:1,location:'NP2-NCON-LSD9',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD10-10',name:'Arm Chair',unit:'pcs',total:12,supply:2,location:'NP2-NCON-LSD10',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BSD11-11',name:'Bed Foam',unit:'pcs',total:20,supply:3,location:'NP2-NCON-BSD11',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BSD12-12',name:'Bed Side Cabinet',unit:'units',total:10,supply:2,location:'NP2-NCON-BSD12',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BSD13-13',name:'Bed Side Table',unit:'units',total:10,supply:2,location:'NP2-NCON-BSD13',condition:'All In Good Condition'},
+    {code:'NP2-NCON-LSD14-14',name:'Built In Shelves - 5 layers',unit:'unit',total:6,supply:1,location:'NP2-NCON-LSD14',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD15-15',name:'Combi Blinds - 8 panels',unit:'lot',total:8,supply:0,location:'NP2-NCON-RSD15',condition:'Not Found'},
+    {code:'NP2-NCON-RSD16-16',name:'Computer Set',unit:'set',total:3,supply:1,location:'NP2-NCON-RSD16',condition:'Good Condition'},
+    {code:'NP2-NCON-BSD17-17',name:'Counter Table - L Shape',unit:'units',total:3,supply:3,location:'NP2-NCON-BSD17',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BSD18-18',name:'Divider',unit:'pcs',total:10,supply:3,location:'NP2-NCON-BSD18',condition:'All In Good Condition'},
+    {code:'NP2-NCON-RSD19-19',name:'Drop Light',unit:'pc',total:5,supply:1,location:'NP2-NCON-RSD19',condition:'Rusty'},
+    {code:'NP2-NCON-LSD20-20',name:'Dynamic/Gynecological Table - manual',unit:'units',total:1,supply:2,location:'NP2-NCON-LSD20',condition:'All In Good Condition'},
+    {code:'NP2-NCON-LSD21-21',name:'Feeding Table',unit:'pcs',total:8,supply:1,location:'NP2-NCON-LSD21',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD22-22',name:'Fire Extinguisher',unit:'unit',total:5,supply:1,location:'NP2-NCON-RSD22',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD23-23',name:'First Aid Kit',unit:'set',total:10,supply:1,location:'NP2-NCON-LSD23',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD24-24',name:'Foot Stool',unit:'pc',total:15,supply:0,location:'NP2-NCON-RSD24',condition:'Not Found'},
+    {code:'NP2-NCON-RSD25-25',name:'Foot Stool - stainless',unit:'units',total:10,supply:0,location:'NP2-NCON-RSD25',condition:'Not Found'},
+    {code:'NP2-NCON-LWL26-26',name:'Frame - Vision',unit:'pc',total:5,supply:1,location:'NP2-NCON-LWL26',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD27-27',name:'Gaumard Scientific Women Model',unit:'units',total:2,supply:4,location:'NP2-NCON-LSD27',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BSD28-28',name:'Hospital Bed',unit:'units',total:10,supply:4,location:'NP2-NCON-BSD28',condition:'3 Good Condition, 1 Defective'},
+    {code:'NP2-NCON-BSD29-29',name:'Hospital Bed AbS 3 cranks',unit:'units',total:6,supply:4,location:'NP2-NCON-BSD29',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BSD30-30',name:'Hospital Bed 3 cranks w/ mattress',unit:'units',total:6,supply:3,location:'NP2-NCON-BSD30',condition:'All In Good Condition'},
+    {code:'NP2-NCON-RSD31-31',name:'Hospital Electrical Bed w/ egg crate',unit:'unit',total:2,supply:0,location:'NP2-NCON-RSD31',condition:'Not Found'},
+    {code:'NP2-NCON-RSD32-32',name:'Human Female Sex Organ Model, Lying Down Position',unit:'unit',total:6,supply:1,location:'NP2-NCON-LSD32',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD33-33',name:'Intramuscular Injection Model',unit:'unit',total:15,supply:1,location:'NP2-NCON-LSD33',condition:'Good Condition'},
+    {code:'NP2-NCON-RWL34-34',name:'IR Bullet Network Camera - dhua',unit:'unit',total:5,supply:1,location:'NP2-NCON-RWL34',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD35-35',name:'IR Dome Network Camera - Dhua',unit:'unit',total:5,supply:0,location:'NP2-NCON-RSD35',condition:'Not Found'},
+    {code:'NP2-NCON-LSD36-36',name:'IV Stand',unit:'pcs',total:15,supply:4,location:'NP2-NCON-LSD36',condition:'All In Good Condition'},
+    {code:'NP2-NCON-LSD37-37',name:'JO21-3-02',unit:'unit',total:1,supply:2,location:'NP2-NCON-LSD37',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD38-38',name:'Kelly Pad',unit:'pcs',total:10,supply:3,location:'NP2-NCON-LSD38',condition:'All In Good Condition'},
+    {code:'NP2-NCON-BWL39-39',name:'Laboratory Sink w/ cabinet',unit:'units',total:3,supply:5,location:'NP2-NCON-BWL39',condition:'All In Good Condition'},
+    {code:'NP2-NCON-LSD40-40',name:'Life / Form Enema Admin. Simulator (NASCO)',unit:'unit',total:6,supply:1,location:'NP2-NCON-LSD40',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD41-41',name:'Life / Form Simulator - SN. LF1087-4077',unit:'unit',total:5,supply:1,location:'NP2-NCON-LSD41',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD42-42',name:'Life / Form Simulator - SN. LF1142-1678',unit:'unit',total:5,supply:1,location:'NP2-NCON-LSD42',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD43-43',name:'Life / Form Simulator - SN. LF957-5600',unit:'unit',total:5,supply:1,location:'NP2-NCON-LSD43',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD44-44',name:'Medical Box',unit:'pcs',total:10,supply:0,location:'NP2-NCON-RSD44',condition:'Not Found'},
+    {code:'NP2-NCON-RSD45-45',name:'Microscope Bag',unit:'pcs',total:10,supply:0,location:'NP2-NCON-RSD45',condition:'Not Found'},
+    {code:'NP2-NCON-RSD46-46',name:'Monoblock Chair',unit:'units',total:30,supply:28,location:'NP2-NCON-RSD46',condition:'All In Good Condition'},
+    {code:'NP2-NCON-RSD47-47',name:'Patient Trolley',unit:'unit',total:4,supply:1,location:'NP2-NCON-RSD47',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD48-48',name:'Pole Stand',unit:'units',total:10,supply:5,location:'NP2-NCON-LSD48',condition:'4 Good Condition, 1 Defective'},
+    {code:'NP2-NCON-RSD49-49',name:'Round Monoblock Chair',unit:'pc',total:12,supply:0,location:'NP2-NCON-RSD49',condition:'Not Found'},
+    {code:'NP2-NCON-LSD50-50',name:'Stand Type BP Anneroid - ALPKS',unit:'units',total:15,supply:2,location:'NP2-NCON-LSD50',condition:'All In Good Condition'},
+    {code:'NP2-NCON-LSD51-51',name:'Steel Cabinet - 4 drawers',unit:'units',total:10,supply:0,location:'NP2-NCON-LSD51',condition:'Not Found'},
+    {code:'NP2-NCON-RSD52-52',name:'Steel Chair',unit:'pcs',total:20,supply:0,location:'NP2-NCON-RSD52',condition:'Not Found'},
+    {code:'NP2-NCON-LSD53-53',name:'Transparent Catheter Trainer (Male Model)',unit:'unit',total:8,supply:1,location:'NP2-NCON-LSD53',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD54-54',name:'Trash Can - Green',unit:'pc',total:5,supply:1,location:'NP2-NCON-LSD54',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD55-55',name:'Wall Clock',unit:'pc',total:2,supply:1,location:'NP2-NCON-LSD55',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD56-56',name:'Wireless Access Point - Ruijie',unit:'unit',total:5,supply:1,location:'NP2-NCON-RSD56',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD57-57',name:'Wooden Cabinet w/ drawer & compartment',unit:'unit',total:1,supply:1,location:'NP2-NCON-RSD57',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD58-58',name:'Wooden Chair',unit:'pcs',total:30,supply:1,location:'NP2-NCON-LSD58',condition:'Good Condition'},
+    {code:'NP2-NCON-LSD59-59',name:'Wooden Shelf w/ 5 compartments',unit:'unit',total:8,supply:1,location:'NP2-NCON-LSD59',condition:'Good Condition'},
+    {code:'NP2-NCON-RSD60-60',name:'Wooden Table w/ cabinet - white',unit:'unit',total:10,supply:0,location:'NP2-NCON-RSD60',condition:'Not Found'},
+  ];
+
+  const np2ConData = [
+    {code:'NP2-CON-MSHL1-01',name:'Disposable Gown (Non-Sterile)',unit:'pcs',total:1200,supply:10,location:'NP2-CON-MSHL1',condition:'All In Good Condition'},
+    {code:'NP2-CON-MSHL2-02',name:'Disposable Non-Surgical Isolation Gown',unit:'pcs',total:800,supply:17,location:'NP2-CON-MSHL2',condition:'All In Good Condition'},
+    {code:'NP2-CON-LSHL3-03',name:'Disposable Syringe w/ needle 3 cc',unit:'pcs',total:3000,supply:2400,location:'NP2-CON-LSHL3',condition:'All In Good Condition'},
+    {code:'NP2-CON-LSHL4-04',name:'Disposable Syringe w/ needle 5 cc',unit:'pcs',total:4000,supply:3470,location:'NP2-CON-LSHL4',condition:'All In Good Condition'},
+    {code:'NP2-CON-MSHL5-05',name:'Latex Examination Gloves (Non-Sterile, Powder Free)',unit:'pcs',total:10000,supply:5,location:'NP2-CON-MSHL5',condition:'All In Good Condition'},
+    {code:'NP2-CON-LSHL6-06',name:'Single Use Medical Coverall (Sterile)',unit:'pcs',total:409,supply:20,location:'NP2-CON-LSHL6',condition:'All In Good Condition'},
+  ];
+
+  const consumableData = [
+    {code:'CSR-CON-C5B-01',name:'Absorbent cotton (400 g)',unit:'pack',ideal:2475,total:'5',supply:'3 pcs',location:'C5B',condition:'Good',expiry:'July, 2029',restock:'Unknown'},
+    {code:'CSR-CON-C6B-02',name:'Absorbent Gauze Roll',unit:'set',ideal:2475,total:'3',supply:'3',location:'C6B',condition:'Good',expiry:'12/20/29',restock:'Unknown'},
+    {code:'CSR-CON-C8B-03',name:'Acetyl cysteine',unit:'sachet',ideal:2475,total:'5',supply:'5 pcs',location:'C8B',condition:'Expired',expiry:'12/18',restock:'Unknown'},
+    {code:'CSR-CON-C5A-04',name:'Adhesive tape micropore (2.5 cm x 9.1 m)',unit:'boxes (12)',ideal:2475,total:'12',supply:'12 pcs',location:'C5A',condition:'Good',expiry:'Nov, 30,2028',restock:'Unknown'},
+    {code:'CSR-CON-C5A-05',name:'Adhesive tape micropore (5cmx9.1 m)',unit:'boxes (6)',ideal:2475,total:'6',supply:'21 pcs',location:'C5A',condition:'Good',expiry:'November 30, 2029',restock:'Unknown'},
+    {code:'CSR-CON-C8B-06',name:'Alcohol',unit:'Bottle',ideal:2475,total:'13',supply:'13 pcs',location:'C8B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C3B-07',name:'Alcohol',unit:'bottle',ideal:2475,total:'7',supply:'7',location:'C3B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C8B-08',name:'Amoxicillin trihydrate',unit:'Bottle (10ml)',ideal:2475,total:'1 pc',supply:'1 pc',location:'C8B',condition:'Expired',expiry:'06/2019',restock:'Unknown'},
+    {code:'CSR-CON-C6A-013',name:'Asepto Syringe',unit:'pcs',ideal:2475,total:'24',supply:'24',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5B-014',name:'Baby Diaper (newborn)',unit:'pack (30)',ideal:2475,total:'76 pcs',supply:'76 pcs',location:'C5B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C3B-016',name:'Betadine',unit:'bottle',ideal:2475,total:'16',supply:'16',location:'C3B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5B-020',name:'Bouffant cap (blue)',unit:'pack (100)',ideal:2475,total:'3 pack',supply:'3 pack',location:'C5B',condition:'Good',expiry:'Dec,19,2029',restock:'Unknown'},
+    {code:'CSR-CON-C6A-021',name:'Burette type infusion set',unit:'pcs',ideal:2475,total:'6',supply:'6',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C6A-025',name:'Care soap',unit:'pcs',ideal:2475,total:'18',supply:'18',location:'C6A',condition:'Good',expiry:'9/14/2027',restock:'Unknown'},
+    {code:'CSR-CON-C3B-035',name:'CHN Bag',unit:'Bag',ideal:2475,total:'22 pcs',supply:'22 pcs',location:'C3B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5A-040',name:'Clean Gloves (M)',unit:'boxes (100)',ideal:2475,total:'500 pcs',supply:'500 pcs',location:'C5A',condition:'Good',expiry:'Oct 2030',restock:'Unknown'},
+    {code:'CSR-CON-C6B-043',name:'Colostomy bag',unit:'7 pack (10 pcs)',ideal:2475,total:'70',supply:'70',location:'C6B',condition:'Good',expiry:'June 2028',restock:'Unknown'},
+    {code:'CSR-CON-C6A-045',name:'Cord clamp',unit:'pcs',ideal:2475,total:'235',supply:'235',location:'C6A',condition:'Good',expiry:'10/28/2028',restock:'Unknown'},
+    {code:'CSR-CON-C6A-046',name:'Cotton balls',unit:'pack',ideal:2475,total:'3',supply:'3',location:'C6A',condition:'Good',expiry:'July 2029',restock:'Unknown'},
+    {code:'CSR-CON-C5B-052',name:'Dextrose in water (5%)',unit:'bottle (500ml)',ideal:2475,total:'7 pcs',supply:'7 pcs',location:'C5B',condition:'Good',expiry:'Nov 2027',restock:'Unknown'},
+    {code:'CSR-CON-C6B-054',name:'Disposable syringe 1cc',unit:'1cc (100 pcs)',ideal:2475,total:'400',supply:'400',location:'C6B',condition:'Good',expiry:'September 1, 2030',restock:'Unknown'},
+    {code:'CSR-CON-C6B-055',name:'Disposable syringe 5cc',unit:'5cc (100 pcs)',ideal:2475,total:'700',supply:'700',location:'C6B',condition:'Good',expiry:'December 15, 2027',restock:'Unknown'},
+    {code:'CSR-CON-C6B-057',name:'Disposable syringe 10cc',unit:'10cc (100 pcs)',ideal:2475,total:'100',supply:'100',location:'C6B',condition:'Good',expiry:'9/28/28',restock:'Unknown'},
+    {code:'CSR-CON-C6B-066',name:'Feeding tube',unit:'1 pack(100 pcs)',ideal:2475,total:'100',supply:'100',location:'C6B',condition:'Good',expiry:'3/2024',restock:'Unknown'},
+    {code:'CSR-CON-C6B-067',name:'Foley balloon catheter F-16',unit:'2 box (10 pcs)',ideal:2475,total:'20',supply:'20',location:'C6B',condition:'Good',expiry:'Febru 2029',restock:'Unknown'},
+    {code:'CSR-CON-C6A-069',name:'Gauze (pcs)',unit:'pcs',ideal:2475,total:'76',supply:'76',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5A-072',name:'Gauze swab (4x4)',unit:'boxes (100)',ideal:2475,total:'61 pcs',supply:'61 pcs',location:'C5B',condition:'Good',expiry:'Oct 2028',restock:'Unknown'},
+    {code:'CSR-CON-C5A-075',name:'Hair removal cream (25 g)',unit:'pcs',ideal:2475,total:'1 pc',supply:'1 pc',location:'C5A',condition:'Good',expiry:'Nov 2026',restock:'Unknown'},
+    {code:'CSR-CON-C6A-076',name:'Hairnet',unit:'pack',ideal:2475,total:'3',supply:'3',location:'C6A',condition:'Good',expiry:'12/19/2029',restock:'Unknown'},
+    {code:'CSR-CON-C6A-081',name:'IV cannula',unit:'pcs',ideal:2475,total:'58',supply:'58',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5A-082',name:'IV Cannula (boxes)',unit:'boxes (100)',ideal:2475,total:'69 pcs',supply:'69 pcs',location:'C5A',condition:'Good',expiry:'Mar 2029',restock:'Unknown'},
+    {code:'CSR-CON-C6A-083',name:'IV infusion set',unit:'pcs',ideal:2475,total:'42',supply:'42',location:'C6A',condition:'Good',expiry:'6/23/2030',restock:'Unknown'},
+    {code:'CSR-CON-C6B-084',name:'K95 Face mask',unit:'2 pack (50 pcs)',ideal:2475,total:'100',supply:'100',location:'C6B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5A-090',name:'Lubricating gel (3g)',unit:'boxes (100)',ideal:2475,total:'107 pcs',supply:'107 pcs',location:'C5A',condition:'Good',expiry:'Mar 4, 2030',restock:'Unknown'},
+    {code:'CSR-CON-C3B-092',name:'Micropore Tape',unit:'pcs',ideal:2475,total:'17 pcs',supply:'17 pcs',location:'C3B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C3B-093',name:'Mask',unit:'pcs',ideal:2475,total:'10',supply:'10pcs',location:'C3B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5A-097',name:'Microscope slides (1x3)',unit:'boxes (72)',ideal:2475,total:'92 pcs',supply:'92 pcs',location:'C5A',condition:'Good',expiry:'NONE',restock:'Unknown'},
+    {code:'CSR-CON-C6A-099',name:'Nebulizing kit',unit:'pcs',ideal:2475,total:'7',supply:'7',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C6A-102',name:'Oxygen Cannula',unit:'pcs',ideal:2475,total:'14',supply:'14',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C6A-103',name:'Oxygen Mask',unit:'pcs',ideal:2475,total:'3',supply:'3',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C5B-110',name:'Phytobas (Phytomenadione)',unit:'ampule 10 ml',ideal:2475,total:'15 pcs',supply:'15 pcs',location:'C5A',condition:'Good',expiry:'Dec 2027',restock:'Unknown'},
+    {code:'CSR-CON-C5A-118',name:'Pytomen (Phytomenadione)',unit:'ampule (10)',ideal:2475,total:'67 pcs',supply:'67 pcs',location:'C5A',condition:'Good',expiry:'Oct 2027',restock:'Unknown'},
+    {code:'CSR-CON-C5A-124',name:'Sodium chloride (0.9)',unit:'bottle (1L)',ideal:2475,total:'11 pcs',supply:'11 pcs',location:'C5A',condition:'Good',expiry:'Sep 3 2027',restock:'Unknown'},
+    {code:'CSR-CON-C3B-125',name:'Sterile Cap',unit:'pcs',ideal:2475,total:'20 pcs',supply:'20pcs',location:'C3B',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C6B-126',name:'Sterile Latex Surgical Gloves',unit:'3 pack (50 pair)',ideal:2475,total:'150',supply:'150',location:'C6B',condition:'Good',expiry:'July 2029',restock:'Unknown'},
+    {code:'CSR-CON-C5A-127',name:'Sterile water for injection',unit:'boxes (100)',ideal:2475,total:'95 pcs',supply:'95 pcs',location:'C5A',condition:'Good',expiry:'April 2027',restock:'Unknown'},
+    {code:'CSR-CON-C6B-128',name:'Stomach Tube',unit:'pcs',ideal:2475,total:'72',supply:'72',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C6A-130',name:'Stool Container',unit:'pcs',ideal:2475,total:'25',supply:'25',location:'C6A',condition:'Good',expiry:'6/23/2030',restock:'Unknown'},
+    {code:'CSR-CON-C6B-135',name:'Stylet',unit:'1 box (20pcs)',ideal:2475,total:'20',supply:'20',location:'C6B',condition:'Good',expiry:'05/09/28',restock:'Unknown'},
+    {code:'CSR-CON-C6B-136',name:'Suction Catheter',unit:'3 box (50 pcs)',ideal:2475,total:'150',supply:'150',location:'C6B',condition:'Good',expiry:'10/21/25',restock:'Unknown'},
+    {code:'CSR-CON-C5A-137',name:'Surgical blade',unit:'boxes (100)',ideal:2475,total:'7 pcs',supply:'7 pcs',location:'C5A',condition:'Good',expiry:'Nov 2026',restock:'Unknown'},
+    {code:'CSR-CON-C6A-138',name:'Surgical Brush',unit:'pcs',ideal:2475,total:'24',supply:'24',location:'C6A',condition:'Good',expiry:'Nove 2028',restock:'Unknown'},
+    {code:'CSR-CON-C6B-140',name:'Surgical Cap',unit:'5 pack (100 pcs)',ideal:2475,total:'500',supply:'500',location:'C6B',condition:'Good',expiry:'12/19/29',restock:'Unknown'},
+    {code:'CSR-CON-C6A-141',name:'Surgical Gloves (7.5)',unit:'pcs',ideal:2475,total:'54',supply:'54',location:'C6A',condition:'Good',expiry:'7/1/2029',restock:'Unknown'},
+    {code:'CSR-CON-C6A-142',name:'Surgical Gloves (8)',unit:'pcs',ideal:2475,total:'83',supply:'83',location:'C6A',condition:'Good',expiry:'Febru 2028',restock:'Unknown'},
+    {code:'CSR-CON-C6A-144',name:'Syringe (10cc)',unit:'pcs',ideal:2475,total:'82',supply:'82',location:'C6A',condition:'Good',expiry:'10/15/2029',restock:'Unknown'},
+    {code:'CSR-CON-C6A-146',name:'Syringe (3cc)',unit:'pcs',ideal:2475,total:'95',supply:'95',location:'C6A',condition:'Good',expiry:'12/20/2028',restock:'Unknown'},
+    {code:'CSR-CON-C6A-147',name:'Syringe (1cc)',unit:'pcs',ideal:2475,total:'111',supply:'111',location:'C6A',condition:'Good',expiry:'6/5/2030',restock:'Unknown'},
+    {code:'CSR-CON-C6A-148',name:'Syringe (5cc)',unit:'pcs',ideal:2475,total:'54',supply:'54',location:'C6A',condition:'Good',expiry:'11/20/2028',restock:'Unknown'},
+    {code:'CSR-CON-C5A-151',name:'Tongue Depressor (wooden)',unit:'box (100)',ideal:2475,total:'187 pcs',supply:'187 pcs',location:'C5A',condition:'Good',expiry:'Aug 2029',restock:'Unknown'},
+    {code:'CSR-CON-C6B-154',name:'Umbilical Cord Clamp',unit:'box (100pcs)',ideal:2475,total:'200',supply:'200',location:'C6B',condition:'Good',expiry:'10/28/28',restock:'Unknown'},
+    {code:'CSR-CON-C6A-155',name:'Urine Bag',unit:'pcs',ideal:2475,total:'31',supply:'31',location:'C6A',condition:'Good',expiry:'N/A',restock:'Unknown'},
+    {code:'CSR-CON-C6B-156',name:'Urine Bag (sets)',unit:'5 set (10pcs)',ideal:2475,total:'50',supply:'50',location:'C6B',condition:'Good',expiry:'July 4, 2027',restock:'Unknown'},
+  ];
+
+  const mnhData = [
+    {code:'MNH-NCON-LSA-01',name:'4HP Toner Aircon – Carrier',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-LSA-02',name:'55-inch Interactive Display',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-LSR1-03',name:'Adjustable Overbed Table / Feeding Table',unit:'unit',total:5,supply:5,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-RSR2-04',name:'Adult Intubation Mannequin – Ambu',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-05',name:'Airway Kit',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-06',name:'Ambulance Collapsible Stretcher',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-07',name:'Aspirator',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-RSA-08',name:'Auscultation System (NASCO)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-RSA-09',name:'Auscultation Trainer 2.0 with iPad',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-10',name:'Baby Bath Towel',unit:'pcs',total:20,supply:20,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-11',name:'Baby Mannequin (Neonatal Resuscitation)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-12',name:'Bassinet Baby Stand',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-13',name:'Bedside Table (Various)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-14',name:'Bib',unit:'pcs',total:39,supply:39,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-15',name:'Bonnet with Mittens Set',unit:'set',total:9,supply:9,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-16',name:'Breast Examination Model (Gaumard)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-17',name:'Child Birth Simulator – VG395',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-18',name:'Clinical Room Setup',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-19',name:'Complete Geri Nursing Skills Mannequin',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-20',name:'Corkboard',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-21',name:'Counter Table (L-type)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-LSA-22',name:'CPR Prompt Mannequin (5-pack)',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-23',name:'Deluxe Circumcised Condom Training Model',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-LSA-24',name:'Digital Flipchart System',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-25',name:'ECG Machine (Advance Medical)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-26',name:'ECG Wires',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-27',name:'Emergency Cart',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-28',name:'Emergency Stretcher – Stainless',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-RSA-29',name:'Female Catheterization Simulator',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-30',name:'Female Mannequin – Noelle',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-31',name:'Fire Extinguisher (Green)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-LSA-32',name:'First Aid Box',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-33',name:'Five Year Old Multipurpose Simulator',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-34',name:'Foot Stool – Stainless',unit:'unit',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-35',name:'Hand Towel',unit:'pcs',total:36,supply:36,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-36',name:'Health/Physical Assessment Trainer',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-37',name:'Hospital Bed (ABS, 3-Cranks)',unit:'unit',total:6,supply:6,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-38',name:'Infant Weighing Scale',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-39',name:'Intradermal Injection Simulator',unit:'unit',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-40',name:'Intramuscular Injection Upper Leg Model',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN41',name:'IV Arm',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-42',name:'IV Stand / Hanger (Stainless)',unit:'unit',total:6,supply:6,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-43',name:'Laboratory Sink',unit:'unit',total:3,supply:3,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-44',name:'Lapsheet',unit:'pcs',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-45',name:'Life/Form Lucy Maternal & Neonatal Birthing',unit:'unit',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-46',name:'Long Curtain – Blue',unit:'pcs',total:8,supply:8,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-47',name:'Luxurious Stretcher',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-RSA-48',name:'Male Catheterization Simulator',unit:'unit',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-49',name:'Manual Resuscitator',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MCI-50',name:'Manual, SpO2 Sensor, Prover (Accessories)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-51',name:'Mayo Stand with Tray & Wheels',unit:'unit',total:6,supply:6,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-52',name:'Mechanical Physician\'s Scale',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-53',name:'Medical Airway Training Kit',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-54',name:'Medical Oxygen Humidifier Kit',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-55',name:'Medical Simulation Mannequin / Dummies',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-56',name:'Nebulizer (Omron / Pulmo Aide)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-57',name:'Newborn Baby Mannequin',unit:'pcs',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-58',name:'Newborn Crib with Stand and Carriage',unit:'unit',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-59',name:'Nurse Computer Work Station',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-60',name:'Office Table',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-61',name:'Overbed Table (Brown)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-62',name:'Oxygen Tank (Various Sizes)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-63',name:'Oxygen Tank Cart (50lbs Single)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-64',name:'Palpation Model for Leopold\'s Maneuver',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-65',name:'Patient Care with CPR Mannequin (NASCO)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-66',name:'Patient Gown',unit:'pcs',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-RSA-67',name:'Patient\'s Chart / Chart Rack',unit:'pcs',total:10,supply:10,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-68',name:'Penis Model',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-69',name:'Perineal Laceration Trainer Kit',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-70',name:'Portable Suction Machine (Desk Type)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-71',name:'Pulse Oximeter (Tabletop)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-72',name:'Roller Blinds / Window Blinds',unit:'pcs',total:9,supply:9,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-73',name:'Simulation Training Cases',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-74',name:'Sink',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-75',name:'Smart Stat Patient Simulator',unit:'set',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-76',name:'Stand Type BP Aneroid – ALPKS',unit:'unit',total:4,supply:4,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-LSA-77',name:'Teri Androgynous Geriatric Patient Trainer',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-78',name:'Top Infusion Pump – TOP-3300',unit:'pcs',total:3,supply:3,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-79',name:'Tracheostomy Adult Care Mannequin',unit:'pcs',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-80',name:'Transfer Stretcher Bed',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-81',name:'Vaporizer / Steam Inhaler',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-82',name:'Wheel Chair',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-83',name:'Window-Type Air Conditioner',unit:'unit',total:2,supply:2,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-MC1-84',name:'Wooden Shelf (Various)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+    {code:'MNH-NCON-IMN-85',name:'Wooden Table – Oval',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
+  ];
+
+  let editingIndex = null, np2EditingIndex = null, conEditingIndex = null, np2conEditingIndex = null, mnhEditingIndex = null;
 
   function conditionClass(c) {
     if (!c) return 'condition-mixed';
     const lc = c.toLowerCase();
     if (lc === 'defective') return 'condition-defective';
-    if (lc.includes('defective') || lc.includes('damaged') || lc.includes('old') || lc.includes('rust') || lc.includes('incomplete')) return 'condition-mixed';
+    if (lc.includes('defective')||lc.includes('damaged')||lc.includes('old')||lc.includes('rust')||lc.includes('incomplete')) return 'condition-mixed';
     return 'condition-good';
   }
+  function conditionClassNP2(c) {
+    if (!c) return 'condition-mixed';
+    const lc = c.toLowerCase();
+    if (lc.includes('not found')) return 'condition-notfound';
+    if (lc.includes('defective')||lc.includes('rusty')) return 'condition-defective';
+    if (lc.includes('slightly')||lc.includes('1 defective')) return 'condition-mixed';
+    return 'condition-good';
+  }
+  function conditionClassCon(c) {
+    if (!c) return 'condition-mixed';
+    const lc = c.toLowerCase();
+    if (lc === 'expired') return 'condition-defective';
+    if (lc === 'good') return 'condition-good';
+    return 'condition-mixed';
+  }
 
+  // ── CSR Non-Consumable ──
   function renderTable(data) {
     const tbody = document.getElementById('inventory-body');
     document.getElementById('count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${inventoryData.length}</strong> items`;
-    if (!data.length) {
-      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map((item, i) => `
-      <tr>
-        <td class="td-num">${inventoryData.indexOf(item) + 1}</td>
-        <td class="td-code">${item.code}</td>
-        <td class="td-name">${item.name}</td>
-        <td class="td-unit">${item.unit}</td>
-        <td class="ideal-stock">${item.ideal}</td>
-        <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
-        <td class="supply-num">${item.supply}</td>
-        <td><span class="location-tag">${item.location}</span></td>
-        <td><span class="condition-pill ${conditionClass(item.condition)}">${item.condition || '—'}</span></td>
-        <td>
-          <div class="actions">
-            <button class="btn-edit" onclick="openEditModal(${inventoryData.indexOf(item)})">Edit</button>
-            <button class="btn-del" onclick="deleteItem(${inventoryData.indexOf(item)})">Delete</button>
-          </div>
-        </td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${inventoryData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td><td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td><td class="ideal-stock">${item.ideal}</td>
+      <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClass(item.condition)}">${item.condition||'—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditModal(${inventoryData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteItem(${inventoryData.indexOf(item)})">Delete</button>
+      </div></td></tr>`).join('') :
+    `<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
   }
-
   function filterTable() {
     const q = document.getElementById('search-input').value.toLowerCase();
-    const filtered = inventoryData.filter(item =>
-      item.name.toLowerCase().includes(q) ||
-      item.code.toLowerCase().includes(q) ||
-      item.location.toLowerCase().includes(q)
-    );
-    renderTable(filtered);
+    renderTable(inventoryData.filter(i => i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)||i.location.toLowerCase().includes(q)));
   }
+  function openAddModal() { editingIndex=null; document.getElementById('modal-title').textContent='Add Item'; ['f-code','f-name','f-unit','f-total','f-supply','f-location','f-condition'].forEach(id=>document.getElementById(id).value=''); document.getElementById('f-ideal').value=525; document.getElementById('modal-overlay').classList.add('open'); }
+  function openEditModal(idx) { editingIndex=idx; const item=inventoryData[idx]; document.getElementById('modal-title').textContent='Edit Item'; document.getElementById('f-code').value=item.code; document.getElementById('f-name').value=item.name; document.getElementById('f-unit').value=item.unit; document.getElementById('f-ideal').value=item.ideal; document.getElementById('f-total').value=item.total; document.getElementById('f-supply').value=item.supply; document.getElementById('f-location').value=item.location; document.getElementById('f-condition').value=item.condition; document.getElementById('modal-overlay').classList.add('open'); }
+  function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+  function saveItem() { const item={code:document.getElementById('f-code').value.trim(),name:document.getElementById('f-name').value.trim(),unit:document.getElementById('f-unit').value.trim(),ideal:parseInt(document.getElementById('f-ideal').value)||525,total:parseInt(document.getElementById('f-total').value)||0,supply:parseInt(document.getElementById('f-supply').value)||0,location:document.getElementById('f-location').value.trim(),condition:document.getElementById('f-condition').value.trim()}; if(!item.name){alert('Item name is required.');return;} if(editingIndex!==null){inventoryData[editingIndex]=item;}else{inventoryData.push(item);} closeModal(); renderTable(inventoryData); document.getElementById('inventory-modal-overlay').classList.add('open'); }
+  function deleteItem(idx) { if(confirm(`Delete "${inventoryData[idx].name}"?`)){inventoryData.splice(idx,1);filterTable();} }
+  function openInventoryModal() { document.getElementById('inventory-modal-overlay').classList.add('open'); renderTable(inventoryData); }
+  function closeInventoryModal() { document.getElementById('inventory-modal-overlay').classList.remove('open'); }
+  document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+  document.getElementById('inventory-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeInventoryModal();});
 
-  function openAddModal() {
-    editingIndex = null;
-    document.getElementById('modal-title').textContent = 'Add Item';
-    ['f-code','f-name','f-unit','f-ideal','f-total','f-supply','f-location','f-condition'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('f-ideal').value = 525;
-    document.getElementById('modal-overlay').classList.add('open');
+  // ── NP2 Non-Consumable ──
+  function renderNP2Table(data) {
+    const tbody = document.getElementById('np2-body');
+    document.getElementById('np2-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${np2Data.length}</strong> items`;
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${np2Data.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td><td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td>
+      <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassNP2(item.condition)}">${item.condition||'—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditNP2Modal(${np2Data.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteNP2Item(${np2Data.indexOf(item)})">Delete</button>
+      </div></td></tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
   }
+  function filterNP2Table() { const q=document.getElementById('np2-search-input').value.toLowerCase(); renderNP2Table(np2Data.filter(i=>i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)||i.location.toLowerCase().includes(q))); }
+  function openNP2Modal() { document.getElementById('np2-modal-overlay').classList.add('open'); renderNP2Table(np2Data); }
+  function closeNP2Modal() { document.getElementById('np2-modal-overlay').classList.remove('open'); }
+  function openAddNP2Modal() { np2EditingIndex=null; document.getElementById('np2-modal-title').textContent='Add NP2 Item'; ['nf-code','nf-name','nf-unit','nf-location','nf-condition'].forEach(id=>document.getElementById(id).value=''); document.getElementById('nf-total').value=0; document.getElementById('nf-supply').value=0; document.getElementById('np2-form-overlay').classList.add('open'); }
+  function openEditNP2Modal(idx) { np2EditingIndex=idx; const item=np2Data[idx]; document.getElementById('np2-modal-title').textContent='Edit NP2 Item'; document.getElementById('nf-code').value=item.code; document.getElementById('nf-name').value=item.name; document.getElementById('nf-unit').value=item.unit; document.getElementById('nf-total').value=item.total; document.getElementById('nf-supply').value=item.supply; document.getElementById('nf-location').value=item.location; document.getElementById('nf-condition').value=item.condition; document.getElementById('np2-form-overlay').classList.add('open'); }
+  function closeNP2FormModal() { document.getElementById('np2-form-overlay').classList.remove('open'); }
+  function saveNP2Item() { const item={code:document.getElementById('nf-code').value.trim(),name:document.getElementById('nf-name').value.trim(),unit:document.getElementById('nf-unit').value.trim(),total:parseInt(document.getElementById('nf-total').value)||0,supply:parseInt(document.getElementById('nf-supply').value)||0,location:document.getElementById('nf-location').value.trim(),condition:document.getElementById('nf-condition').value.trim()}; if(!item.name){alert('Item name is required.');return;} if(np2EditingIndex!==null){np2Data[np2EditingIndex]=item;}else{np2Data.push(item);} closeNP2FormModal(); renderNP2Table(np2Data); document.getElementById('np2-modal-overlay').classList.add('open'); }
+  function deleteNP2Item(idx) { if(confirm(`Delete "${np2Data[idx].name}"?`)){np2Data.splice(idx,1);renderNP2Table(np2Data);} }
+  document.getElementById('np2-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeNP2Modal();});
+  document.getElementById('np2-form-overlay').addEventListener('click',function(e){if(e.target===this)closeNP2FormModal();});
 
-  function openEditModal(idx) {
-    editingIndex = idx;
-    const item = inventoryData[idx];
-    document.getElementById('modal-title').textContent = 'Edit Item';
-    document.getElementById('f-code').value = item.code;
-    document.getElementById('f-name').value = item.name;
-    document.getElementById('f-unit').value = item.unit;
-    document.getElementById('f-ideal').value = item.ideal;
-    document.getElementById('f-total').value = item.total;
-    document.getElementById('f-supply').value = item.supply;
-    document.getElementById('f-location').value = item.location;
-    document.getElementById('f-condition').value = item.condition;
-    document.getElementById('modal-overlay').classList.add('open');
+  // ── NP2 Consumable ──
+  function renderNP2ConTable(data) {
+    const tbody = document.getElementById('np2con-body');
+    document.getElementById('np2con-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${np2ConData.length}</strong> items`;
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${np2ConData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td><td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td>
+      <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassNP2(item.condition)}">${item.condition||'—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditNP2ConModal(${np2ConData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteNP2ConItem(${np2ConData.indexOf(item)})">Delete</button>
+      </div></td></tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
   }
+  function filterNP2ConTable() { const q=document.getElementById('np2con-search-input').value.toLowerCase(); renderNP2ConTable(np2ConData.filter(i=>i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)||i.location.toLowerCase().includes(q))); }
+  function openNP2ConModal() { document.getElementById('np2con-modal-overlay').classList.add('open'); renderNP2ConTable(np2ConData); }
+  function closeNP2ConModal() { document.getElementById('np2con-modal-overlay').classList.remove('open'); }
+  function openAddNP2ConModal() { np2conEditingIndex=null; document.getElementById('np2con-modal-title').textContent='Add NP2 Consumable Item'; ['ncf-code','ncf-name','ncf-unit','ncf-location','ncf-condition'].forEach(id=>document.getElementById(id).value=''); document.getElementById('ncf-total').value=0; document.getElementById('ncf-supply').value=0; document.getElementById('np2con-form-overlay').classList.add('open'); }
+  function openEditNP2ConModal(idx) { np2conEditingIndex=idx; const item=np2ConData[idx]; document.getElementById('np2con-modal-title').textContent='Edit NP2 Consumable Item'; document.getElementById('ncf-code').value=item.code; document.getElementById('ncf-name').value=item.name; document.getElementById('ncf-unit').value=item.unit; document.getElementById('ncf-total').value=item.total; document.getElementById('ncf-supply').value=item.supply; document.getElementById('ncf-location').value=item.location; document.getElementById('ncf-condition').value=item.condition; document.getElementById('np2con-form-overlay').classList.add('open'); }
+  function closeNP2ConFormModal() { document.getElementById('np2con-form-overlay').classList.remove('open'); }
+  function saveNP2ConItem() { const item={code:document.getElementById('ncf-code').value.trim(),name:document.getElementById('ncf-name').value.trim(),unit:document.getElementById('ncf-unit').value.trim(),total:parseInt(document.getElementById('ncf-total').value)||0,supply:parseInt(document.getElementById('ncf-supply').value)||0,location:document.getElementById('ncf-location').value.trim(),condition:document.getElementById('ncf-condition').value.trim()}; if(!item.name){alert('Item name is required.');return;} if(np2conEditingIndex!==null){np2ConData[np2conEditingIndex]=item;}else{np2ConData.push(item);} closeNP2ConFormModal(); renderNP2ConTable(np2ConData); document.getElementById('np2con-modal-overlay').classList.add('open'); }
+  function deleteNP2ConItem(idx) { if(confirm(`Delete "${np2ConData[idx].name}"?`)){np2ConData.splice(idx,1);renderNP2ConTable(np2ConData);} }
+  document.getElementById('np2con-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeNP2ConModal();});
+  document.getElementById('np2con-form-overlay').addEventListener('click',function(e){if(e.target===this)closeNP2ConFormModal();});
 
-  function closeModal() {
-    document.getElementById('modal-overlay').classList.remove('open');
+  // ── CSR Consumable ──
+  function renderConsumableTable(data) {
+    const tbody = document.getElementById('consumable-body');
+    document.getElementById('con-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${consumableData.length}</strong> items`;
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${consumableData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td><td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td><td class="ideal-stock">${item.ideal}</td>
+      <td><span class="qty-pill">${item.total}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassCon(item.condition)}">${item.condition||'—'}</span></td>
+      <td style="font-size:12px;color:var(--gray-700);">${item.expiry||'—'}</td>
+      <td style="font-size:12px;color:var(--gray-500);">${item.restock||'—'}</td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditConsumableModal(${consumableData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteConsumableItem(${consumableData.indexOf(item)})">Delete</button>
+      </div></td></tr>`).join('') :
+    `<tr><td colspan="12" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
   }
-
-  function saveItem() {
-    const item = {
-      code: document.getElementById('f-code').value.trim(),
-      name: document.getElementById('f-name').value.trim(),
-      unit: document.getElementById('f-unit').value.trim(),
-      ideal: parseInt(document.getElementById('f-ideal').value) || 525,
-      total: parseInt(document.getElementById('f-total').value) || 0,
-      supply: parseInt(document.getElementById('f-supply').value) || 0,
-      location: document.getElementById('f-location').value.trim(),
-      condition: document.getElementById('f-condition').value.trim(),
-    };
-    if (!item.name) { alert('Item name is required.'); return; }
-    if (editingIndex !== null) {
-      inventoryData[editingIndex] = item;
-    } else {
-      inventoryData.push(item);
-    }
-    closeModal();
-    filterTable();
-  }
-
-  function deleteItem(idx) {
-    if (confirm(`Delete "${inventoryData[idx].name}"?`)) {
-      inventoryData.splice(idx, 1);
-      filterTable();
-    }
-  }
-
-  document.getElementById('modal-overlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-
-  // Initial render
-  renderTable(inventoryData);
+  function filterConsumableTable() { const q=document.getElementById('con-search-input').value.toLowerCase(); renderConsumableTable(consumableData.filter(i=>i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)||i.location.toLowerCase().includes(q))); }
+  function openConsumableModal() { document.getElementById('consumable-modal-overlay').classList.add('open'); renderConsumableTable(consumableData); }
+  function closeConsumableModal() { document.getElementById('consumable-modal-overlay').classList.remove('open'); }
+  function openAddConsumableModal() { conEditingIndex=null; document.getElementById('con-modal-title').textContent='Add Consumable Item'; ['cf-code','cf-name','cf-unit','cf-total','cf-supply','cf-location','cf-condition','cf-expiry'].forEach(id=>document.getElementById(id).value=''); document.getElementById('cf-ideal').value=2475; document.getElementById('cf-restock').value='Unknown'; document.getElementById('con-modal-overlay').classList.add('open'); }
+  function openEditConsumableModal(idx) { conEditingIndex=idx; const item=consumableData[idx]; document.getElementById('con-modal-title').textContent='Edit Consumable Item'; document.getElementById('cf-code').value=item.code; document.getElementById('cf-name').value=item.name; document.getElementById('cf-unit').value=item.unit; document.getElementById('cf-ideal').value=item.ideal; document.getElementById('cf-total').value=item.total; document.getElementById('cf-supply').value=item.supply; document.getElementById('cf-location').value=item.location; document.getElementById('cf-condition').value=item.condition; document.getElementById('cf-expiry').value=item.expiry; document.getElementById('cf-restock').value=item.restock; document.getElementById('con-modal-overlay').classList.add('open'); }
+  function closeConModal() { document.getElementById('con-modal-overlay').classList.remove('open'); }
+  function saveConsumableItem() { const item={code:document.getElementById('cf-code').value.trim(),name:document.getElementById('cf-name').value.trim(),unit:document.getElementById('cf-unit').value.trim(),ideal:parseInt(document.getElementById('cf-ideal').value)||2475,total:document.getElementById('cf-total').value.trim(),supply:document.getElementById('cf-supply').value.trim(),location:document.getElementById('cf-location').value.trim(),condition:document.getElementById('cf-condition').value.trim(),expiry:document.getElementById('cf-expiry').value.trim(),restock:document.getElementById('cf-restock').value.trim()}; if(!item.name){alert('Item name is required.');return;} if(conEditingIndex!==null){consumableData[conEditingIndex]=item;}else{consumableData.push(item);} closeConModal(); renderConsumableTable(consumableData); document.getElementById('consumable-modal-overlay').classList.add('open'); }
+  function deleteConsumableItem(idx) { if(confirm(`Delete "${consumableData[idx].name}"?`)){consumableData.splice(idx,1);renderConsumableTable(consumableData);} }
+  document.getElementById('consumable-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeConsumableModal();});
+  document.getElementById('con-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeConModal();});
 </script>
 </body>
 </html>
