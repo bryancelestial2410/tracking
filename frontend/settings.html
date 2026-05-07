@@ -92,6 +92,12 @@
     .inv-category-btn.np2-con-btn:hover { background:#f0b429;color:#fff; }
     .inv-category-btn.mnh-btn { background:#f0e6fc;border-color:#9b59b6;color:#5b1e8a; }
     .inv-category-btn.mnh-btn:hover { background:#9b59b6;color:#fff; }
+
+    .inv-category-btn.mnh-con-btn { background:#e7fbf8;border-color:#19b6b0;color:#075b57; }
+    .inv-category-btn.mnh-con-btn:hover { background:#19b6b0;color:#fff; }
+    .inv-category-btn.mc-btn { background:#dff7ff;border-color:#00a7c7;color:#064f5f; }
+    .inv-category-btn.mc-btn:hover { background:#00a7c7;color:#fff; }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @media (max-width: 768px) { .main { padding: 28px 16px; } .navbar { padding: 0 20px; } .section-card { padding: 20px 16px; } .form-row { grid-template-columns: 1fr; } }
   </style>
@@ -161,6 +167,15 @@
             <div style="font-size:11px;opacity:0.75;margin-top:2px;">85 items</div>
           </div>
         </button>
+        <button class="inv-category-btn mnh-con-btn" onclick="openMNHConModal()">
+          <span style="font-size:20px;">🧪</span>
+           <div>
+            <div style="font-weight:700;font-size:14px;">MNH Consumable</div>
+            <div style="font-size:11px;opacity:0.75;margin-top:2px;">51 items</div>
+         </div>
+        </button>
+
+        
       </div>
     </div>
   </main>
@@ -394,6 +409,96 @@
       <button class="btn-save" onclick="saveItem()">Save Item</button>
     </div>
   </div>
+  //
+  <div class="modal-overlay" id="mnhcon-modal-overlay">
+  <div class="modal" style="max-width:1200px;width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h2>🧪 MNH Consumable</h2>
+      <button class="modal-close" onclick="closeMNHConModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage mini hospital consumable inventory</p>
+    <div class="toolbar">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="mnhcon-search-input" placeholder="Search MNH consumable…" oninput="filterMNHConTable()"></div>
+      <button class="btn-add" onclick="openAddMNHConModal()">+ Add Item</button>
+    </div>
+    <div class="count-label" id="mnhcon-count-label">Showing <strong>0</strong> items</div>
+    <div class="table-wrap">
+      <table id="mnhcon-table">
+        <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Units</th><th>Total Stock</th><th>Supply on Hand</th><th>Expiration Date</th><th>Stock Status</th><th>Last Restock</th><th>Location</th><th>Actions</th></tr></thead>
+        <tbody id="mnhcon-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="mnhcon-form-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="mnhcon-modal-title">Add MNH Consumable Item</h2>
+      <button class="modal-close" onclick="closeMNHConFormModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Item Code</label><input type="text" id="mcf-code" placeholder="MNH-CON-MC8-01"></div>
+      <div class="form-group"><label>Units</label><input type="text" id="mcf-unit" placeholder="BOTTLE"></div>
+    </div>
+    <div class="form-group"><label>Item Name</label><input type="text" id="mcf-name" placeholder="Item name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Total Stock</label><input type="text" id="mcf-total" placeholder="30 BOTTLES"></div>
+      <div class="form-group"><label>Supply on Hand</label><input type="text" id="mcf-supply" placeholder="4 BOTTLES"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Expiration Date</label><input type="text" id="mcf-expiry" placeholder="09/03/2027"></div>
+      <div class="form-group"><label>Stock Status</label><input type="text" id="mcf-status" placeholder="LOW"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Last Restock Date</label><input type="text" id="mcf-restock" placeholder="March 2025"></div>
+      <div class="form-group"><label>Location</label><input type="text" id="mcf-location" placeholder="MC8"></div>
+    </div>
+    <button class="btn-save" onclick="saveMNHConItem()">Save Item</button>
+  </div>
+</div>
+<div class="modal-overlay" id="mc-modal-overlay">
+  <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h2>🎤 MC Non Consumable</h2>
+      <button class="modal-close" onclick="closeMCModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage MC non-consumable equipment inventory</p>
+    <div class="toolbar">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="mc-search-input" placeholder="Search MC items…" oninput="filterMCTable()"></div>
+      <button class="btn-add" onclick="openAddMCModal()">+ Add Item</button>
+    </div>
+    <div class="count-label" id="mc-count-label">Showing <strong>0</strong> items</div>
+    <div class="table-wrap">
+      <table id="mc-table">
+        <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Total Stock</th><th>Supply on Hand</th><th>Location</th><th>Item Condition</th><th>Actions</th></tr></thead>
+        <tbody id="mc-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MC Add/Edit Form Modal -->
+<div class="modal-overlay" id="mc-form-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="mc-modal-title">Add MC Item</h2>
+      <button class="modal-close" onclick="closeMCFormModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Item Code</label><input type="text" id="mc-code" placeholder="MC-NCON-01"></div>
+      <div class="form-group"><label>Unit</label><input type="text" id="mc-unit" placeholder="pc"></div>
+    </div>
+    <div class="form-group"><label>Item Name</label><input type="text" id="mc-name" placeholder="Item name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Total Stock</label><input type="number" id="mc-total" placeholder="0"></div>
+      <div class="form-group"><label>Supply on Hand</label><input type="number" id="mc-supply" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>Location</label><input type="text" id="mc-location" placeholder="F"></div>
+    <div class="form-group"><label>Item Condition</label><input type="text" id="mc-condition" placeholder="Good condition"></div>
+    <button class="btn-save" onclick="saveMCItem()">Save Item</button>
+  </div>
+</div>
 
 <script>
   const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -773,8 +878,83 @@
     {code:'MNH-NCON-MC1-84',name:'Wooden Shelf (Various)',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
     {code:'MNH-NCON-IMN-85',name:'Wooden Table – Oval',unit:'unit',total:1,supply:1,location:'IMN',condition:'Good Condition'},
   ];
+   
+  const mnhConData = [
+  {code:'MNH-CON-MC8-01',name:'0.9 Sodium Chloride 1L',unit:'BOTTLE',total:'30 BOTTLES',supply:'4 BOTTLES',expiry:'09/03/2027',status:'LOW',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC6-02',name:'0.9 Sodium Chloride 500ML',unit:'BOTTLE BAG',total:'30 BOTTLES',supply:'13 BOTTLES',expiry:'Mar 2028',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC7-03',name:'Absorbent Cotton 400g',unit:'PACK',total:'20 PACKS',supply:'10 PACKS',expiry:'July 2029',status:'AVAILABLE',restock:'March 2025',location:'MC7'},
+  {code:'MNH-CON-MC6-04',name:'Absorbent Gauze Roll 28x24 2ply',unit:'ROLLS',total:'15 ROLLS',supply:'8 ROLLS',expiry:'02/25/2030',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC7-05',name:'Adult Diapers S-L',unit:'PACK',total:'10 PACKS',supply:'1 PACK',expiry:'Mar 2030',status:'AVAILABLE',restock:'March 2025',location:'MC7'},
+  {code:'MNH-CON-MC8-06',name:'Blood Clot Simulator',unit:'UNITS',total:'5 UNITS',supply:'3 UNITS',expiry:'N/A',status:'AVAILABLE',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC4-07',name:'Burette-Type Infusion Set 150ML',unit:'PCS',total:'10 PCS',supply:'1 PIECE',expiry:'09/25/2025',status:'LOW',restock:'March 2025',location:'MC4'},
+  {code:'MNH-CON-MC4-08',name:'Care Soap Bar',unit:'PACKS',total:'40 PACKS',supply:'30 PACKS',expiry:'11/24/2028',status:'AVAILABLE',restock:'March 2025',location:'MC4'},
+  {code:'MNH-CON-MC2-09',name:'Dishwashing Soap',unit:'GAL',total:'10 GALLONS',supply:'2 GALLONS',expiry:'N/A',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-10',name:'Disposable Clip Cap',unit:'100PCS/PACKS',total:'15 PACKS',supply:'7 PACKS',expiry:'12/19/2029',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC8-11',name:'Disposable Syringe 5cc',unit:'BOX',total:'25 BOXES',supply:'5 BOXES',expiry:'11/20/2028',status:'LOW',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC6-12',name:'Disposable Syringe w Needle Luer Lock 10cc',unit:'BOX',total:'25 BOXES',supply:'3 BOXES',expiry:'11/25/2030',status:'LOW',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC2-13',name:'Elastic Bandage (7.5x5)',unit:'PCS',total:'15 PCS',supply:'7 PIECES',expiry:'08/01/2029',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-14',name:'Fluid Bottle Container',unit:'PCS',total:'10 PCS',supply:'4 PIECES',expiry:'N/A',status:'LOW',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC4-15',name:'Foley Balloon Catheter S16',unit:'BOX',total:'15 PCS',supply:'1 PIECE',expiry:'SEPT 2030',status:'LOW',restock:'March 2025',location:'MC4'},
+  {code:'MNH-CON-MC2-16',name:'Garbage Bag -L',unit:'ROLLS',total:'12 ROLLS',supply:'6 ROLLS',expiry:'N/A',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-17',name:'Gauze Swab 3x3',unit:'BOX',total:'20 BOXES',supply:'5 BOXES',expiry:'08/15/2029',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-18',name:'Gauze Swab 4x4',unit:'BOX',total:'20 BOXES',supply:'2 BOXES',expiry:'Sept 2028',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-19',name:'Handsoap',unit:'GAL',total:'10 GALLONS',supply:'3 GALLONS',expiry:'N/A',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-20',name:'Hospital ID Bracelet',unit:'BOX',total:'5 BOXES',supply:'1 BOX',expiry:'N/A',status:'LOW',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC4-21',name:'IDP KN95 Face Mask',unit:'PCS',total:'500 PCS',supply:'299 PIECES',expiry:'11/20/2025',status:'AVAILABLE',restock:'March 2025',location:'MC4'},
+  {code:'MNH-CON-MC2-22',name:'Isopropyl Alcohol 70% Sol',unit:'GAL',total:'15 GALLONS',supply:'9 GALLONS',expiry:'N/A',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-23',name:'IV Cannula w Injection Valve 20g',unit:'BOX',total:'12 BOXES',supply:'4 BOXES',expiry:'Jan 2030',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-24',name:'IV Cannula w Wings and Injection Port 20g/32mm',unit:'BOX',total:'12 BOXES',supply:'2 BOXES',expiry:'Jan 2030',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-25',name:'Latex Examination Gloves Non Sterile (S)',unit:'BOX',total:'25 BOXES',supply:'9 BOXES',expiry:'Jan 2030',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-26',name:'Latex Gloves Non Sterile (M)',unit:'BOX',total:'25 BOXES',supply:'16 BOXES',expiry:'Jan 2030',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-27',name:'Lubricating Jelly',unit:'PCS',total:'100 PCS',supply:'84 PIECES',expiry:'04/09/2029',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-28',name:'Micropore Adhesive Tape 2 in x10yd',unit:'BOX',total:'30 BOXES',supply:'18 BOXES',expiry:'11/30/2029',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC6-29',name:'Micropore Adhesive Tape 1inx10 yd',unit:'PCS',total:'100 PCS',supply:'80 PIECES',expiry:'12/31/2028',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC8-30',name:'Nasal Oxygen Cannula Adult',unit:'PACK',total:'10 PACKS',supply:'4 PACKS',expiry:'Aug 2030',status:'LOW',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC8-31',name:'Nebulizer Tubing',unit:'PC/PACK',total:'15 PCS',supply:'6 PIECES',expiry:'June 2028',status:'LOW',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC8-32',name:'Non Rebreathing Oxygen Mask',unit:'PC/PACK',total:'15 PCS',supply:'8 PIECES',expiry:'Sept 2028',status:'LOW',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC7-33',name:'Pampers Ac Dry Taped Newborn',unit:'PACK',total:'10 PACKS',supply:'1 PACK',expiry:'Aug 2028',status:'LOW',restock:'March 2025',location:'MC7'},
+  {code:'MNH-CON-MC8-34',name:'Simple Oxygen Mask',unit:'PACK',total:'10 PACKS',supply:'1 PACK',expiry:'October 2026',status:'LOW',restock:'March 2025',location:'MC8'},
+  {code:'MNH-CON-MC2-35',name:'Sterile Lancets',unit:'PCS',total:'200 PCS',supply:'100 PIECES',expiry:'Nov 2028',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-36',name:'Sterile Latex Surgical Gloves S-7',unit:'BOX',total:'20 BOXES',supply:'6 BOXES',expiry:'07/31/2030',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC2-37',name:'Sterile Needle Size 18',unit:'PCS',total:'30 PCS',supply:'9 PIECES',expiry:'Feb 2028',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-38',name:'Sterile Surgical Gloves S-7.5',unit:'BOX',total:'15 BOXES',supply:'5 BOXES',expiry:'04/14/2030',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC6-39',name:'Sterile Surgical Gloves S-8',unit:'BOX',total:'15 BOXES',supply:'6 BOXES',expiry:'04/14/2030',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC4-40',name:'Sterile Urine Bag 2000ML',unit:'PACK',total:'20 PACKS',supply:'9 PACKS',expiry:'11/27/2029',status:'LOW',restock:'March 2025',location:'MC4'},
+  {code:'MNH-CON-MC2-41',name:'Sterile Water (5ML)',unit:'PCS',total:'30 PCS',supply:'10 PIECES',expiry:'Apr 2027',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-42',name:'Sterile Water 50 ML',unit:'BOX',total:'20 BOXES',supply:'6 BOXES',expiry:'Aug 2027',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-43',name:'Suction Catheter',unit:'BOX',total:'10 BOXES',supply:'2 BOXES',expiry:'05/19/2030',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC2-44',name:'Surgical Blades',unit:'BOX',total:'10 BOXES',supply:'2 BOXES',expiry:'Aug 2027',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-45',name:'Surgical Scrub Brush',unit:'PCS',total:'100 PCS',supply:'68 PIECES',expiry:'June 2028',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC6-46',name:'Syringe w Needle Slip Tip 1cc',unit:'BOX',total:'15 BOXES',supply:'3 BOXES',expiry:'11/25/2030',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+  {code:'MNH-CON-MC2-47',name:'T MDF Lancet',unit:'BOX',total:'5 BOXES',supply:'1 BOX',expiry:'June 2026',status:'LOW',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC4-48',name:'TC Foley Catheter Latex S-14',unit:'BOX',total:'15 BOXES',supply:'3 BOXES',expiry:'Apr 2030',status:'LOW',restock:'March 2025',location:'MC4'},
+  {code:'MNH-CON-MC7-49',name:'Umbilical Cord Clamp',unit:'BOX',total:'15 BOXES',supply:'15 BOXES',expiry:'10/28/2028',status:'AVAILABLE',restock:'March 2025',location:'MC7'},
+  {code:'MNH-CON-MC5-50',name:'Vitamin K 10ML',unit:'PCS',total:'40 PCS',supply:'35 PIECES',expiry:'Aug 2024',status:'AVAILABLE',restock:'March 2025',location:'MC2'},
+  {code:'MNH-CON-MC6-51',name:'Wooden Tongue Depressor',unit:'BOX',total:'15 BOXES',supply:'6 BOXES',expiry:'02/17/2029',status:'AVAILABLE',restock:'March 2025',location:'MC6'},
+];
+ const mcData = [
+    {code:'MC-NCON-01',name:'Podium',unit:'pc',total:1,supply:1,location:'F',condition:'Good condition'},
+    {code:'MC-NCON-02',name:'Black chair',unit:'pcs',total:5,supply:10,location:'B',condition:'All in good condition'},
+    {code:'MC-NCON-03',name:'Wooden Table',unit:'pc',total:1,supply:2,location:'F',condition:'Good condition'},
+    {code:'MC-NCON-04',name:'Floor Mounted',unit:'unit',total:1,supply:2,location:'LS',condition:'Good condition'},
+    {code:'MC-NCON-05',name:'Built In Speaker',unit:'unit',total:8,supply:8,location:'AS',condition:'All in good condition'},
+    {code:'MC-NCON-06',name:'Orbit fan',unit:'pcs',total:4,supply:6,location:'FIXED',condition:'All in good condition'},
+    {code:'MC-NCON-07',name:'Fire extinguisher',unit:'pc',total:2,supply:2,location:'F',condition:'All in good condition'},
+    {code:'MC-NCON-08',name:'Student chairs',unit:'pcs',total:98,supply:110,location:'M',condition:'All in good condition'},
+    {code:'MC-NCON-09',name:'Professional Wireless Microphone',unit:'unit',total:4,supply:6,location:'F',condition:'Slightly in good condition'},
+    {code:'MC-NCON-10',name:'75" Lisa Board',unit:'unit',total:1,supply:1,location:'FIXED',condition:'Good condition'},
+    {code:'MC-NCON-11',name:'Audience light',unit:'pcs',total:12,supply:12,location:'FIXED',condition:'All in good condition'},
+    {code:'MC-NCON-12',name:'Stage light',unit:'pcs',total:6,supply:6,location:'FIXED',condition:'Slightly in good condition (2 defective)'},
+    {code:'MC-NCON-13',name:'CCTV camera',unit:'pcs',total:4,supply:6,location:'FIXED',condition:'All in good condition'},
+    {code:'MC-NCON-14',name:'Wall clock',unit:'pcs',total:1,supply:2,location:'FIXED',condition:'Good condition'},
+    {code:'MC-NCON-15',name:'Carrier Aircon',unit:'unit',total:2,supply:2,location:'RS',condition:'Good condition'},
+    {code:'MC-NCON-16',name:'Monoblock',unit:'pcs',total:32,supply:40,location:'F&B',condition:'Good condition'},
+    {code:'MC-NCON-17',name:'Amplifier',unit:'unit',total:5,supply:6,location:'LCF',condition:'All in good condition'},
+    {code:'MC-NCON-18',name:'LED',unit:'unit',total:1,supply:2,location:'FIXED',condition:'Good condition'},
+  ];
 
-  let editingIndex = null, np2EditingIndex = null, conEditingIndex = null, np2conEditingIndex = null, mnhEditingIndex = null;
+  let editingIndex = null, np2EditingIndex = null, conEditingIndex = null, np2conEditingIndex = null, mnhEditingIndex = null, mnhConEditingIndex = null, mcEditingIndex = null;
+
 
   function conditionClass(c) {
     if (!c) return 'condition-mixed';
@@ -919,6 +1099,354 @@
   function deleteConsumableItem(idx) { if(confirm(`Delete "${consumableData[idx].name}"?`)){consumableData.splice(idx,1);renderConsumableTable(consumableData);} }
   document.getElementById('consumable-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeConsumableModal();});
   document.getElementById('con-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeConModal();});
+
+    // ── MNH Non-Consumable ──
+  function renderMNHTable(data) {
+    const tbody = document.getElementById('mnh-body');
+    document.getElementById('mnh-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${mnhData.length}</strong> items`;
+
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${mnhData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td><td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td>
+      <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassNP2(item.condition)}">${item.condition||'—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditMNHModal(${mnhData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteMNHItem(${mnhData.indexOf(item)})">Delete</button>
+      </div></td>
+    </tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+  }
+
+  function filterMNHTable() {
+    const q = document.getElementById('mnh-search-input').value.toLowerCase();
+    renderMNHTable(mnhData.filter(i =>
+      i.name.toLowerCase().includes(q) ||
+      i.code.toLowerCase().includes(q) ||
+      i.location.toLowerCase().includes(q)
+    ));
+  }
+
+  function openMNHModal() {
+    document.getElementById('mnh-modal-overlay').classList.add('open');
+    renderMNHTable(mnhData);
+  }
+
+  function closeMNHModal() {
+    document.getElementById('mnh-modal-overlay').classList.remove('open');
+  }
+
+  function openAddMNHModal() {
+    mnhEditingIndex = null;
+    document.getElementById('mnh-modal-title').textContent = 'Add MNH Item';
+    ['mf-code','mf-name','mf-unit','mf-location','mf-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('mf-total').value = 0;
+    document.getElementById('mf-supply').value = 0;
+    document.getElementById('mnh-form-overlay').classList.add('open');
+  }
+
+  function openEditMNHModal(idx) {
+    mnhEditingIndex = idx;
+    const item = mnhData[idx];
+
+    document.getElementById('mnh-modal-title').textContent = 'Edit MNH Item';
+    document.getElementById('mf-code').value = item.code;
+    document.getElementById('mf-name').value = item.name;
+    document.getElementById('mf-unit').value = item.unit;
+    document.getElementById('mf-total').value = item.total;
+    document.getElementById('mf-supply').value = item.supply;
+    document.getElementById('mf-location').value = item.location;
+    document.getElementById('mf-condition').value = item.condition;
+
+    document.getElementById('mnh-form-overlay').classList.add('open');
+  }
+
+  function closeMNHFormModal() {
+    document.getElementById('mnh-form-overlay').classList.remove('open');
+  }
+
+  function saveMNHItem() {
+    const item = {
+      code: document.getElementById('mf-code').value.trim(),
+      name: document.getElementById('mf-name').value.trim(),
+      unit: document.getElementById('mf-unit').value.trim(),
+      total: parseInt(document.getElementById('mf-total').value) || 0,
+      supply: parseInt(document.getElementById('mf-supply').value) || 0,
+      location: document.getElementById('mf-location').value.trim(),
+      condition: document.getElementById('mf-condition').value.trim()
+    };
+
+    if (!item.name) {
+      alert('Item name is required.');
+      return;
+    }
+
+    if (mnhEditingIndex !== null) {
+      mnhData[mnhEditingIndex] = item;
+    } else {
+      mnhData.push(item);
+    }
+
+    closeMNHFormModal();
+    renderMNHTable(mnhData);
+    document.getElementById('mnh-modal-overlay').classList.add('open');
+  }
+
+  function deleteMNHItem(idx) {
+    if (confirm(`Delete "${mnhData[idx].name}"?`)) {
+      mnhData.splice(idx, 1);
+      renderMNHTable(mnhData);
+    }
+  }
+
+  document.getElementById('mnh-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeMNHModal();
+  });
+
+  document.getElementById('mnh-form-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeMNHFormModal();
+  });
+///////
+function stockStatusClass(status) {
+  return status && status.toLowerCase().includes('available') ? 'condition-good' : 'condition-mixed';
+}
+
+function renderMNHConTable(data) {
+  const tbody = document.getElementById('mnhcon-body');
+  document.getElementById('mnhcon-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${mnhConData.length}</strong> items`;
+  tbody.innerHTML = data.length ? data.map(item => `<tr>
+    <td class="td-num">${mnhConData.indexOf(item)+1}</td>
+    <td class="td-code">${item.code}</td>
+    <td class="td-name">${item.name}</td>
+    <td class="td-unit">${item.unit}</td>
+    <td><span class="qty-pill">${item.total}</span></td>
+    <td class="supply-num">${item.supply}</td>
+    <td style="font-size:12px;color:var(--gray-700);">${item.expiry || '—'}</td>
+    <td><span class="condition-pill ${stockStatusClass(item.status)}">${item.status || '—'}</span></td>
+    <td style="font-size:12px;color:var(--gray-500);">${item.restock || '—'}</td>
+    <td><span class="location-tag">${item.location}</span></td>
+    <td><div class="actions">
+      <button class="btn-edit" onclick="openEditMNHConModal(${mnhConData.indexOf(item)})">Edit</button>
+      <button class="btn-del" onclick="deleteMNHConItem(${mnhConData.indexOf(item)})">Delete</button>
+    </div></td>
+  </tr>`).join('') : `<tr><td colspan="11" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+}
+
+function filterMNHConTable() {
+  const q = document.getElementById('mnhcon-search-input').value.toLowerCase();
+  renderMNHConTable(mnhConData.filter(i => i.name.toLowerCase().includes(q) || i.code.toLowerCase().includes(q) || i.location.toLowerCase().includes(q) || i.status.toLowerCase().includes(q)));
+}
+
+function openMNHConModal() {
+  document.getElementById('mnhcon-modal-overlay').classList.add('open');
+  renderMNHConTable(mnhConData);
+}
+
+function closeMNHConModal() {
+  document.getElementById('mnhcon-modal-overlay').classList.remove('open');
+}
+
+function openAddMNHConModal() {
+  mnhConEditingIndex = null;
+  document.getElementById('mnhcon-modal-title').textContent = 'Add MNH Consumable Item';
+  ['mcf-code','mcf-name','mcf-unit','mcf-total','mcf-supply','mcf-expiry','mcf-status','mcf-restock','mcf-location'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('mcf-restock').value = 'March 2025';
+  document.getElementById('mnhcon-form-overlay').classList.add('open');
+}
+
+function openEditMNHConModal(idx) {
+  mnhConEditingIndex = idx;
+  const item = mnhConData[idx];
+  document.getElementById('mnhcon-modal-title').textContent = 'Edit MNH Consumable Item';
+  document.getElementById('mcf-code').value = item.code;
+  document.getElementById('mcf-name').value = item.name;
+  document.getElementById('mcf-unit').value = item.unit;
+  document.getElementById('mcf-total').value = item.total;
+  document.getElementById('mcf-supply').value = item.supply;
+  document.getElementById('mcf-expiry').value = item.expiry;
+  document.getElementById('mcf-status').value = item.status;
+  document.getElementById('mcf-restock').value = item.restock;
+  document.getElementById('mcf-location').value = item.location;
+  document.getElementById('mnhcon-form-overlay').classList.add('open');
+}
+
+function closeMNHConFormModal() {
+  document.getElementById('mnhcon-form-overlay').classList.remove('open');
+}
+
+function saveMNHConItem() {
+  const item = {
+    code: document.getElementById('mcf-code').value.trim(),
+    name: document.getElementById('mcf-name').value.trim(),
+    unit: document.getElementById('mcf-unit').value.trim(),
+    total: document.getElementById('mcf-total').value.trim(),
+    supply: document.getElementById('mcf-supply').value.trim(),
+    expiry: document.getElementById('mcf-expiry').value.trim(),
+    status: document.getElementById('mcf-status').value.trim(),
+    restock: document.getElementById('mcf-restock').value.trim(),
+    location: document.getElementById('mcf-location').value.trim()
+  };
+  if (!item.name) { alert('Item name is required.'); return; }
+  if (mnhConEditingIndex !== null) { mnhConData[mnhConEditingIndex] = item; } else { mnhConData.push(item); }
+  closeMNHConFormModal();
+  renderMNHConTable(mnhConData);
+  document.getElementById('mnhcon-modal-overlay').classList.add('open');
+}
+
+function deleteMNHConItem(idx) {
+  if (confirm(`Delete "${mnhConData[idx].name}"?`)) {
+    mnhConData.splice(idx, 1);
+    renderMNHConTable(mnhConData);
+  }
+}
+
+document.getElementById('mnhcon-modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeMNHConModal();
+});
+
+document.getElementById('mnhcon-form-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeMNHConFormModal();
+});
+//mc
+function addMCButton() {
+    const buttonRow = document.querySelector('.section-card div[style*="flex-wrap"]');
+    if (!buttonRow || document.querySelector('.inv-category-btn.mc-btn')) return;
+
+    buttonRow.insertAdjacentHTML('beforeend', `
+      <button class="inv-category-btn mc-btn" onclick="openMCModal()">
+        <span style="font-size:20px;">🎤</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;">MC Non Consumable</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:2px;">18 items</div>
+        </div>
+      </button>
+    `);
+  }
+
+  function conditionClassMC(c) {
+    if (!c) return 'condition-mixed';
+    const lc = c.toLowerCase();
+    if (lc.includes('defective')) return 'condition-mixed';
+    if (lc.includes('slightly')) return 'condition-mixed';
+    return 'condition-good';
+  }
+
+  function renderMCTable(data) {
+    const tbody = document.getElementById('mc-body');
+    document.getElementById('mc-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${mcData.length}</strong> items`;
+
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${mcData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td>
+      <td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td>
+      <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassMC(item.condition)}">${item.condition || '—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditMCModal(${mcData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteMCItem(${mcData.indexOf(item)})">Delete</button>
+      </div></td>
+    </tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+  }
+
+  function filterMCTable() {
+    const q = document.getElementById('mc-search-input').value.toLowerCase();
+    renderMCTable(mcData.filter(i =>
+      i.name.toLowerCase().includes(q) ||
+      i.code.toLowerCase().includes(q) ||
+      i.location.toLowerCase().includes(q) ||
+      i.condition.toLowerCase().includes(q)
+    ));
+  }
+
+  function openMCModal() {
+    document.getElementById('mc-modal-overlay').classList.add('open');
+    renderMCTable(mcData);
+  }
+
+  function closeMCModal() {
+    document.getElementById('mc-modal-overlay').classList.remove('open');
+  }
+
+  function openAddMCModal() {
+    mcEditingIndex = null;
+    document.getElementById('mc-modal-title').textContent = 'Add MC Item';
+    ['mc-code','mc-name','mc-unit','mc-location','mc-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('mc-total').value = 0;
+    document.getElementById('mc-supply').value = 0;
+    document.getElementById('mc-form-overlay').classList.add('open');
+  }
+
+  function openEditMCModal(idx) {
+    mcEditingIndex = idx;
+    const item = mcData[idx];
+
+    document.getElementById('mc-modal-title').textContent = 'Edit MC Item';
+    document.getElementById('mc-code').value = item.code;
+    document.getElementById('mc-name').value = item.name;
+    document.getElementById('mc-unit').value = item.unit;
+    document.getElementById('mc-total').value = item.total;
+    document.getElementById('mc-supply').value = item.supply;
+    document.getElementById('mc-location').value = item.location;
+    document.getElementById('mc-condition').value = item.condition;
+
+    document.getElementById('mc-form-overlay').classList.add('open');
+  }
+
+  function closeMCFormModal() {
+    document.getElementById('mc-form-overlay').classList.remove('open');
+  }
+
+  function saveMCItem() {
+    const item = {
+      code: document.getElementById('mc-code').value.trim(),
+      name: document.getElementById('mc-name').value.trim(),
+      unit: document.getElementById('mc-unit').value.trim(),
+      total: parseInt(document.getElementById('mc-total').value) || 0,
+      supply: parseInt(document.getElementById('mc-supply').value) || 0,
+      location: document.getElementById('mc-location').value.trim(),
+      condition: document.getElementById('mc-condition').value.trim()
+    };
+
+    if (!item.name) {
+      alert('Item name is required.');
+      return;
+    }
+
+    if (mcEditingIndex !== null) {
+      mcData[mcEditingIndex] = item;
+    } else {
+      mcData.push(item);
+    }
+
+    closeMCFormModal();
+    renderMCTable(mcData);
+    document.getElementById('mc-modal-overlay').classList.add('open');
+  }
+
+  function deleteMCItem(idx) {
+    if (confirm(`Delete "${mcData[idx].name}"?`)) {
+      mcData.splice(idx, 1);
+      renderMCTable(mcData);
+    }
+  }
+
+  document.getElementById('mc-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeMCModal();
+  });
+
+  document.getElementById('mc-form-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeMCFormModal();
+  });
+
+  addMCButton();
+
 </script>
 </body>
 </html>
