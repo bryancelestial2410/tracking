@@ -92,11 +92,31 @@
     .inv-category-btn.np2-con-btn:hover { background:#f0b429;color:#fff; }
     .inv-category-btn.mnh-btn { background:#f0e6fc;border-color:#9b59b6;color:#5b1e8a; }
     .inv-category-btn.mnh-btn:hover { background:#9b59b6;color:#fff; }
-
+    
     .inv-category-btn.mnh-con-btn { background:#e7fbf8;border-color:#19b6b0;color:#075b57; }
     .inv-category-btn.mnh-con-btn:hover { background:#19b6b0;color:#fff; }
     .inv-category-btn.mc-btn { background:#dff7ff;border-color:#00a7c7;color:#064f5f; }
     .inv-category-btn.mc-btn:hover { background:#00a7c7;color:#fff; }
+    .inv-category-btn.al-btn { background:#f4ffe0;border-color:#96c93d;color:#425f05; }
+    .inv-category-btn.al-btn:hover { background:#96c93d;color:#fff; }
+    .inv-category-btn.anatomy-btn { background:#eaf6df;border-color:#8abf6a;color:#315f20; }
+    .inv-category-btn.anatomy-btn:hover { background:#6fa84f;color:#fff; }
+    .inv-category-btn.ordr-btn { background:#ffe7dc;border-color:#d97b68;color:#7a2818; }
+    .inv-category-btn.ordr-btn:hover { background:#d97b68;color:#fff; }
+     .inv-category-btn.ordrncon-btn { background:#f7e2e2;border-color:#d85b61;color:#7a171d; }
+    .inv-category-btn.ordrncon-btn:hover { background:#d85b61;color:#fff; }
+    .table-section-row td {
+    background:#e06469 !important;
+    color:#111;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    text-align:left;
+  }
+    .table-section-row.simulation td {
+    background:#9fbcea !important;
+    text-align:center;
+  }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @media (max-width: 768px) { .main { padding: 28px 16px; } .navbar { padding: 0 20px; } .section-card { padding: 20px 16px; } .form-row { grid-template-columns: 1fr; } }
@@ -497,6 +517,187 @@
     <div class="form-group"><label>Location</label><input type="text" id="mc-location" placeholder="F"></div>
     <div class="form-group"><label>Item Condition</label><input type="text" id="mc-condition" placeholder="Good condition"></div>
     <button class="btn-save" onclick="saveMCItem()">Save Item</button>
+  </div>
+  <div class="modal-overlay" id="al-modal-overlay">
+  <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h2>🧬 AL Non Consumable</h2>
+      <button class="modal-close" onclick="closeALModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage AL non-consumable equipment inventory</p>
+    <div class="toolbar">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="al-search-input" placeholder="Search AL items…" oninput="filterALTable()"></div>
+      <button class="btn-add" onclick="openAddALModal()">+ Add Item</button>
+    </div>
+    <div class="count-label" id="al-count-label">Showing <strong>0</strong> items</div>
+    <div class="table-wrap">
+      <table id="al-table">
+        <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Total Stock</th><th>Stock on Hand</th><th>Location</th><th>Item Condition</th><th>Actions</th></tr></thead>
+        <tbody id="al-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- AL Add/Edit Form Modal -->
+<div class="modal-overlay" id="al-form-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="al-modal-title">Add AL Item</h2>
+      <button class="modal-close" onclick="closeALFormModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Item Code</label><input type="text" id="al-code" placeholder="AL-NCON-01"></div>
+      <div class="form-group"><label>Unit</label><input type="text" id="al-unit" placeholder="unit"></div>
+    </div>
+    <div class="form-group"><label>Item Name</label><input type="text" id="al-name" placeholder="Item name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Total Stock</label><input type="number" id="al-total" placeholder="0"></div>
+      <div class="form-group"><label>Stock on Hand</label><input type="number" id="al-supply" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>Location</label><input type="text" id="al-location" placeholder="LSW"></div>
+    <div class="form-group"><label>Item Condition</label><input type="text" id="al-condition" placeholder="Good condition"></div>
+    <button class="btn-save" onclick="saveALItem()">Save Item</button>
+  </div>
+</div>
+</div>
+<!-- Anatomy Lab Modal -->
+<div class="modal-overlay" id="anatomy-modal-overlay">
+  <div class="modal" style="max-width:1100px;width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h2>🧬 Anatomy Lab</h2>
+      <button class="modal-close" onclick="closeAnatomyModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage Anatomy Lab Room 201 inventory</p>
+    <div class="toolbar">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="anatomy-search-input" placeholder="Search Anatomy Lab items…" oninput="filterAnatomyTable()"></div>
+      <button class="btn-add" onclick="openAddAnatomyModal()">+ Add Item</button>
+    </div>
+    <div class="count-label" id="anatomy-count-label">Showing <strong>0</strong> items</div>
+    <div class="table-wrap">
+      <table id="anatomy-table">
+        <thead><tr><th>#</th><th>Item Code</th><th>Item Name</th><th>Unit</th><th>Total Stock</th><th>Stock on Hand</th><th>Location</th><th>Item Condition</th><th>Actions</th></tr></thead>
+        <tbody id="anatomy-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Anatomy Lab Add/Edit Form Modal -->
+<div class="modal-overlay" id="anatomy-form-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="anatomy-modal-title">Add Anatomy Lab Item</h2>
+      <button class="modal-close" onclick="closeAnatomyFormModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Item Code</label><input type="text" id="anatomy-code" placeholder="AL-BOR-01"></div>
+      <div class="form-group"><label>Unit</label><input type="text" id="anatomy-unit" placeholder="unit"></div>
+    </div>
+    <div class="form-group"><label>Item Name</label><input type="text" id="anatomy-name" placeholder="Item name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Total Stock</label><input type="number" id="anatomy-total" placeholder="0"></div>
+      <div class="form-group"><label>Stock on Hand</label><input type="number" id="anatomy-supply" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>Location</label><input type="text" id="anatomy-location" placeholder="LSW"></div>
+    <div class="form-group"><label>Item Condition</label><input type="text" id="anatomy-condition" placeholder="Good condition"></div>
+    <button class="btn-save" onclick="saveAnatomyItem()">Save Item</button>
+  </div>
+</div>
+<div class="modal-overlay" id="ordr-modal-overlay">
+  <div class="modal" style="max-width:1200px;width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h2>🏥 OR/DR Consumables</h2>
+      <button class="modal-close" onclick="closeORDRModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage OR/DR consumable inventory</p>
+    <div class="toolbar">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="ordr-search-input" placeholder="Search OR/DR consumables…" oninput="filterORDRTable()"></div>
+      <button class="btn-add" onclick="openAddORDRModal()">+ Add Item</button>
+    </div>
+    <div class="count-label" id="ordr-count-label">Showing <strong>0</strong> items</div>
+    <div class="table-wrap">
+      <table id="ordr-table">
+        <thead><tr><th>#</th><th>Item ID</th><th>Item Name</th><th>Unit</th><th>Ideal Stocks</th><th>Supply on Hand</th><th>Location</th><th>Condition</th><th>Actions</th></tr></thead>
+        <tbody id="ordr-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- OR/DR Consumables Add/Edit Form Modal -->
+<div class="modal-overlay" id="ordr-form-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="ordr-modal-title">Add OR/DR Consumable</h2>
+      <button class="modal-close" onclick="closeORDRFormModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Item ID</label><input type="text" id="ordr-code" placeholder="OR/DR-068"></div>
+      <div class="form-group"><label>Unit</label><input type="text" id="ordr-unit" placeholder="box"></div>
+    </div>
+    <div class="form-group"><label>Item Name</label><input type="text" id="ordr-name" placeholder="Item name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Ideal Stocks</label><input type="number" id="ordr-ideal" placeholder="40"></div>
+      <div class="form-group"><label>Supply on Hand</label><input type="text" id="ordr-supply" placeholder="100pcs(1box)"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Location</label><input type="text" id="ordr-location" placeholder="OR/DRCC1R"></div>
+      <div class="form-group"><label>Condition</label><input type="text" id="ordr-condition" placeholder="Good"></div>
+    </div>
+    <button class="btn-save" onclick="saveORDRItem()">Save Item</button>
+  </div>
+</div>
+<div class="modal-overlay" id="ordrncon-modal-overlay">
+  <div class="modal" style="max-width:1200px;width:95vw;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h2>🏥 OR/DR Non Consumable</h2>
+      <button class="modal-close" onclick="closeORDRNConModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;">Manage OR/DR non-consumable equipment inventory</p>
+    <div class="toolbar">
+      <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="ordrncon-search-input" placeholder="Search OR/DR non-consumable…" oninput="filterORDRNConTable()"></div>
+      <button class="btn-add" onclick="openAddORDRNConModal()">+ Add Item</button>
+    </div>
+    <div class="count-label" id="ordrncon-count-label">Showing <strong>0</strong> items</div>
+    <div class="table-wrap">
+      <table id="ordrncon-table">
+        <thead><tr><th>#</th><th>Item ID</th><th>Item Name</th><th>Unit</th><th>Ideal Stocks</th><th>Supply on Hand</th><th>Location</th><th>Condition</th><th>Actions</th></tr></thead>
+        <tbody id="ordrncon-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- OR/DR Non-Consumable Add/Edit Form Modal -->
+<div class="modal-overlay" id="ordrncon-form-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="ordrncon-modal-title">Add OR/DR Item</h2>
+      <button class="modal-close" onclick="closeORDRNConFormModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Section</label>
+      <select id="ordrncon-section">
+        <option value="Operating Room">Operating Room</option>
+        <option value="Delivery Room">Delivery Room</option>
+        <option value="DR/OR Equipment Simulation">DR/OR Equipment Simulation</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Item ID</label><input type="text" id="ordrncon-code" placeholder="OR-001"></div>
+      <div class="form-group"><label>Unit</label><input type="text" id="ordrncon-unit" placeholder="pcs"></div>
+    </div>
+    <div class="form-group"><label>Item Name</label><input type="text" id="ordrncon-name" placeholder="Item name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Ideal Stocks</label><input type="number" id="ordrncon-ideal" placeholder="8"></div>
+      <div class="form-group"><label>Supply on Hand</label><input type="number" id="ordrncon-supply" placeholder="4"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Location</label><input type="text" id="ordrncon-location" placeholder="OR/DR-NCON-C1L"></div>
+      <div class="form-group"><label>Condition</label><input type="text" id="ordrncon-condition" placeholder="Good"></div>
+    </div>
+    <button class="btn-save" onclick="saveORDRNConItem()">Save Item</button>
   </div>
 </div>
 
@@ -952,8 +1153,220 @@
     {code:'MC-NCON-17',name:'Amplifier',unit:'unit',total:5,supply:6,location:'LCF',condition:'All in good condition'},
     {code:'MC-NCON-18',name:'LED',unit:'unit',total:1,supply:2,location:'FIXED',condition:'Good condition'},
   ];
+  const alData = [
+    {code:'AL-NCON-01',name:'TV Sony Wega w/ TV Stand',unit:'unit',total:1,supply:2,location:'LSW',condition:'Defective'},
+    {code:'AL-NCON-02',name:'2.5HP Split Type Aircon - Carrier',unit:'unit',total:1,supply:2,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-03',name:'Wooden Shelves - 6 layers',unit:'unit',total:1,supply:2,location:'RSC',condition:'Good condition'},
+    {code:'AL-NCON-04',name:'Wooden Shelves - 4 layers',unit:'unit',total:1,supply:2,location:'LS',condition:'Good condition'},
+    {code:'AL-NCON-05',name:'3B Plant Cell Model',unit:'pcs',total:1,supply:2,location:'LSW',condition:'Good condition'},
+    {code:'AL-NCON-06',name:'Skeleton Stand w/ Ballcaster',unit:'set',total:1,supply:2,location:'RSC',condition:'Slightly Defective'},
+    {code:'AL-NCON-07',name:'Stool Chair',unit:'pcs',total:36,supply:45,location:'LSC',condition:'30 in good condition, 7 defective'},
+    {code:'AL-NCON-08',name:'Lab Table - black',unit:'unit',total:8,supply:8,location:'AS',condition:'Slightly Defective'},
+    {code:'AL-NCON-09',name:'Whiteboard',unit:'unit',total:1,supply:2,location:'F',condition:'Slightly Defective'},
+    {code:'AL-NCON-10',name:"Teacher's Table",unit:'unit',total:1,supply:2,location:'F',condition:'Slightly Defective'},
+    {code:'AL-NCON-11',name:'Sample Fetus - 18 days',unit:'pcs',total:1,supply:2,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-C3B-12',name:'Sample Fetus - 20 days',unit:'pcs',total:1,supply:2,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-C3B-13',name:'Sample Fetus - 22 days',unit:'pcs',total:1,supply:2,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-C3B-14',name:'Sample Fetus - 23 days',unit:'pcs',total:1,supply:2,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-C3B-15',name:'Sample Fetus - 23 days',unit:'pcs',total:1,supply:2,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-C3B-16',name:'Sample Fetus - w/o number',unit:'pcs',total:5,supply:5,location:'RS',condition:'In good condition'},
+    {code:'AL-NCON-17',name:'Delux Dual Sex Muscular Figure',unit:'pcs',total:1,supply:2,location:'LSC',condition:'Defective'},
+    {code:'AL-NCON-18',name:'Fire Extinguisher',unit:'pcs',total:1,supply:2,location:'B',condition:'Good condition'},
+    {code:'AL-NCON-19',name:'Male pelvis',unit:'unit',total:1,supply:2,location:'LSC',condition:'Good condition'},
+    {code:'AL-NCON-20',name:'Female Pelvis',unit:'unit',total:1,supply:2,location:'LSC',condition:'Good condition'},
+    {code:'AL-NCON-21',name:'Disarticulated Painted Full Skeleton',unit:'pcs',total:1,supply:2,location:'LS',condition:'Good condition'},
+    {code:'AL-NCON-22',name:'First Aid Box',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+    {code:'AL-NCON-23',name:'Boekel Nervous System',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+    {code:'AL-NCON-24',name:'Lavatory w/ Faucet',unit:'pcs',total:4,supply:4,location:'LSW',condition:'Slightly in good condition (1 defective)'},
+    {code:'AL-NCON-25',name:'Curtain Rod',unit:'pcs',total:3,supply:3,location:'LSW',condition:'All in good condition'},
+    {code:'AL-NCON-26',name:'Long Curtain- blue',unit:'pcs',total:12,supply:16,location:'RSW',condition:'All in good condition'},
+    {code:'AL-NCON-27',name:'2.5HP Split Aircon - condura',unit:'unit',total:1,supply:1,location:'RS',condition:'Good condition'},
+    {code:'AL-NCON-28',name:'Female reproductive system',unit:'',total:'',supply:'',location:'',condition:''},
+    {code:'AL-NCON-29',name:'Skin Model 70x Life Size',unit:'',total:'',supply:'',location:'',condition:''},
+    {code:'AL-NCON-30',name:'Classic Unisex Torso w/ neck',unit:'',total:'',supply:'',location:'',condition:''},
+    {code:'AL-NCON-31',name:'Male reproductive system',unit:'',total:'',supply:'',location:'',condition:''},
+    {code:'AL-NCON-32',name:'Boekel Circulatory System',unit:'',total:'',supply:'',location:'',condition:''},
+    {code:'AL-NCON-33',name:'Boekel Nervous System',unit:'',total:'',supply:'',location:'',condition:''},
+  ];
+   const anatomyData = [
+  {code:'AL-BOR-01',name:'TV Sony Wega w/ TV Stand',unit:'unit',total:1,supply:1,location:'LSW',condition:'Defective'},
+  {code:'AL-BOR-02',name:'2.5HP Split Type Aircon',unit:'unit',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-03',name:'Wooden Shelves - 6 layers',unit:'unit',total:1,supply:1,location:'RSC',condition:'Good condition'},
+  {code:'AL-BOR-04',name:'Wooden Shelves - 4 layers',unit:'unit',total:1,supply:1,location:'LS',condition:'Good condition'},
+  {code:'AL-BOR-05',name:'3B Plant Cell Model',unit:'pcs',total:1,supply:1,location:'LSW',condition:'Good condition'},
+  {code:'AL-BOR-06',name:'Skeleton Stand w/ Ballcaster',unit:'set',total:1,supply:1,location:'RSC',condition:'Slightly Defective'},
+  {code:'AL-BOR-07',name:'Stool Chair',unit:'pcs',total:37,supply:37,location:'LSC',condition:'30 in good condition, 7 defective'},
+  {code:'AL-BOR-08',name:'Lab Table - black',unit:'unit',total:6,supply:6,location:'AS',condition:'Slightly Defective'},
+  {code:'AL-BOR-09',name:'Whiteboard',unit:'unit',total:1,supply:1,location:'F',condition:'Slightly Defective'},
+  {code:'AL-BOR-10',name:"Teacher's Table",unit:'unit',total:1,supply:1,location:'F',condition:'Slightly Defective'},
 
-  let editingIndex = null, np2EditingIndex = null, conEditingIndex = null, np2conEditingIndex = null, mnhEditingIndex = null, mnhConEditingIndex = null, mcEditingIndex = null;
+  {code:'AL-BOR-11',name:'2.5 Split Type Aircon',unit:'unit',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-12',name:'2.5HP Split Type Aircon',unit:'unit',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-13',name:'2.5HP Split Type Aircon',unit:'unit',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-14',name:'2parts Female Pelvis Anatomy Model',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-15',name:'4parts Male Pelvis Anatomy Model',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-16',name:'Boekel Circulatory System',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+  {code:'AL-BOR-17',name:'Boekel Nervous System',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+  {code:'AL-BOR-18',name:'Boekel Spinal Column w/ prolapsed',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+  {code:'AL-BOR-19',name:'Boekel Urinary System Bisexual FS',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+  {code:'AL-BOR-20',name:'Classic Unisex Torso w/ neck',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+
+  {code:'AL-BOR-21',name:'Curtain Rod',unit:'pcs',total:5,supply:5,location:'LSW',condition:'All in good condition'},
+  {code:'AL-BOR-22',name:'Delux Dual Sex Muscular Figure',unit:'pcs',total:1,supply:1,location:'LSC',condition:'Defective'},
+  {code:'AL-BOR-23',name:'Disarticulated Painted Full Skeleton',unit:'pcs',total:1,supply:1,location:'LS',condition:'Good condition'},
+  {code:'AL-BOR-24',name:'Female Pelvis',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-25',name:'Female Reproductive System',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-26',name:'Fire Extinguisher',unit:'pcs',total:1,supply:1,location:'B',condition:'Good condition'},
+  {code:'AL-BOR-27',name:'First Aid Kit',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+  {code:'AL-BOR-28',name:'Lavatory w/ Faucet',unit:'unit',total:4,supply:4,location:'LSW',condition:'Slightly in good condition (1 defective)'},
+  {code:'AL-BOR-29',name:'Long Curtain',unit:'pcs',total:11,supply:11,location:'RSW',condition:'All in good condition'},
+  {code:'AL-BOR-30',name:'Magazine Stand',unit:'unit',total:1,supply:1,location:'RSW',condition:'Good condition'},
+
+  {code:'AL-BOR-31',name:'Male Pelvis',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-32',name:'Male Pelvis Anatomy',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-33',name:'Male Reproductive System',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+  {code:'AL-BOR-C3B-34',name:'Sample Fetus - 18 days',unit:'pcs',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-C3B-35',name:'Sample Fetus - 20 days',unit:'pcs',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-C3B-36',name:'Sample Fetus - 22 days',unit:'pcs',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-C3B-37',name:'Sample Fetus - 23 days',unit:'pcs',total:1,supply:1,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-C3B-38',name:'Sample Fetus - 28 days',unit:'pcs',total:4,supply:4,location:'RS',condition:'Good condition'},
+  {code:'AL-BOR-C3B-39',name:'Sample Fetus w/o # of days',unit:'pcs',total:6,supply:6,location:'RS',condition:'In good condition'},
+  {code:'AL-BOR-40',name:'Skin Model 70x Life Size',unit:'unit',total:1,supply:1,location:'LSC',condition:'Good condition'},
+];
+ const ordrData = [
+    {code:'OR/DR-068',name:'0.9 Sodium Chloride',unit:'bottle',ideal:40,supply:'3',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-069',name:'0.9 Sodium Chloride (SITL-PNSS)',unit:'bottle',ideal:40,supply:'2',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-070',name:'5% Dextrose in Water 500ml',unit:'bottle',ideal:40,supply:'2',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-071',name:'Absorbent Gauze Roll S:(36x100yds) - Pro Health Care',unit:'roll',ideal:10,supply:'1',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-072',name:'Absorbent Gauze Roll S:(36x100yds) - Sure Guard',unit:'roll',ideal:10,supply:'1',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-073',name:'Adhesive Tape Micropore (12N) - 3M',unit:'box',ideal:20,supply:'6pcs(3box)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-074',name:'Adhesive Tape Micropore (6N) - 3M',unit:'box',ideal:20,supply:'6pcs(1box)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-075',name:'Boufant Cap S:(21) Blue - Orex',unit:'box',ideal:200,supply:'100pcs(1pack)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-076',name:'Burette-Type Infusion Set (Single-Use) - Sure Guard',unit:'box',ideal:40,supply:'6',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-077',name:'Disposable Infusion Set (Macro Set) Single Use Sterile - Surgitech',unit:'box',ideal:40,supply:'13pcs(1box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-078',name:'Disposable Syringe w/ needle Luer Lock (10cc) - Sure Guard',unit:'box',ideal:20,supply:'325pcs(4box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-079',name:'Disposable Syringe w/ needle Single Use Only (5cc) - Indoplas',unit:'box',ideal:20,supply:'100pcs(3box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-080',name:'Disposable Syringe w/ needle Slip Tip (1cc) Sure Guard',unit:'box',ideal:20,supply:'100pcs(2box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-081',name:'First Aid Box',unit:'box',ideal:15,supply:'2',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-082',name:'Foley Balloon Catheter Siliconized Two Way (Fr:16) - Sure Guard',unit:'box',ideal:12,supply:'10pcs(7box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-083',name:'Foley Catheter Latex 100% Silicone Coated (Fr:16) - Top Care',unit:'box',ideal:12,supply:'20pcs(8box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-084',name:'Handsoap Green Tea - Soap Blends',unit:'bottle',ideal:10,supply:'1',location:'OR/DRCC1R',condition:'Fair'},
+    {code:'OR/DR-085',name:'Irrigation Syringe Bulb Type (60 ml) - Surgitech',unit:'pcs',ideal:45,supply:'3',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-086',name:'I.V Cannula w/ Injection Valve S: (20G) - Can Care',unit:'box',ideal:10,supply:'100pcs(1box)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-087',name:'KN 95 Facemask - Indoplas',unit:'box',ideal:10,supply:'50pcs(8box)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-088',name:'Lubricating Jelly Sterile Water Based - Top Care',unit:'box',ideal:12,supply:'100pcs(1box)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-089',name:'Povidone Iodine 10% Solution Antiseptic - Betasol',unit:'Gallon',ideal:8,supply:'1',location:'OR/DRCC1R',condition:'Fair'},
+    {code:'OR/DR-090',name:'Povidone Iodine Topical Solution Antiseptic 7.5mg - Betasol',unit:'Gallon',ideal:8,supply:'1',location:'OR/DRCC1R',condition:'Fair'},
+    {code:'OR/DR-091',name:'Sterile I.V Infusion Set w/ needle - Sure Guard',unit:'box',ideal:5,supply:'23pcs(1box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-092',name:'Sterile Water for Injection Pyrogen Free (5ml) - Univax',unit:'box',ideal:15,supply:'100pcs(2box)',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-093',name:'Stomach Tube (Fr:16) - Partners',unit:'box',ideal:10,supply:'41pcs(1box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-094',name:'Suction Catheter for Single Use Only (Fr:12) - Top Care',unit:'box',ideal:12,supply:'100pcs(1box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-095',name:'Surgical Scrub Brush Sterile',unit:'pcs',ideal:50,supply:'23pcs',location:'OR/DRCC1R',condition:'Excellent'},
+    {code:'OR/DR-096',name:'Tongue Depressor Sterile (Wooden) - Unimex',unit:'pcs',ideal:8,supply:'100pcs(1box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-097',name:'Umbilical Cord Clamp - King Med',unit:'pcs',ideal:10,supply:'100pcs(2box)',location:'OR/DRCC1R',condition:'Good'},
+    {code:'OR/DR-098',name:'Urine Bag 200ml Sterile for Single Use Only - Sure Guard',unit:'box',ideal:15,supply:'66pcs(7box)',location:'OR/DRCC1R',condition:'Good'},
+  ];
+  const ordrnconData = [
+    {section:'Operating Room',code:'OR-001',name:'Adson Forceps',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-002',name:'Allis Forceps',unit:'pcs',ideal:16,supply:15,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-003',name:'Allis Tissue Forceps',unit:'pcs',ideal:16,supply:14,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-004',name:'Army Navy Retractor',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-005',name:'Aneurysm Needle (Left)',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-006',name:'Aneurysm Needle (Right)',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-007',name:'Babcock Forceps',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-008',name:'Backhaus Towel Clip',unit:'pcs',ideal:24,supply:23,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-009',name:'Blade Holder',unit:'pcs',ideal:8,supply:6,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-010',name:'Bladder Retractor',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-011',name:'Cautery Cord/Tip',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-012',name:'Crile-Rankin Forceps (Curved)',unit:'pcs',ideal:16,supply:14,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-013',name:'Crile-Rankin Forceps (Straight)',unit:'pcs',ideal:16,supply:9,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-014',name:'Cushing Retractor',unit:'pcs',ideal:8,supply:8,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-015',name:'Deaver Retractor',unit:'pcs',ideal:6,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-016',name:'DeBakey Tissue Forceps',unit:'pcs',ideal:8,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-017',name:'Director/Tongue Tie',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-018',name:'Double Arm Retractor',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-019',name:'Foerster Sponge Forceps',unit:'pcs',ideal:16,supply:15,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-020',name:'Instrument Tray',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-021',name:'Instrument Tray',unit:'pcs',ideal:20,supply:19,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-022',name:'Kelly Forceps (Straight)',unit:'pcs',ideal:27,supply:27,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-023',name:'Kidney Basin',unit:'pcs',ideal:16,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-024',name:'Luer Suction Tube',unit:'pcs',ideal:8,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-025',name:'Malleable Retractor',unit:'pcs',ideal:6,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-026',name:'Mayo Scissor (Curved)',unit:'pcs',ideal:8,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-027',name:'Mayo Scissor (Straight)',unit:'pcs',ideal:8,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-028',name:'Metzembaum Scissors',unit:'pcs',ideal:8,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-029',name:'Mosquito Forceps (Curved)',unit:'pcs',ideal:28,supply:26,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-030',name:'Mosquito Forceps (Straight)',unit:'pcs',ideal:51,supply:51,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-031',name:'Needle Holder',unit:'pcs',ideal:9,supply:9,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-032',name:'Orthopedic Ped',unit:'pcs',ideal:2,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-033',name:'Ovum Forceps',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-034',name:'Pean Forceps',unit:'pcs',ideal:16,supply:12,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-035',name:'Probe with Eye',unit:'pcs',ideal:6,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-036',name:'Rake Retractor',unit:'pcs',ideal:11,supply:11,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-037',name:'Richardson Retractor',unit:'pcs',ideal:6,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-038',name:'Ribbon Retractor',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-039',name:'Ribbon Retractor (Medium)',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-040',name:'Ribbon Retractor (Small)',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-041',name:'Rochester-Ochsner Forceps (Curved)',unit:'pcs',ideal:8,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-042',name:'Rochester-Ochsner Forceps (Extra Large)',unit:'pcs',ideal:8,supply:8,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-043',name:'Rochester-Ochsner Forceps (Large)',unit:'pcs',ideal:8,supply:5,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-044',name:'Rochester-Ochsner Forceps (Medium)',unit:'pcs',ideal:10,supply:10,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-045',name:'Rochester-Ochsner Forceps (Small)',unit:'pcs',ideal:17,supply:17,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-046',name:'Schmieden Clava Scissors',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-047',name:'Self Retaining Retractor',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-048',name:'Sims Uterine Curette',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-049',name:'Single Arm Retractor',unit:'pcs',ideal:8,supply:7,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-050',name:'Skin Staple Remover',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-051',name:'Skin Stapler',unit:'pcs',ideal:4,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-052',name:'Sponge Holding Forceps',unit:'pcs',ideal:8,supply:3,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-053',name:'Straight Forceps',unit:'pcs',ideal:8,supply:5,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-054',name:'Suction Tube Tip',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-055',name:'Suction Tubing',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-056',name:'Tissue Forceps (Hook)',unit:'pcs',ideal:8,supply:1,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-057',name:'Tissue Forceps (Hooked)',unit:'pcs',ideal:8,supply:5,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-058',name:'Tissue Forceps (Large)',unit:'pcs',ideal:8,supply:3,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-059',name:'Tissue Forceps (Medium)',unit:'pcs',ideal:8,supply:4,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-060',name:'Tray',unit:'pcs',ideal:8,supply:5,location:'OR/DR-NCON-C1L',condition:'Good'},
+    {section:'Operating Room',code:'OR-061',name:'Universal Wire Ligature Scissors',unit:'pcs',ideal:4,supply:2,location:'OR/DR-NCON-C1L',condition:'Good'},
+
+    {section:'Delivery Room',code:'DR-062',name:'BP Aneroid',unit:'pcs',ideal:4,supply:2,location:'OR/DRNCC1L',condition:'Good'},
+    {section:'Delivery Room',code:'DR-063',name:'Graves Vaginal Speculum',unit:'pcs',ideal:6,supply:1,location:'OR/DRNCC1L',condition:'Good'},
+    {section:'Delivery Room',code:'DR-064',name:'Hodson',unit:'pcs',ideal:4,supply:1,location:'OR/DRNCC1L',condition:'Good'},
+    {section:'Delivery Room',code:'DR-065',name:'Ovum Forceps',unit:'pcs',ideal:4,supply:1,location:'OR/DRNCC1L',condition:'Good'},
+    {section:'Delivery Room',code:'DR-066',name:'Sims Uterine Curette',unit:'pcs',ideal:4,supply:2,location:'OR/DRNCC1L',condition:'Good'},
+    {section:'Delivery Room',code:'DR-067',name:'Stainless Kidney Basin',unit:'pcs',ideal:6,supply:3,location:'OR/DRNCC1L',condition:'Good'},
+
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-099',name:'Baby Mannequin',unit:'pcs',ideal:12,supply:3,location:'OR/DR STIMULATION',condition:'All Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-100',name:'Bed Side Cabinet (Paramount Bed NON- Stainless)',unit:'pcs',ideal:10,supply:3,location:'OR/DR STIMULATION',condition:'All Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-101',name:'Bed Side Cabinet',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-102',name:'Bedside Table',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-103',name:'BP Apparatus',unit:'pcs',ideal:15,supply:2,location:'OR/DR STIMULATION',condition:'1 Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-104',name:'Cardiac Monitor (Nihon Kohden)',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-105',name:'Computer',unit:'pcs',ideal:20,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-106',name:'Crib',unit:'pcs',ideal:12,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-107',name:'Drop Light',unit:'pcs',ideal:12,supply:2,location:'OR/DR STIMULATION',condition:'1 Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-108',name:'Fetoscope',unit:'pcs',ideal:12,supply:2,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-109',name:'Infant Incubator',unit:'pcs',ideal:12,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-110',name:'IV Stand (4 Hooks Stainless)',unit:'pcs',ideal:10,supply:6,location:'OR/DR STIMULATION',condition:'4 Working 2 Defective'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-111',name:'Luxurious Stretcher',unit:'pcs',ideal:15,supply:1,location:'OR/DR STIMULATION',condition:''},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-112',name:'Mayo Table (Stand & Tray)',unit:'pcs',ideal:15,supply:2,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-113',name:'Medical Stools w/ Wheels',unit:'pcs',ideal:20,supply:2,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-114',name:'Multipurpose Patient Simulator w/ Omni Code Blue S303 (Gaumard)',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:''},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-115',name:'Noelle Delivery Mannequin',unit:'pcs',ideal:15,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-116',name:'Operation Lamp',unit:'pcs',ideal:5,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-117',name:'Oxygen Tank 2/ Regulator-50 lbs',unit:'pcs',ideal:10,supply:2,location:'OR/DR STIMULATION',condition:''},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-118',name:'Oxygen Tank Cart 50 lbs-single',unit:'pcs',ideal:10,supply:2,location:'OR/DR STIMULATION',condition:''},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-119',name:'Stainless Bed Side Cabinet',unit:'pcs',ideal:10,supply:2,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-120',name:'Stomach Mannequin',unit:'pcs',ideal:20,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-121',name:'Suction Apparatus',unit:'pcs',ideal:15,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-122',name:'Suctioning Machine',unit:'pcs',ideal:15,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-123',name:'Surgical Armboard',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-124',name:'Surgical Footstool',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+    {section:'DR/OR Equipment Simulation',code:'OR/DR-125',name:'Weighing Scale',unit:'pcs',ideal:10,supply:1,location:'OR/DR STIMULATION',condition:'Working'},
+  ];
+
+
+  let editingIndex = null, np2EditingIndex = null, conEditingIndex = null, np2conEditingIndex = null, mnhEditingIndex = null, mnhConEditingIndex = null, mcEditingIndex = null, alEditingIndex = null, anatomyEditingIndex = null, ordrEditingIndex = null, ordrnconEditingIndex = null;
 
 
   function conditionClass(c) {
@@ -1446,6 +1859,565 @@ function addMCButton() {
   });
 
   addMCButton();
+
+   function addALButton() {
+    const buttonRow = document.querySelector('.section-card div[style*="flex-wrap"]');
+    if (!buttonRow || document.querySelector('.inv-category-btn.al-btn')) return;
+
+    buttonRow.insertAdjacentHTML('beforeend', `
+      <button class="inv-category-btn al-btn" onclick="openALModal()">
+        <span style="font-size:20px;">🧬</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;">AL Non Consumable</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:2px;">33 items</div>
+        </div>
+      </button>
+    `);
+  }
+
+  function conditionClassAL(c) {
+    if (!c) return 'condition-notfound';
+    const lc = c.toLowerCase();
+    if (lc === 'defective') return 'condition-defective';
+    if (lc.includes('defective') || lc.includes('slightly')) return 'condition-mixed';
+    return 'condition-good';
+  }
+
+  function formatALStock(value, unit) {
+    if (value === '' || value === null || value === undefined) return '—';
+    return `${value}${unit ? ' ' + unit : ''}`;
+  }
+
+  function renderALTable(data) {
+    const tbody = document.getElementById('al-body');
+    document.getElementById('al-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${alData.length}</strong> items`;
+
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${alData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td>
+      <td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit || '—'}</td>
+      <td><span class="qty-pill">${formatALStock(item.total, item.unit)}</span></td>
+      <td class="supply-num">${item.supply === '' ? '—' : item.supply}</td>
+      <td><span class="location-tag">${item.location || '—'}</span></td>
+      <td><span class="condition-pill ${conditionClassAL(item.condition)}">${item.condition || '—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditALModal(${alData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteALItem(${alData.indexOf(item)})">Delete</button>
+      </div></td>
+    </tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+  }
+
+  function filterALTable() {
+    const q = document.getElementById('al-search-input').value.toLowerCase();
+    renderALTable(alData.filter(i =>
+      i.name.toLowerCase().includes(q) ||
+      i.code.toLowerCase().includes(q) ||
+      (i.location || '').toLowerCase().includes(q) ||
+      (i.condition || '').toLowerCase().includes(q)
+    ));
+  }
+
+  function openALModal() {
+    document.getElementById('al-modal-overlay').classList.add('open');
+    renderALTable(alData);
+  }
+
+  function closeALModal() {
+    document.getElementById('al-modal-overlay').classList.remove('open');
+  }
+
+  function openAddALModal() {
+    alEditingIndex = null;
+    document.getElementById('al-modal-title').textContent = 'Add AL Item';
+    ['al-code','al-name','al-unit','al-location','al-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('al-total').value = 0;
+    document.getElementById('al-supply').value = 0;
+    document.getElementById('al-form-overlay').classList.add('open');
+  }
+
+  function openEditALModal(idx) {
+    alEditingIndex = idx;
+    const item = alData[idx];
+
+    document.getElementById('al-modal-title').textContent = 'Edit AL Item';
+    document.getElementById('al-code').value = item.code;
+    document.getElementById('al-name').value = item.name;
+    document.getElementById('al-unit').value = item.unit;
+    document.getElementById('al-total').value = item.total;
+    document.getElementById('al-supply').value = item.supply;
+    document.getElementById('al-location').value = item.location;
+    document.getElementById('al-condition').value = item.condition;
+
+    document.getElementById('al-form-overlay').classList.add('open');
+  }
+
+  function closeALFormModal() {
+    document.getElementById('al-form-overlay').classList.remove('open');
+  }
+
+  function saveALItem() {
+    const item = {
+      code: document.getElementById('al-code').value.trim(),
+      name: document.getElementById('al-name').value.trim(),
+      unit: document.getElementById('al-unit').value.trim(),
+      total: document.getElementById('al-total').value === '' ? '' : parseInt(document.getElementById('al-total').value),
+      supply: document.getElementById('al-supply').value === '' ? '' : parseInt(document.getElementById('al-supply').value),
+      location: document.getElementById('al-location').value.trim(),
+      condition: document.getElementById('al-condition').value.trim()
+    };
+
+    if (!item.name) {
+      alert('Item name is required.');
+      return;
+    }
+
+    if (alEditingIndex !== null) {
+      alData[alEditingIndex] = item;
+    } else {
+      alData.push(item);
+    }
+
+    closeALFormModal();
+    renderALTable(alData);
+    document.getElementById('al-modal-overlay').classList.add('open');
+  }
+
+  function deleteALItem(idx) {
+    if (confirm(`Delete "${alData[idx].name}"?`)) {
+      alData.splice(idx, 1);
+      renderALTable(alData);
+    }
+  }
+
+  document.getElementById('al-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeALModal();
+  });
+
+  document.getElementById('al-form-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeALFormModal();
+  });
+
+  addALButton();
+
+  function addAnatomyButton() {
+    const buttonRow = document.querySelector('.section-card div[style*="flex-wrap"]');
+    if (!buttonRow || document.querySelector('.inv-category-btn.anatomy-btn')) return;
+
+    buttonRow.insertAdjacentHTML('beforeend', `
+      <button class="inv-category-btn anatomy-btn" onclick="openAnatomyModal()">
+        <span style="font-size:20px;">🧬</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;">Anatomy Lab</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:2px;">27 items</div>
+        </div>
+      </button>
+    `);
+  }
+
+  function conditionClassAnatomy(c) {
+    if (!c) return 'condition-notfound';
+    const lc = c.toLowerCase();
+    if (lc === 'defective') return 'condition-defective';
+    if (lc.includes('defective') || lc.includes('slightly')) return 'condition-mixed';
+    return 'condition-good';
+  }
+
+  function renderAnatomyTable(data) {
+    const tbody = document.getElementById('anatomy-body');
+    document.getElementById('anatomy-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${anatomyData.length}</strong> items`;
+
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${anatomyData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td>
+      <td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td>
+      <td><span class="qty-pill">${item.total} ${item.unit}</span></td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassAnatomy(item.condition)}">${item.condition || '—'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditAnatomyModal(${anatomyData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteAnatomyItem(${anatomyData.indexOf(item)})">Delete</button>
+      </div></td>
+    </tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+  }
+
+  function filterAnatomyTable() {
+    const q = document.getElementById('anatomy-search-input').value.toLowerCase();
+    renderAnatomyTable(anatomyData.filter(i =>
+      i.name.toLowerCase().includes(q) ||
+      i.code.toLowerCase().includes(q) ||
+      i.location.toLowerCase().includes(q) ||
+      i.condition.toLowerCase().includes(q)
+    ));
+  }
+
+  function openAnatomyModal() {
+    document.getElementById('anatomy-modal-overlay').classList.add('open');
+    renderAnatomyTable(anatomyData);
+  }
+
+  function closeAnatomyModal() {
+    document.getElementById('anatomy-modal-overlay').classList.remove('open');
+  }
+
+  function openAddAnatomyModal() {
+    anatomyEditingIndex = null;
+    document.getElementById('anatomy-modal-title').textContent = 'Add Anatomy Lab Item';
+    ['anatomy-code','anatomy-name','anatomy-unit','anatomy-location','anatomy-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('anatomy-total').value = 0;
+    document.getElementById('anatomy-supply').value = 0;
+    document.getElementById('anatomy-form-overlay').classList.add('open');
+  }
+
+  function openEditAnatomyModal(idx) {
+    anatomyEditingIndex = idx;
+    const item = anatomyData[idx];
+
+    document.getElementById('anatomy-modal-title').textContent = 'Edit Anatomy Lab Item';
+    document.getElementById('anatomy-code').value = item.code;
+    document.getElementById('anatomy-name').value = item.name;
+    document.getElementById('anatomy-unit').value = item.unit;
+    document.getElementById('anatomy-total').value = item.total;
+    document.getElementById('anatomy-supply').value = item.supply;
+    document.getElementById('anatomy-location').value = item.location;
+    document.getElementById('anatomy-condition').value = item.condition;
+
+    document.getElementById('anatomy-form-overlay').classList.add('open');
+  }
+
+  function closeAnatomyFormModal() {
+    document.getElementById('anatomy-form-overlay').classList.remove('open');
+  }
+
+  function saveAnatomyItem() {
+    const item = {
+      code: document.getElementById('anatomy-code').value.trim(),
+      name: document.getElementById('anatomy-name').value.trim(),
+      unit: document.getElementById('anatomy-unit').value.trim(),
+      total: parseInt(document.getElementById('anatomy-total').value) || 0,
+      supply: parseInt(document.getElementById('anatomy-supply').value) || 0,
+      location: document.getElementById('anatomy-location').value.trim(),
+      condition: document.getElementById('anatomy-condition').value.trim()
+    };
+
+    if (!item.name) {
+      alert('Item name is required.');
+      return;
+    }
+
+    if (anatomyEditingIndex !== null) {
+      anatomyData[anatomyEditingIndex] = item;
+    } else {
+      anatomyData.push(item);
+    }
+
+    closeAnatomyFormModal();
+    renderAnatomyTable(anatomyData);
+    document.getElementById('anatomy-modal-overlay').classList.add('open');
+  }
+
+  function deleteAnatomyItem(idx) {
+    if (confirm(`Delete "${anatomyData[idx].name}"?`)) {
+      anatomyData.splice(idx, 1);
+      renderAnatomyTable(anatomyData);
+    }
+  }
+
+  document.getElementById('anatomy-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeAnatomyModal();
+  });
+
+  document.getElementById('anatomy-form-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeAnatomyFormModal();
+  });
+
+  addAnatomyButton();
+
+   function addORDRButton() {
+    const buttonRow = document.querySelector('.section-card div[style*="flex-wrap"]');
+    if (!buttonRow || document.querySelector('.inv-category-btn.ordr-btn')) return;
+
+    buttonRow.insertAdjacentHTML('beforeend', `
+      <button class="inv-category-btn ordr-btn" onclick="openORDRModal()">
+        <span style="font-size:20px;">🏥</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;">OR/DR Consumables</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:2px;">31 items</div>
+        </div>
+      </button>
+    `);
+  }
+
+  function conditionClassORDR(c) {
+    if (!c) return 'condition-mixed';
+    const lc = c.toLowerCase();
+    if (lc.includes('excellent') || lc.includes('good')) return 'condition-good';
+    if (lc.includes('fair')) return 'condition-mixed';
+    return 'condition-mixed';
+  }
+
+  function renderORDRTable(data) {
+    const tbody = document.getElementById('ordr-body');
+    document.getElementById('ordr-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${ordrData.length}</strong> items`;
+
+    tbody.innerHTML = data.length ? data.map(item => `<tr>
+      <td class="td-num">${ordrData.indexOf(item)+1}</td>
+      <td class="td-code">${item.code}</td>
+      <td class="td-name">${item.name}</td>
+      <td class="td-unit">${item.unit}</td>
+      <td class="ideal-stock">${item.ideal}</td>
+      <td class="supply-num">${item.supply}</td>
+      <td><span class="location-tag">${item.location}</span></td>
+      <td><span class="condition-pill ${conditionClassORDR(item.condition)}">${item.condition || '-'}</span></td>
+      <td><div class="actions">
+        <button class="btn-edit" onclick="openEditORDRModal(${ordrData.indexOf(item)})">Edit</button>
+        <button class="btn-del" onclick="deleteORDRItem(${ordrData.indexOf(item)})">Delete</button>
+      </div></td>
+    </tr>`).join('') :
+    `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+  }
+
+  function filterORDRTable() {
+    const q = document.getElementById('ordr-search-input').value.toLowerCase();
+    renderORDRTable(ordrData.filter(i =>
+      i.name.toLowerCase().includes(q) ||
+      i.code.toLowerCase().includes(q) ||
+      i.location.toLowerCase().includes(q) ||
+      i.condition.toLowerCase().includes(q)
+    ));
+  }
+
+  function openORDRModal() {
+    document.getElementById('ordr-modal-overlay').classList.add('open');
+    renderORDRTable(ordrData);
+  }
+
+  function closeORDRModal() {
+    document.getElementById('ordr-modal-overlay').classList.remove('open');
+  }
+
+  function openAddORDRModal() {
+    ordrEditingIndex = null;
+    document.getElementById('ordr-modal-title').textContent = 'Add OR/DR Consumable';
+    ['ordr-code','ordr-name','ordr-unit','ordr-supply','ordr-location','ordr-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ordr-ideal').value = 0;
+    document.getElementById('ordr-form-overlay').classList.add('open');
+  }
+
+  function openEditORDRModal(idx) {
+    ordrEditingIndex = idx;
+    const item = ordrData[idx];
+
+    document.getElementById('ordr-modal-title').textContent = 'Edit OR/DR Consumable';
+    document.getElementById('ordr-code').value = item.code;
+    document.getElementById('ordr-name').value = item.name;
+    document.getElementById('ordr-unit').value = item.unit;
+    document.getElementById('ordr-ideal').value = item.ideal;
+    document.getElementById('ordr-supply').value = item.supply;
+    document.getElementById('ordr-location').value = item.location;
+    document.getElementById('ordr-condition').value = item.condition;
+
+    document.getElementById('ordr-form-overlay').classList.add('open');
+  }
+
+  function closeORDRFormModal() {
+    document.getElementById('ordr-form-overlay').classList.remove('open');
+  }
+
+  function saveORDRItem() {
+    const item = {
+      code: document.getElementById('ordr-code').value.trim(),
+      name: document.getElementById('ordr-name').value.trim(),
+      unit: document.getElementById('ordr-unit').value.trim(),
+      ideal: parseInt(document.getElementById('ordr-ideal').value) || 0,
+      supply: document.getElementById('ordr-supply').value.trim(),
+      location: document.getElementById('ordr-location').value.trim(),
+      condition: document.getElementById('ordr-condition').value.trim()
+    };
+
+    if (!item.name) {
+      alert('Item name is required.');
+      return;
+    }
+
+    if (ordrEditingIndex !== null) {
+      ordrData[ordrEditingIndex] = item;
+    } else {
+      ordrData.push(item);
+    }
+
+    closeORDRFormModal();
+    renderORDRTable(ordrData);
+    document.getElementById('ordr-modal-overlay').classList.add('open');
+  }
+
+  function deleteORDRItem(idx) {
+    if (confirm(`Delete "${ordrData[idx].name}"?`)) {
+      ordrData.splice(idx, 1);
+      renderORDRTable(ordrData);
+    }
+  }
+
+  document.getElementById('ordr-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeORDRModal();
+  });
+
+  document.getElementById('ordr-form-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeORDRFormModal();
+  });
+
+  addORDRButton();
+
+   function addORDRNConButton() {
+    const buttonRow = document.querySelector('.section-card div[style*="flex-wrap"]');
+    if (!buttonRow || document.querySelector('.inv-category-btn.ordrncon-btn')) return;
+
+    buttonRow.insertAdjacentHTML('beforeend', `
+      <button class="inv-category-btn ordrncon-btn" onclick="openORDRNConModal()">
+        <span style="font-size:20px;">🛠️</span>
+        <div>
+          <div style="font-weight:700;font-size:14px;">OR/DR Non Consumable</div>
+          <div style="font-size:11px;opacity:0.75;margin-top:2px;">94 items</div>
+        </div>
+      </button>
+    `);
+  }
+
+  function conditionClassORDRNCon(c) {
+    if (!c) return 'condition-notfound';
+    const lc = c.toLowerCase();
+    if (lc.includes('defective')) return 'condition-mixed';
+    if (lc.includes('good') || lc.includes('working')) return 'condition-good';
+    return 'condition-mixed';
+  }
+
+  function renderORDRNConTable(data) {
+    const tbody = document.getElementById('ordrncon-body');
+    document.getElementById('ordrncon-count-label').innerHTML = `Showing <strong>${data.length}</strong> of <strong>${ordrnconData.length}</strong> items`;
+
+    const sectionOrder = ['Operating Room', 'Delivery Room', 'DR/OR Equipment Simulation'];
+    const visibleSections = sectionOrder.filter(section => data.some(item => item.section === section));
+
+    tbody.innerHTML = visibleSections.map(section => {
+      const sectionItems = data.filter(item => item.section === section);
+      const sectionClass = section === 'DR/OR Equipment Simulation' ? 'table-section-row simulation' : 'table-section-row';
+
+      return `<tr class="${sectionClass}"><td colspan="9">${section}</td></tr>` + sectionItems.map(item => `<tr>
+        <td class="td-num">${ordrnconData.indexOf(item)+1}</td>
+        <td class="td-code">${item.code}</td>
+        <td class="td-name">${item.name}</td>
+        <td class="td-unit">${item.unit}</td>
+        <td class="ideal-stock">${item.ideal}</td>
+        <td class="supply-num">${item.supply}</td>
+        <td><span class="location-tag">${item.location}</span></td>
+        <td><span class="condition-pill ${conditionClassORDRNCon(item.condition)}">${item.condition || '-'}</span></td>
+        <td><div class="actions">
+          <button class="btn-edit" onclick="openEditORDRNConModal(${ordrnconData.indexOf(item)})">Edit</button>
+          <button class="btn-del" onclick="deleteORDRNConItem(${ordrnconData.indexOf(item)})">Delete</button>
+        </div></td>
+      </tr>`).join('');
+    }).join('') || `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--gray-500);">No items found.</td></tr>`;
+  }
+
+  function filterORDRNConTable() {
+    const q = document.getElementById('ordrncon-search-input').value.toLowerCase();
+    renderORDRNConTable(ordrnconData.filter(i =>
+      i.section.toLowerCase().includes(q) ||
+      i.name.toLowerCase().includes(q) ||
+      i.code.toLowerCase().includes(q) ||
+      i.location.toLowerCase().includes(q) ||
+      (i.condition || '').toLowerCase().includes(q)
+    ));
+  }
+
+  function openORDRNConModal() {
+    document.getElementById('ordrncon-modal-overlay').classList.add('open');
+    renderORDRNConTable(ordrnconData);
+  }
+
+  function closeORDRNConModal() {
+    document.getElementById('ordrncon-modal-overlay').classList.remove('open');
+  }
+
+  function openAddORDRNConModal() {
+    ordrnconEditingIndex = null;
+    document.getElementById('ordrncon-modal-title').textContent = 'Add OR/DR Item';
+    document.getElementById('ordrncon-section').value = 'Operating Room';
+    ['ordrncon-code','ordrncon-name','ordrncon-unit','ordrncon-location','ordrncon-condition'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ordrncon-ideal').value = 0;
+    document.getElementById('ordrncon-supply').value = 0;
+    document.getElementById('ordrncon-form-overlay').classList.add('open');
+  }
+
+  function openEditORDRNConModal(idx) {
+    ordrnconEditingIndex = idx;
+    const item = ordrnconData[idx];
+
+    document.getElementById('ordrncon-modal-title').textContent = 'Edit OR/DR Item';
+    document.getElementById('ordrncon-section').value = item.section;
+    document.getElementById('ordrncon-code').value = item.code;
+    document.getElementById('ordrncon-name').value = item.name;
+    document.getElementById('ordrncon-unit').value = item.unit;
+    document.getElementById('ordrncon-ideal').value = item.ideal;
+    document.getElementById('ordrncon-supply').value = item.supply;
+    document.getElementById('ordrncon-location').value = item.location;
+    document.getElementById('ordrncon-condition').value = item.condition;
+
+    document.getElementById('ordrncon-form-overlay').classList.add('open');
+  }
+
+  function closeORDRNConFormModal() {
+    document.getElementById('ordrncon-form-overlay').classList.remove('open');
+  }
+
+  function saveORDRNConItem() {
+    const item = {
+      section: document.getElementById('ordrncon-section').value,
+      code: document.getElementById('ordrncon-code').value.trim(),
+      name: document.getElementById('ordrncon-name').value.trim(),
+      unit: document.getElementById('ordrncon-unit').value.trim(),
+      ideal: parseInt(document.getElementById('ordrncon-ideal').value) || 0,
+      supply: parseInt(document.getElementById('ordrncon-supply').value) || 0,
+      location: document.getElementById('ordrncon-location').value.trim(),
+      condition: document.getElementById('ordrncon-condition').value.trim()
+    };
+
+    if (!item.name) {
+      alert('Item name is required.');
+      return;
+    }
+
+    if (ordrnconEditingIndex !== null) {
+      ordrnconData[ordrnconEditingIndex] = item;
+    } else {
+      ordrnconData.push(item);
+    }
+
+    closeORDRNConFormModal();
+    renderORDRNConTable(ordrnconData);
+    document.getElementById('ordrncon-modal-overlay').classList.add('open');
+  }
+
+  function deleteORDRNConItem(idx) {
+    if (confirm(`Delete "${ordrnconData[idx].name}"?`)) {
+      ordrnconData.splice(idx, 1);
+      renderORDRNConTable(ordrnconData);
+    }
+  }
+
+  document.getElementById('ordrncon-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeORDRNConModal();
+  });
+
+  document.getElementById('ordrncon-form-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeORDRNConFormModal();
+  });
+
+  addORDRNConButton();
 
 </script>
 </body>
